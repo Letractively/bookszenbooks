@@ -1,0 +1,26 @@
+#summary Use case for handling the removal of a book from the shopping cart.
+#labels Phase-Requirements,Use-Cases
+
+= Introduction =
+
+*Description:*
+
+A user wants to remove a book from his/her shopping cart.
+
+*Preconditions:*
+ # The user has a registered and active bookstore account.
+ # The user is logged in.
+ # The user has a book added to his/her shopping cart.
+
+*Postconditions:*
+ # The book will no longer be in the user's shopping cart.
+
+= Basic Course of Action =
+
+ # The user visits his/her shopping cart to view a list of books currently in the cart.
+ # The user clicks on the Remove Book button next to the book he/she wishes to remove.
+ # The system displays a confirmation that the user wants to remove the book from his/her cart.
+ # The user accepts.
+ # The system removes the book from the user's cart.
+ # The system displays a message to the user that the book has been removed from the cart.
+ # Use case ends.
