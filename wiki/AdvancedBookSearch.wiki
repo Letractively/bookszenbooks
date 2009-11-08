@@ -1,0 +1,26 @@
+#summary Use case for handling an "advanced" book search.
+#labels Phase-Requirements,Use-Cases
+
+= Introduction =
+
+*Description:*
+
+User searches for a book to purchase, using advanced/combined search criteria like author, title, ISBN, year, edition, etc.
+
+*Preconditions:*
+ # The user knows at least one piece of information of the book he/she wants to search for.
+
+*Postconditions:*
+ # The user will be presented with a list of active book listings matching his/her search criteria.
+
+= Basic Course of Action =
+ # The user wants to search for a book.
+ # The user enters a book title.
+ # The user enters a book author's name.
+ # The user enters the book's ISBN.
+ # The user enters the book's edition number.
+ # The user selects the book's category from a list.
+ # The user submits the search form.
+ # The system searches the books database table for matches.
+ # The system returns a list of matched book listings to the user.
+ # Use case ends.
