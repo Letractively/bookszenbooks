@@ -1,0 +1,25 @@
+#summary Use case for handling the addition of a book to the user's shopping cart.
+#labels Phase-Requirements,Use-Cases
+
+= Introduction =
+
+*Description:*
+
+The user wants to add an available book to his/her shopping cart.
+
+*Preconditions:*
+ # The user has registered and active user account.
+ # The user is logged in.
+ # The selected book is not in the user's shopping cart.
+ # The selected book is an active listing and is for sale by the owner.
+
+*Postconditions:*
+ # The selected book will be added to the user's shopping cart.
+
+= Basic Course of Action =
+
+ # The user views a book listing that he/she wants to add to his/her shopping cart.
+ # The user clicks on the *Add To Cart* button.
+ # The system checks that the book is not already added to the user's cart, and that the book is available.
+ # The system adds the book to the user's shopping cart. 
+ # Use case ends.
