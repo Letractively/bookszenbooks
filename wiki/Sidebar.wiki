@@ -3,6 +3,8 @@
  * [Roadmap Roadmap]
  * [ExternalResources External Resources]
  * [Conventions Conventions]
+ * [DevelopmentPlans Development Plans]
+   * [SoftwareFeatures Software Features]
  * [Documentation Documentation]
    * [UseCases Use Cases]
    * [ClassDiagram Class Diagram]
