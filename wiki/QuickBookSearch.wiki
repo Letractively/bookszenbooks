@@ -1,0 +1,22 @@
+#summary Use case for handling "quick" book searches.
+#labels Phase-Requirements,Use-Cases
+Use Case for searching active book listing pages.
+
+= Introduction =
+
+*Description:*
+
+A very simple version of the [AdvancedBookSearch] case. 
+
+*Preconditions:*
+ # The user knows the _partial_ title or author of the book he/she wants to find.
+
+*Postconditions:*
+ # The user will be presented with a list of active book listings matching his/her search criteria.
+
+= Basic Course of Action =
+ # The user wants to search for a book.
+ # The user enters a _partial_ book title OR book author.
+ # The system searches the books database for matches.
+ # The system returns a list of all active book listings matching the criteria.
+ # Use case ends.
