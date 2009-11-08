@@ -1,0 +1,33 @@
+#summary Use case for handling the checkout process.
+#labels Phase-Requirements,Use-Cases
+
+= Introduction =
+
+*Description:*
+
+Puts an order in for the user's selected books to buy.
+
+*Preconditions:*
+ # The user is logged in to a registered and active account.
+ # The user has at least one book in his/her shopping cart.
+
+*Postconditions:*
+ # The user's order will be processed and the seller will be alerted that a request for his/her book(s) has been made.
+ # The selected book(s) will no longer be for sale.
+
+= Basic Course of Action =
+
+ # A user wants to check out and place an order for the selected books in his/her shopping cart.
+ # The user visits his/her shopping cart page.
+ # The user clicks the "Checkout" button.
+ # The user enters his/her password for their bookstore account (for security reasons).
+ # The user enters his/her shipping address.
+ # The user is provided with a confirmation page for their order, allowing him/her to change quantities, remove items, or cancel.
+ # The user selects a billing method (Paypal or Google Checkout, for example).
+ # The user is brought to the third-party's website to continue the payment process.
+ # Once the payment is sent, the system receives confirmation that the payment completed successfully.
+ # The user returns to the bookstore website to view a confirmation screen for their order.
+ # An message is sent to the seller informing him/her about the purchased book.
+ # A message is sent to the buyer with order details.
+ # The book is removed from the listing page and can no longer be purchased.
+ # Use case ends.
