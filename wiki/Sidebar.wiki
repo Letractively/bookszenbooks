@@ -7,4 +7,5 @@
    * [ClassDiagram Class Diagram]
    * [ERModel Entity Relational Model]
    * [SequenceDiagrams Sequence Diagrams]
+ * [http://code.google.com/p/bookszenbooks/w/list List & Search Pages]
  * [http://code.google.com/p/bookszenbooks/w/edit Create New Page]
