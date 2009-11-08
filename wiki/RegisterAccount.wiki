@@ -1,0 +1,26 @@
+#summary Use case for handling user account registration.
+
+= Introduction =
+
+*Description:*
+
+Register a student for a book trader account.
+
+*Preconditions:*
+ # The student is enrolled at WSC.
+ # The student does not yet have a registered book trader account.
+
+*Postconditions:*
+ # The student will be registered for a book trader account, and will have access to member-only features.
+
+= Basic Course of Action =
+
+ # The student wants to register a new account.
+ # The student clicks on the sign up link.
+ # The student fills out required fields such as name, email address and password.
+ # The system verifies that the email address is valid (correct format; @worcester.edu), and is not yet registered.
+ # The system sends a verification email to the user's registered email address.
+ # The user clicks on the verification link.
+ # The system activates the user account.
+ # The system displays a success page stating that the account has been activated.
+ # Use case ends.
