@@ -1,0 +1,30 @@
+#summary Use case for handling adding book listings.
+#labels Phase-Requirements,Use-Cases
+
+= Introduction =
+
+*Description:*
+
+The user lists a book they want to sell.
+
+*Preconditions:*
+ # The user has a registered and active account.
+ # The user is logged in.
+ # The user has a book that they want to sell.
+ # The user has the required book information.
+
+*Postconditions:*
+ # The user will have the book listed for sale on the book traders website.
+
+= Basic Course of Action =
+
+ # The user wants to list a book for sale.
+ # The user visits the list book page.
+ # The user enters the required information for the book.
+ # The user submits the form.
+ # The system verifies that all required information is present.
+ # The system displays a preview page to the user.
+ # The user confirms that he/she wants to list the book.
+ # The system adds the book to the listing database.
+ # The system displays the book's listing page to the user.
+ # Use case ends.
