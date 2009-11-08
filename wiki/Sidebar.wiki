@@ -1,6 +1,6 @@
  * [Goals Goals of Books Zen Books]
  * [Roadmap Roadmap]
- * [ExternalResources External Resource]
+ * [ExternalResources External Resources]
  * [Conventions Conventions]
  * [Documentation Documentation]
    * [UseCases Use Cases]
