@@ -1,0 +1,5 @@
+#summary The homepage for the Books Zen Books wiki.
+
+= Introduction =
+
+This wiki provides a wealth of information related to the Books Zen Books project. Please pardon the sawdust, as we're still expanding it.
