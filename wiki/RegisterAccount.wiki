@@ -1,4 +1,5 @@
 #summary Use case for handling user account registration.
+#labels UseCases,Phase-Requirements
 
 = Introduction =
 
