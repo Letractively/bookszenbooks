@@ -1,5 +1,5 @@
 #summary Use case for handling the removal of a book from the shopping cart.
-#labels Phase-Requirements,Use-Cases
+#labels Phase-Requirements,UseCases
 
 = Introduction =
 
