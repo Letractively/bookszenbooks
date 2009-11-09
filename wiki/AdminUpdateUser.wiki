@@ -1,0 +1,30 @@
+AdminUpdateUser 
+
+Register a new user to an account 
+
+Introduction
+
+Pre conditions 
+
+1. User does not have an active account 
+
+Post condition 
+
+1. User's information will be updated. 
+
+Basic Course of Action 
+
+1. Administrator visits profile page. 
+
+2. Administrator add user's name 
+
+3. Administrator adds user's address 
+
+4. System verifies required fields. 
+
+5. System accepts new information. 
+
+6. user's information is updated. 
+
+7. Use case ends. 
+ 
