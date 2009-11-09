@@ -1,27 +1,4 @@
-#summary A listing of UML Class Diagrams for our project.
+#summary A UML Class Diagram of the Books Zen Books project.
 #labels Phase-Design
 
- * [CDRegisterAccount Register Account]
- * [CDActivateAccount Activate Account]
- * [CDLogInToAcount Log Into Account]
- * [CDListBook List Book]
- * [CDRemoveBook Remove Book]
- * [CDQuickBookSearch Quick Book Search]
- * [CDAdvancedBookSearch Advanced Book Search]
- * [CDAddToCart Add to Cart]
- * [CDRemoveFromCart Remove From Cart]
- * [CDCheckout Checkout]
- * [CDUpdateProfile Update Profile]
- * [CDAdminUpdateUser Update User (Admin)]
- * [CDAdminRemoveUser Remove User (Admin)]
- * [CDAdminUpdateBook Update Book (Admin)]
- * [CDAdminRemoveBook Remove Book (Admin)]
- * [CDAdminUpdateListing Update Listing (Admin)]
- * [CDAdminRemoveListing Remove Listing (Admin)]
- * [CDAdminUpdateSettings Update Settings (Admin)]
- * [CDAdminCreateLexicon Create Lexicon (Admin)]
- * [CDAdminUpdateLexicon Update Lexicon (Admin)]
- * [CDAdminRemoveLexicon Remove Lexicon (Admin)]
- * [CDAdminCreateTemplate Create Template (Admin)]
- * [CDAdminUpdateTemplate Update Template (Admin)]
- * [CDAdminRemoveTemplate Remove Template (Admin)]
+http://bookszenbooks.googlecode.com/files/Class_Diagram_11022009.png
