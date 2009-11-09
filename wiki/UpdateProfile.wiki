@@ -1,5 +1,5 @@
 #summary Use case for handling the checkout process.
-#labels Phase-Requirements,Use-Cases
+#labels Phase-Requirements,UseCases
 
 = Introduction =
 
