@@ -1,5 +1,5 @@
 #summary A listing of use cases for our project.
-#labels Use-Cases,Phase-Requirements
+#labels UseCases,Phase-Requirements
 
  * [RegisterAccount]
  * [LogInToAcount]
