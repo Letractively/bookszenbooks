@@ -1,5 +1,5 @@
 #summary Use case for handling logging into an existing user account..
-#labels Phase-Requirements,Use-Cases
+#labels Phase-Requirements,UseCases
 
 = Introduction =
 
