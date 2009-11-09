@@ -1,5 +1,5 @@
 #summary Use case for handling the addition of a book to the user's shopping cart.
-#labels Phase-Requirements,Use-Cases
+#labels Phase-Requirements,UseCases
 
 = Introduction =
 
