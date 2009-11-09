@@ -1,5 +1,5 @@
 #summary Use case for handling an "advanced" book search.
-#labels Phase-Requirements,Use-Cases
+#labels Phase-Requirements,UseCases
 
 = Introduction =
 
