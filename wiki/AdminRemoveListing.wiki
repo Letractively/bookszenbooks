@@ -25,3 +25,5 @@ Basic Course of Action
 5. Administrator confirms he/she wants to remove listing 
 
 6. System confirms listing has been removed 
+
+7. Use case ends.
