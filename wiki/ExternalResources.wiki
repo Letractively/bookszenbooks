@@ -1,0 +1,12 @@
+#summary Helpful resources related to the development of Books Zen Books.
+#labels Phase-Design
+
+= Referenced Projects =
+ * [http://www.dom4j.org/ Dom4j] - An open source project that makes working with XML easy as pie.
+
+= Software =
+ * [http://netbeans.org/ Netbeans] - For writing source code and SVN management.
+ * [http://visual-paradigm.com Visual Paradigm] - For UML documentation.
+
+= Helpful Sites =
+ * [http://www.agilemodeling.com Agile Modeling] - Tons of information on UML diagrams.
