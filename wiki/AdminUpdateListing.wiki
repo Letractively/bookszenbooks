@@ -1,0 +1,27 @@
+AdminUpdateListing   
+
+Description Updates listings 
+
+Pre Condition 
+
+1. Administrator is logged into the lsitings page. 
+
+Post Condition 
+
+1.Listing will be updated with new data 
+
+Basic course of Action 
+
+1. Administrator visits the update listings page. 
+
+2. Administrator enters new information to be updated. 
+
+3. System verifies new information. 
+
+4. System displays preview of listing page 
+
+5. Administrator confirms new listing 
+
+6. System displays updated listings page. 
+
+7.Use case ends. 
