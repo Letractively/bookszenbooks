@@ -1,3 +1,5 @@
+#summary The main sidebar navigation for the wiki.
+
  * [Home Home]
  * [Goals Goals of Books Zen Books]
  * [Roadmap Roadmap]
