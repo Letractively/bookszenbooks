@@ -1,0 +1,33 @@
+AdminUpdateBook   
+
+Description 
+
+Updates book into the system. 
+
+Pre condition 
+
+1.Administer wants to update book information. 
+
+Post condition 
+
+1. selected book will be updated with new data. 
+
+Basic Course of Action 
+
+1.Administer visits the update book's page. 
+
+2. Administer enters title. 
+
+3.administer enters ISBN 
+
+4. Administer enters author of the book. 
+
+5.Administer enters year of the book. 
+
+6.System verifies the required fields 
+
+7.System verifies information is correct. 
+
+8.System displays book with information entered. 
+
+9 Use case ends. 
