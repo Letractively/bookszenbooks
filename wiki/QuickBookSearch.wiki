@@ -1,5 +1,5 @@
 #summary Use case for handling "quick" book searches.
-#labels Phase-Requirements,Use-Cases
+#labels Phase-Requirements,UseCases
 Use Case for searching active book listing pages.
 
 = Introduction =
