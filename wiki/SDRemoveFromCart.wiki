@@ -1,4 +1,4 @@
-#summary Sequence Diagram for the [RemoveFromCart Remove From Cart] use case.
+#summary Sequence Diagram for the Remove From Cart use case.
 #labels Diagram,Phase-Design
 
 http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Remove_From_Cartt.png
