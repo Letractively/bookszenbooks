@@ -5,9 +5,9 @@
  * [Roadmap Roadmap]
  * [ExternalResources External Resources]
  * [Conventions Conventions]
- * [DevelopmentPlans Development Plans]
+ * Development Plans
    * [SoftwareFeatures Software Features]
- * [Documentation Documentation]
+ * Documentation
    * [UseCases Use Cases]
    * [ClassDiagram Class Diagram]
    * [ERModel Entity Relational Model]
