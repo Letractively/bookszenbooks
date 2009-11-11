@@ -1,4 +1,4 @@
 #summary A UML Class Diagram of the Books Zen Books project.
-#labels Phase-Design
+#labels Phase-Design,Diagram
 
 http://bookszenbooks.googlecode.com/files/Class_Diagram_11022009.png
