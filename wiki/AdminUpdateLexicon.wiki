@@ -1,0 +1,28 @@
+#summary Use case for updating an existing Lexicon entry.
+#labels Phase-Design,UseCase
+
+= Introduction =
+
+*Description:*
+
+Updates a Lexicon entry in the database.
+
+*Preconditions:*
+ # The user has the role of Administrator.
+ # The user is logged into the administration interface.
+ # The user is viewing the Lexicon Management page.
+
+*Postconditions:*
+ # The selected Lexicon entry will be updated with the entered text.
+
+= Basic Course of Action =
+
+ # User wants to update a Lexicon entry.
+ # User selects the Update option for the chosen entry.
+ # User enters a new internationalized text value for the Lexicon entry.
+ # User submits the form.
+ # The system verifies that a Lexicon with the selected language, topic, and key exist in the database.
+ # The system updates the value field of the entry in the database.
+ # The system deletes the Lexicon cache file for the language and topic.
+ # The system displays a success page to the user.
+ # Use case ends.
