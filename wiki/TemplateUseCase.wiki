@@ -22,4 +22,5 @@ To keep the use case writeups consistent, please use the below template when add
 = Basic Course of Action =
 
  # <A step by step and detailed set of use case instructions>
+ # Use case ends.
 }}}
