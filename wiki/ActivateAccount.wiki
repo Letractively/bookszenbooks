@@ -1,0 +1,26 @@
+#summary Use case for activating a newly registered user account.
+#labels Phase-Design,UseCases
+
+= Introduction =
+
+*Description:*
+
+Activates a new user account.
+
+*Preconditions:*
+ # The user must have already registered a new account.
+ # The system must have sent an activation email to the user.
+ # The user must have received the email containing an activation link.
+
+*Postconditions:*
+ # The user's account will be activated.
+ # The user will have full access to all student account features.
+
+= Basic Course of Action =
+
+ # The user clicks on the activation link found in the activation email sent by the system.
+ # The system checks that the user exists in the database.
+ # The system verifies that the provided activation code matches the code stored in the database.
+ # The system activates the user's account.
+ # The system displays the Activation Success page.
+ # Use case ends.
