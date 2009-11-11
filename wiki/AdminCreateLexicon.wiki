@@ -1,0 +1,31 @@
+#summary Use case for creating a new Lexicon entry.
+#labels UseCase,Phase-Design
+
+= Introduction =
+
+*Description:*
+
+Adds a new Lexicon entry to the system.
+
+*Preconditions:*
+ # The user has the role of Administrator.
+ # The user is logged into the administration interface.
+ # The user is viewing the Lexicon Management page.
+
+*Postconditions:*
+ # A new Lexicon with the entered key and value will exist in the database.
+
+= Basic Course of Action =
+
+ # User wants to add a new Lexicon entry.
+ # User selects the appropriate language for the new Lexicon.
+ # User selects the appropriate topic for the new Lexicon.
+ # User enters a unique key value for the Lexicon.
+ # User enters the internationalized text for the Lexicon.
+ # User submits the form.
+ # The system verifies that the language and topic exist in the database.
+ # The system verifies that the entered key is unique for the language and topic.
+ # The system adds the Lexicon entry to the database.
+ # The system deletes the Lexicon cache file for the language and topic.
+ # The system displays a success page to the user.
+ # Use case ends.
