@@ -1,0 +1,28 @@
+#summary Use case for updating a HTML Template.
+#labels Phase-Design,UseCase
+
+= Introduction =
+
+*Description:*
+
+Updates the content of a HTML Template in the database.
+
+*Preconditions:*
+ # The user has the role of Administrator.
+ # The user is logged into the administration interface.
+ # The user is viewing the Template Management page.
+
+*Postconditions:*
+ # The selected template will be updated with the changed HTML markup content.
+
+= Basic Course of Action =
+
+ # User wants to update the content of a HTML Template.
+ # User selects the template he wants to edit from the list of templates.
+ # User makes changes to the existing HTML markup.
+ # User submits the form.
+ # The system verifies that the template exists in the database.
+ # The system updates the template content in the database.
+ # The system deletes the cache file for the template.
+ # The system displays a success page to the user.
+ # Use case ends.
