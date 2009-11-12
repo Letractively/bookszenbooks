@@ -1,0 +1,4 @@
+#summary Sequence Diagram for updating an existing Lexicon entry.
+#labels Diagram,Phase-Design
+
+http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Admin_Update_Lexicon_11122009.png
