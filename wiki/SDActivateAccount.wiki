@@ -1,4 +1,4 @@
 #summary Sequence Diagram for activating/validating a new user account.
 #labels Phase-Design,Diagram
 
-http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Activate_Account.png
+http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Activate_Account_11122009.png
