@@ -1,5 +1,5 @@
 #summary Use case for handling logging into an existing user account..
-#labels Phase-Requirements,UseCases
+#labels Phase-Requirements,UseCase
 
 = Introduction =
 
@@ -11,15 +11,18 @@ A user logs into his/her account.
  # User has already registered an account.
  # The account has been activated.
  # User is not logged in.
+ # User is viewing the log in page.
 
 *Postconditions:*
- # The user will be logged into the book trader system, granting him/her access to member-only features.
+ # The user will be logged into the system.
 
 = Basic Course of Action =
 
  # A user wants to log in.
- # The user proceeds to the log-in page.
- # The user inputs his/her email address and password and submits them to the system.
- # The system verifies that the email address and password match.
+ # User enters his email address.
+ # User enters his password.
+ # User submits the form.
+ # The system verifies that the email address and password match the entry in the database.
+ # The system creates a new session for the user.
  # The system displays a success page confirming that the user is now logged in.
- # End use case.
+ # Use case ends.
