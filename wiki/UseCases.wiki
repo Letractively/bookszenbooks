@@ -1,5 +1,5 @@
 #summary A listing of use cases for our project.
-#labels UseCases,Phase-Requirements
+#labels UseCase,Phase-Requirements
 
  * [RegisterAccount Register Account]
  * [ActivateAccount Activate Account]
@@ -22,6 +22,4 @@
  * [AdminCreateLexicon Create Lexicon (Admin)]
  * [AdminUpdateLexicon Update Lexicon (Admin)]
  * [AdminRemoveLexicon Remove Lexicon (Admin)]
- * [AdminCreateTemplate Create Template (Admin)]
  * [AdminUpdateTemplate Update Template (Admin)]
- * [AdminRemoveTemplate Remove Template (Admin)]
