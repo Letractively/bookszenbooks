@@ -1,0 +1,26 @@
+#summary Use case for removing an existing Lexicon entry.
+#labels UseCase,Phase-Design
+
+= Introduction =
+
+*Description:*
+
+Removes an existing Lexicon entry from the database.
+
+*Preconditions:*
+ # The user has the role of Administrator.
+ # The user is logged into the administration interface.
+ # The user is viewing the Lexicon Management page.
+
+*Postconditions:*
+ # The selected Lexicon entry will be removed from the database.
+
+= Basic Course of Action =
+
+ # User wants to remove a Lexicon entry.
+ # User selects the Remove option for the chosen entry.
+ # The system displays a confirmation dialog verifying that the user wants to remove the Lexicon entry.
+ # User confirms that he wants the Lexicon entry removed.
+ # The system deletes the Lexicon entry from the database.
+ # The system displays a success page to the user.
+ # Use case ends.
