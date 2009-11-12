@@ -10,7 +10,7 @@ Updates a Lexicon entry in the database.
 *Preconditions:*
  # The user has the role of Administrator.
  # The user is logged into the administration interface.
- # The user is viewing the Lexicon Management page.
+ # The user is viewing the Update Lexicon page.
 
 *Postconditions:*
  # The selected Lexicon entry will be updated with the entered text.
