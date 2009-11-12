@@ -23,7 +23,8 @@ Adds a new Lexicon entry to the system.
  # User enters a unique key value for the Lexicon.
  # User enters the internationalized text for the Lexicon.
  # User submits the form.
- # The system verifies that the language and topic exist in the database.
+ # The system verifies that the selected language exists in the database.
+ # the system verifies that the selected topic exists in the database.
  # The system verifies that the entered key is unique for the language and topic.
  # The system adds the Lexicon entry to the database.
  # The system deletes the Lexicon cache file for the language and topic.
