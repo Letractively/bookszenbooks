@@ -10,7 +10,7 @@ Updates the content of a HTML Template in the database.
 *Preconditions:*
  # The user has the role of Administrator.
  # The user is logged into the administration interface.
- # The user is viewing the Template Management page.
+ # The user is viewing the Update Template page for the template he wants to edit.
 
 *Postconditions:*
  # The selected template will be updated with the changed HTML markup content.
@@ -18,7 +18,6 @@ Updates the content of a HTML Template in the database.
 = Basic Course of Action =
 
  # User wants to update the content of a HTML Template.
- # User selects the template he wants to edit from the list of templates.
  # User makes changes to the existing HTML markup.
  # User submits the form.
  # The system verifies that the template exists in the database.
