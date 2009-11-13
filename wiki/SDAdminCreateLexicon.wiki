@@ -1,4 +1,4 @@
 #summary Sequence Diagram for creating a new Lexicon entry.
 #labels Phase-Design,UseCase
 
-http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Admin_Create_Lexicon_11122009.png
+http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Admin_Create_Lexicon_11122009_2.png
