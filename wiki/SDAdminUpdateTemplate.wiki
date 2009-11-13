@@ -1,0 +1,4 @@
+#summary Sequence Diagram for updating a page template.
+#labels Diagram,Phase-Design
+
+http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Admin_Update_Template_11122009.png
