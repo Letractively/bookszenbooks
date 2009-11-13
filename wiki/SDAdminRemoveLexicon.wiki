@@ -1,0 +1,4 @@
+#summary Sequence Diagram for removing a Lexicon entry.
+#labels Diagram,Phase-Design
+
+http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Admin_Remove_Lexicon_11122009.png
