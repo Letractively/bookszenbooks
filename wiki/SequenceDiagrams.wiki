@@ -22,6 +22,4 @@
  * [SDAdminCreateLexicon Create Lexicon (Admin)]
  * [SDAdminUpdateLexicon Update Lexicon (Admin)]
  * [SDAdminRemoveLexicon Remove Lexicon (Admin)]
- * [SDAdminCreateTemplate Create Template (Admin)]
  * [SDAdminUpdateTemplate Update Template (Admin)]
- * [SDAdminRemoveTemplate Remove Template (Admin)]
