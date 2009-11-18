@@ -1,22 +1,29 @@
-<%@ page import="java.sql.ResultSet" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<jsp:useBean id="bzb" class="org.bzb.model.BooksZenBooks" scope="request" />
-
+<%@ page import="java.sql.ResultSet, data.*, business.User, util.BooksZenBooks" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@include file="/includes/header.jsp" %>
 
 
-<%String[] where = { "*" };
-ResultSet t = bzb.getDBDriver().select( "user", where , null );
+<jsp:useBean id="user" class="business.User" scope="request" />
+<%
 
-if( t == null ) {
-    %>LOL, NULL<%
-    return;
-    }
+BooksZenBooks bzb = new BooksZenBooks();
+bzb.initDatabase( "dbConfig.xml" );
 
-while( t.next() ) {
-    %>
-    RESULT<br />
-    <%
-    }
+ResultSet t = bzb.getDBDriver().select( "user", new String[]{ "*" } , null );
+
+if( t.next() ) {
+    user.populate( t );
+    user.setDriver( bzb.getDBDriver() );
+    System.out.println( ">>>EMAIL" + user.getEmail());
+
+    user.setEmail( "someotheremail@domain.com");
+    user.save();
+
+        %>
+        email: ${user.email} <br />
+        <%
+}
 
 %>
+
+<%@include file="/includes/footer.jsp" %>
