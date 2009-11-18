@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    <database>bzb</database>
+    <server>jdbc:mysql://localhost/mysql</server>
+    <user>root</user>
+    <password></password>
+    <charset>utf8</charset>
+    <driver>com.mysql.jdbc.Driver</driver>
+    <platform>MySQL</platform>
+    <pool>
+        <initialSize>5</initialSize>
+        <maxSize>10</maxSize>
+        <growSize>2</growSize>
+        <createWaitTime>2000</createWaitTime>
+        <validityCheckStatement></validityCheckStatement>
+        <refreshThreadCheckInterval></refreshThreadCheckInterval>
+    </pool>
+</config>
