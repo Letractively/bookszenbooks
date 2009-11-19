@@ -8,21 +8,22 @@ import java.util.Date;
 public class User extends DBObject implements Serializable {
 
     private int userId;
-    private boolean admin;
     private String email;
     private String password;
     private String firstName;
     private String lastName;
     private String address;
+    private String city;
     private String state;
     private String country;
     private String postalCode;
     private Date joinDate;
     private Date birthDate;
+    private boolean superUser;
     private boolean validated;
     private String phone;
     protected String tableName = "user";
-    protected String[] primaryKeys = { "id" };
+    protected String[] primaryKeys = { "userId" };
 
     @Override
     public boolean populate(ResultSet row) throws SQLException {
@@ -66,15 +67,15 @@ public class User extends DBObject implements Serializable {
     /**
      * @return the isAdmin
      */
-    public boolean isAdmin() {
-        return admin;
+    public boolean getSuperUser() {
+        return superUser;
     }
 
     /**
      * @param isAdmin the isAdmin to set
      */
-    public void setAdmin(boolean isAdmin) {
-        this.admin = isAdmin;
+    public void setSuperUser(boolean isSuperUser) {
+        this.superUser = isSuperUser;
     }
 
     /**
@@ -220,7 +221,7 @@ public class User extends DBObject implements Serializable {
     /**
      * @return the isValidated
      */
-    public boolean isValidated() {
+    public boolean getValidated() {
         return validated;
     }
 
@@ -243,5 +244,19 @@ public class User extends DBObject implements Serializable {
      */
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    /**
+     * @return the city
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * @param city the city to set
+     */
+    public void setCity(String city) {
+        this.city = city;
     }
 }

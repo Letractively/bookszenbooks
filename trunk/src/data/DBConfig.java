@@ -18,7 +18,7 @@ public class DBConfig {
     private String platform;
 
     public DBConfig( String configResource ) throws FileNotFoundException {
-        URL configFile = this.getClass().getResource( configResource ); // "dbConfig.xml"
+        URL configFile = this.getClass().getResource( configResource );
         Document xmlDocument;
         Element xmlRoot;
 
@@ -37,14 +37,14 @@ public class DBConfig {
         readXML( xmlRoot );
     }
 
-    public Document parseXML( URL file ) throws DocumentException {
+    private Document parseXML( URL file ) throws DocumentException {
         SAXReader reader = new SAXReader();
         Document document = reader.read( file );
 
         return document;
     }
 
-    public void readXML( Element container ) {
+    private void readXML( Element container ) {
         Element xmlChild;
         Iterator iterator = container.elementIterator();
         String childName;

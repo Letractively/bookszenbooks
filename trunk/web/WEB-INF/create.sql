@@ -9,7 +9,7 @@ CREATE TABLE SystemSetting (
   value       text NOT NULL,
   title       varchar(100) NOT NULL,
   description text,
-  field_type varchar(20) NOT NULL default 'text',
+  fieldType varchar(20) NOT NULL default 'text',
   PRIMARY KEY (`key`)) CHARACTER SET UTF8;
 
 CREATE TABLE LexiconTopic (
@@ -33,7 +33,7 @@ CREATE TABLE LexiconEntry (
 CREATE TABLE BookCategory (
   categoryId int(10) NOT NULL AUTO_INCREMENT,
   name  varchar(30) NOT NULL UNIQUE,
-  PRIMARY KEY (catId)) CHARACTER SET UTF8;
+  PRIMARY KEY (categoryId)) CHARACTER SET UTF8;
 
 CREATE TABLE BookOrder (
   orderId       int(10) NOT NULL AUTO_INCREMENT,
@@ -57,8 +57,8 @@ CREATE TABLE `User` (
   phone       varchar(15) NOT NULL,
   joinDate    datetime NOT NULL,
   birthDate   date NOT NULL,
-  validated tinyint(1) NOT NULL,
-  superUser tinyint(1) NOT NULL,
+  validated   tinyint(1) NOT NULL,
+  superUser   tinyint(1) NOT NULL,
   PRIMARY KEY (userId)) CHARACTER SET UTF8;
 
 CREATE TABLE Book (
@@ -81,6 +81,6 @@ CREATE TABLE BookListing (
   currency    varchar(10) NOT NULL,
   edition     smallint(3) NOT NULL,
   listDate    datetime NOT NULL,
-  isActive    tinyint(1) NOT NULL,
+  active      tinyint(1) NOT NULL,
   `condition` varchar(10) NOT NULL,
   PRIMARY KEY (listId)) CHARACTER SET UTF8;

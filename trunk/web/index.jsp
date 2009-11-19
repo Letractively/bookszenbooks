@@ -11,12 +11,20 @@ bzb.initDatabase( "dbConfig.xml" );
 
 ResultSet t = bzb.getDBDriver().select( "user", new String[]{ "*" } , null );
 
+/*User u = new User();
+u.setFirstName( "John" );
+u.setLastName( "Johnson" );
+u.setPassword( "MD5(12345)" );
+u.setEmail( "john@host.com" );
+
+u.save();*/
+
 if( t.next() ) {
     user.populate( t );
     user.setDriver( bzb.getDBDriver() );
-    System.out.println( ">>>EMAIL" + user.getEmail());
 
-    user.setEmail( "someotheremail@domain.com");
+    user.setEmail( "rvarella@worcester.edu");
+    user.setCity( "Leicester" );
     user.save();
 
         %>
