@@ -4,7 +4,8 @@ import util.Util;
 import com.mysql.jdbc.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,6 +20,8 @@ public class DBDriverMySQL implements DBDriver {
         try {
             Statement stmt = ( Statement ) connection.getConnection().createStatement();
 
+            
+
             return stmt.executeQuery( sqlStatement );
         } catch( SQLException e ) {
             throw new RuntimeException();
@@ -26,15 +29,18 @@ public class DBDriverMySQL implements DBDriver {
     }
 
     public int updateQuery( String sqlStatement ) {
-        System.out.println( "STATEMENT:"+ sqlStatement );
-        return 0;
-       /* try {
-            Statement stmt = ( Statement ) connection.getConnection().createStatement();
+        int affectedRows = 0;
 
-            return stmt.executeUpdate( sqlStatement );
+        System.out.println( "QUERY: " + sqlStatement );
+
+        try {
+            Statement stmt = ( Statement ) connection.getConnection().createStatement();
+            affectedRows = stmt.executeUpdate( sqlStatement );
         } catch( SQLException e ) {
             throw new RuntimeException();
-        }*/
+        }
+
+        return affectedRows;
     }
     
     public ResultSet select( String table, String[] fields, String where ) {
@@ -95,7 +101,7 @@ public class DBDriverMySQL implements DBDriver {
         return selectQuery( sql.toString() );
     }
     
-    public int insert( String table, Hashtable<String, String> fields ) {
+    public int insert( String table, HashMap<String, String> fields ) {
         StringBuilder sql = new StringBuilder();
 
         sql.append( "INSERT INTO " ).append( getFullTableName( table ) );
@@ -105,22 +111,32 @@ public class DBDriverMySQL implements DBDriver {
         return updateQuery( sql.toString() );
     }
 
-    public int update( String table, Hashtable<String, String> fields, String where ) {
-
+    public int update( String table, HashMap<String, String> fields, String where ) {
         return update( table, fields, where, null, 0, 0 );
     }
     
-    public int update( String table, Hashtable<String, String> fields, String where, String orderBy[], int start, int limit ) {
+    public int update( String table, HashMap<String, String> fields, String where, String orderBy[], int start, int limit ) {
         StringBuilder sql = new StringBuilder();
+        Iterator<Map.Entry<String,String>> it = fields.entrySet().iterator();
+        Map.Entry<String, String> entry = null;
 
         sql.append( "UPDATE " ).append( getFullTableName( table ) ).append( " SET " );
 
-        for( Map.Entry<String, ?> entry : fields.entrySet() ) {
-            sql.append( entry.getKey() ).append( "='" ).append( entry.getValue().toString() ).append( "'," );
+        while( it.hasNext() ) {
+            entry = ( Map.Entry<String, String> ) it.next();
+            sql.append( entry.getKey() ).append( "='" ).append( entry.getValue() ).append( "'" );
+
+            if( it.hasNext() ) {
+                sql.append( ", " );
+            }
+        }
+
+        if( where != null && !where.isEmpty() ) {
+            sql.append( " WHERE " ).append( where );
         }
 
         if( orderBy != null && orderBy.length > 0 ) {
-            sql.append( Util.joinArray( orderBy, "," ) );
+            sql.append( " ORDER BY " ).append( Util.joinArray( orderBy, "," ) );
         }
 
         if( start < 1 ) {

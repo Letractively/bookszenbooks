@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public abstract class DBObject {
@@ -35,7 +36,7 @@ public abstract class DBObject {
 
         for( int i = 0; i < fields.length; i++ ) {
             if( columnData.containsKey( fields[ i ].getName() ) ) {
-                setField( fields[ i ].getName().toString(), fields[ i ].getType().toString(), row );
+                setField( fields[ i ], row );
             }
         }
 
@@ -61,26 +62,37 @@ public abstract class DBObject {
         }
     }
 
-    private boolean setField(String name, String type, ResultSet row) {
+    private boolean setField( Field field, ResultSet row ) {
         Method method;
         String methodName;
         Class<?>[] methodTypes = new Class<?>[1];
         Object[] methodArgs = new Object[1];
+        Class<?> type = field.getType();
+        String name = field.getName();
 
         try {
-            if( type.equalsIgnoreCase( "class java.lang.String" ) ) {
+            if( type.equals( java.lang.String.class ) ) {
                 methodTypes[0] = java.lang.String.class;
                 methodArgs[0] = row.getString( name );
             }
-            else if( type.equalsIgnoreCase( "class java.lang.Double" ) ) {
+            else if( type.equals( int.class ) ) {
+                methodTypes[0] = int.class;
+                methodArgs[0] = row.getInt( name );
+            }
+            else if( type.equals( boolean.class ) ) {
+                methodTypes[0] = boolean.class;
+                methodArgs[0] = row.getBoolean( name );
+            }
+            else if( type.equals( java.lang.Double.class ) ) {
                 methodTypes[0] = java.lang.Double.class;
                 methodArgs[0] = row.getDouble( name );
             }
-            else if( type.equalsIgnoreCase( "class java.lang.Long" ) ) {
+            else if( type.equals( java.lang.Long.class ) ) {
+                
                 methodTypes[0] = java.lang.Long.class;
                 methodArgs[0] = row.getLong( name );
             }
-            else if( type.equalsIgnoreCase( "class java.util.Date" ) ) {
+            else if( type.equals( java.util.Date.class ) ) {
                 methodTypes[0] = java.util.Date.class;
                 methodArgs[0] = row.getDate( name );
             }
@@ -128,23 +140,41 @@ public abstract class DBObject {
             where += primaryKeys[ i ] + "='" + getFieldValue( primaryKeys[ i ] ) + "' AND ";
         }
 
-        where += primaryKeys[ primaryKeys.length - 1 ] + "='" + getFieldValue( primaryKeys[ primaryKeys.length - 1 ] );
+        where += primaryKeys[ primaryKeys.length - 1 ] + "='" + getFieldValue( primaryKeys[ primaryKeys.length - 1 ] ) + "'";
 
         return where;
     }
 
-    protected Hashtable<String, String> getDatabaseFields() {
+    protected HashMap<String, String> getDatabaseFields() {
         Iterator<ResultSetColumn> it = columnData.values().iterator();
-        Hashtable< String, String > fields = new Hashtable< String, String >();
+        HashMap<String, String> fields = new HashMap<String, String>( columnData.values().size() );
         ResultSetColumn column;
-        
+        Object rawValue;
 
         while( it.hasNext() ) {
             column = it.next();
-            fields.put( column.getColumnName(), getFieldValue( column.getColumnName() ).toString() );
+            rawValue = getFieldValue( column.getColumnName() );
+            
+            fields.put( column.getColumnName(), prepareForDB( rawValue, column.getType() ).toString() );
         }
 
         return fields;
+    }
+
+    protected Object prepareForDB( Object value, int dbType ) {
+        Object returnValue = value;
+        
+        switch( dbType ) {
+            case java.sql.Types.TINYINT:
+            case java.sql.Types.BIT:
+                if( value.getClass().equals( java.lang.Boolean.class ) ) {
+                    returnValue = new Integer( value.equals( true ) ? 1 : 0 );
+                }
+            default:
+                break;
+        }
+
+        return returnValue;
     }
 
     protected Object getFieldValue( String field ) {
@@ -155,7 +185,6 @@ public abstract class DBObject {
         try {
             methodName = "get" + Util.toUpperCaseFirst( field );
             method = this.getClass().getMethod( methodName );
-
             value = method.invoke( this );
         } catch( NoSuchMethodException e ) {
 
