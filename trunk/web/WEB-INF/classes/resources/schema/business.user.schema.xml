@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<table name="user" className="business.User">
+  <field name="userId" dbType="4" javaType="int"/>
+  <field name="email" dbType="12" javaType="class java.lang.String"/>
+  <field name="password" dbType="12" javaType="class java.lang.String"/>
+  <field name="firstName" dbType="12" javaType="class java.lang.String"/>
+  <field name="lastName" dbType="12" javaType="class java.lang.String"/>
+  <field name="address" dbType="12" javaType="class java.lang.String"/>
+  <field name="city" dbType="12" javaType="class java.lang.String"/>
+  <field name="state" dbType="12" javaType="class java.lang.String"/>
+  <field name="country" dbType="12" javaType="class java.lang.String"/>
+  <field name="postalCode" dbType="12" javaType="class java.lang.String"/>
+  <field name="phone" dbType="12" javaType="class java.lang.String"/>
+  <field name="joinDate" dbType="93" javaType="class java.util.Date"/>
+  <field name="birthDate" dbType="91" javaType="class java.util.Date"/>
+  <field name="validated" dbType="-7" javaType="boolean"/>
+  <field name="superUser" dbType="-7" javaType="boolean"/>
+</table>
