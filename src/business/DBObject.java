@@ -3,98 +3,86 @@ package business;
 import java.sql.ResultSet;
 import java.util.Hashtable;
 import data.DBDriver;
-import data.ResultSetColumn;
+import data.SchemaBuilder;
+import data.SchemaColumn;
 import util.Util;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public abstract class DBObject {
-    protected Hashtable<String, ResultSetColumn> columnData;
     protected DBDriver driver;
-    protected String tableName;
-    protected String[] primaryKeys;
+    protected HashMap<String, SchemaColumn> schema;
+    private String tableName;
+    private String[] primaryKeys;
     private boolean dirty;
     private boolean newObject;
-    
 
     public DBObject() {
         this.dirty = false;
         this.newObject = true;
     }
 
+    public void init( DBDriver driver ) {
+        this.driver = driver;
+    }
+
     public boolean populate( ResultSet row ) throws SQLException {
-        Field[] fields = this.getClass().getDeclaredFields();
+        ResultSetMetaData rsMetaData = row.getMetaData();
+        int columnCount = rsMetaData.getColumnCount();
+        String columnName;
         dirty = false;
         newObject = false;
         
-        initMetaData( row );
+        for( int i = 1; i <= columnCount; i++ ) {
+            columnName = rsMetaData.getColumnName( i );
 
-        for( int i = 0; i < fields.length; i++ ) {
-            if( columnData.containsKey( fields[ i ].getName() ) ) {
-                setField( fields[ i ], row );
+            if( schema.containsKey( columnName ) ) {
+                setField( columnName, row );
             }
         }
 
         return true;
     }
 
-    private void initMetaData( ResultSet row ) {
-        ResultSetMetaData metaData;
-        ResultSetColumn column;
-        int countRowFields;
-
-        try {
-            metaData = row.getMetaData();
-            countRowFields = metaData.getColumnCount();
-            columnData = new Hashtable<String, ResultSetColumn>( countRowFields );
-
-            for( int i = 1; i <= countRowFields; i++ ) {
-                column = new ResultSetColumn( i, metaData.getColumnName( i ), metaData.getColumnType( i ) );
-                columnData.put( metaData.getColumnName( i ), column );
-            }
-        } catch( SQLException e ) {
-            throw new RuntimeException();
-        }
-    }
-
-    private boolean setField( Field field, ResultSet row ) {
+    private boolean setField( String key, ResultSet row ) {
         Method method;
         String methodName;
         Class<?>[] methodTypes = new Class<?>[1];
         Object[] methodArgs = new Object[1];
-        Class<?> type = field.getType();
-        String name = field.getName();
+        SchemaColumn column = schema.get( key );
 
         try {
-            if( type.equals( java.lang.String.class ) ) {
+            if( column.getJavaType().equals( "class java.lang.String" ) ) {
                 methodTypes[0] = java.lang.String.class;
-                methodArgs[0] = row.getString( name );
+                methodArgs[0] = row.getString( key );
             }
-            else if( type.equals( int.class ) ) {
+            else if( column.getJavaType().equals( "int" ) ) {
                 methodTypes[0] = int.class;
-                methodArgs[0] = row.getInt( name );
+                methodArgs[0] = row.getInt( key );
             }
-            else if( type.equals( boolean.class ) ) {
+            else if( column.getJavaType().equals( "boolean" ) ) {
                 methodTypes[0] = boolean.class;
-                methodArgs[0] = row.getBoolean( name );
+                methodArgs[0] = row.getBoolean( key );
             }
-            else if( type.equals( java.lang.Double.class ) ) {
+            else if( column.getJavaType().equals( "class java.lang.Double" ) ) {
                 methodTypes[0] = java.lang.Double.class;
-                methodArgs[0] = row.getDouble( name );
+                methodArgs[0] = row.getDouble( key );
             }
-            else if( type.equals( java.lang.Long.class ) ) {
+            else if( column.getJavaType().equals( "class java.lang.Long" ) ) {
                 
                 methodTypes[0] = java.lang.Long.class;
-                methodArgs[0] = row.getLong( name );
+                methodArgs[0] = row.getLong( key );
             }
-            else if( type.equals( java.util.Date.class ) ) {
+            else if( column.getJavaType().equals( "class java.util.Date" ) ) {
                 methodTypes[0] = java.util.Date.class;
-                methodArgs[0] = row.getDate( name );
+                methodArgs[0] = row.getDate( key );
             }
             else {
                 return false;
@@ -103,7 +91,7 @@ public abstract class DBObject {
             return false;
         }
         
-        methodName = "set" + Util.toUpperCaseFirst( name );
+        methodName = "set" + Util.toUpperCaseFirst( key );
         
         try {
             method = this.getClass().getMethod( methodName, methodTypes );
@@ -146,33 +134,53 @@ public abstract class DBObject {
     }
 
     protected HashMap<String, String> getDatabaseFields() {
-        Iterator<ResultSetColumn> it = columnData.values().iterator();
-        HashMap<String, String> fields = new HashMap<String, String>( columnData.values().size() );
-        ResultSetColumn column;
+        Iterator<SchemaColumn> it = schema.values().iterator();
+        HashMap<String, String> fields = new HashMap<String, String>( schema.values().size() );
+        SchemaColumn column;
         Object rawValue;
 
         while( it.hasNext() ) {
             column = it.next();
-            rawValue = getFieldValue( column.getColumnName() );
+            rawValue = getFieldValue( column.getName() );
             
-            fields.put( column.getColumnName(), prepareForDB( rawValue, column.getType() ).toString() );
+            fields.put( column.getName(), prepareForDB( rawValue, column.getDbType(), column.getJavaType() ) );
         }
 
         return fields;
     }
 
-    protected Object prepareForDB( Object value, int dbType ) {
-        Object returnValue = value;
-        
+    protected String prepareForDB( Object value, int dbType, String javaType ) {
+        String returnValue = null;
+        SimpleDateFormat simpleDate;
+
+        System.out.println( javaType + ":" + dbType );
+        System.out.println( java.sql.Types.DATE + "," + java.sql.Types.TIME + "," + java.sql.Types.TIMESTAMP );
+
+        if( value == null ) {
+            return null;
+        }
+
         switch( dbType ) {
             case java.sql.Types.TINYINT:
             case java.sql.Types.BIT:
-                if( value.getClass().equals( java.lang.Boolean.class ) ) {
-                    returnValue = new Integer( value.equals( true ) ? 1 : 0 );
+                if( javaType.equals( "boolean" ) ) {
+                    returnValue = value.equals( true ) ? "1" : "0";
                 }
+                break;
+            case java.sql.Types.DATE:
+                simpleDate = new SimpleDateFormat( "yyyy-MM-dd" );
+                returnValue = simpleDate.format( ( Date ) value );
+                break;
+            case java.sql.Types.TIMESTAMP:
+                simpleDate = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+                returnValue = simpleDate.format( ( Date ) value );
+                break;
             default:
+                returnValue = value == null ? null : value.toString();
                 break;
         }
+
+        //System.out.println( returnValue );
 
         return returnValue;
     }
@@ -200,22 +208,8 @@ public abstract class DBObject {
     /**
      * @return the columnData
      */
-    public Hashtable getColumnData() {
-        return columnData;
-    }
-
-    /**
-     * @return the driver
-     */
-    public DBDriver getDriver() {
-        return driver;
-    }
-
-    /**
-     * @param driver the driver to set
-     */
-    public void setDriver( DBDriver driver ) {
-        this.driver = driver;
+    public HashMap getSchema() {
+        return schema;
     }
 
     /**
@@ -244,5 +238,13 @@ public abstract class DBObject {
      */
     public String[] getPrimaryKeys() {
         return primaryKeys;
+    }
+
+    protected void setDirty( boolean isDirty ) {
+        this.dirty = isDirty;
+    }
+
+    protected void setNewObject( boolean isNewObject ) {
+        this.newObject = isNewObject;
     }
 }

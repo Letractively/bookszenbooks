@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 public class DBDriverMySQL implements DBDriver {
     private DBConnection connection;
@@ -20,8 +19,6 @@ public class DBDriverMySQL implements DBDriver {
         try {
             Statement stmt = ( Statement ) connection.getConnection().createStatement();
 
-            
-
             return stmt.executeQuery( sqlStatement );
         } catch( SQLException e ) {
             throw new RuntimeException();
@@ -31,12 +28,13 @@ public class DBDriverMySQL implements DBDriver {
     public int updateQuery( String sqlStatement ) {
         int affectedRows = 0;
 
-        System.out.println( "QUERY: " + sqlStatement );
+        System.out.println( ">>>>>QUERY: " + sqlStatement );
 
         try {
             Statement stmt = ( Statement ) connection.getConnection().createStatement();
             affectedRows = stmt.executeUpdate( sqlStatement );
         } catch( SQLException e ) {
+            System.out.println( e.getMessage() );
             throw new RuntimeException();
         }
 
@@ -106,7 +104,7 @@ public class DBDriverMySQL implements DBDriver {
 
         sql.append( "INSERT INTO " ).append( getFullTableName( table ) );
         sql.append( "(" ).append( Util.joinArray( fields.keySet(), "," ) ).append( ") " );
-        sql.append( "VALUES(" ).append( Util.joinArray( ( Set<String> ) fields.values(), "," ) ).append( ") " );
+        sql.append( "VALUES('" ).append( Util.joinArray( fields.values(), "','" ) ).append( "') " );
 
         return updateQuery( sql.toString() );
     }

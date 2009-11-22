@@ -1,6 +1,9 @@
 package business;
 
+import data.DBDriver;
+import data.SchemaBuilder;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -25,8 +28,20 @@ public class User extends DBObject implements Serializable {
     protected String tableName = "user";
     protected String[] primaryKeys = { "userId" };
 
+    public User() { }
+
     @Override
-    public boolean populate(ResultSet row) throws SQLException {
+    public void init( DBDriver driver ) {
+        super.init( driver );
+        
+        String className = this.getClass().getName();
+        Field[] fields = this.getClass().getDeclaredFields();
+        SchemaBuilder builder = new SchemaBuilder( driver );
+        schema = builder.getSchema( className, tableName, fields );
+    }
+
+    @Override
+    public boolean populate( ResultSet row ) throws SQLException {
         return super.populate( row );
     }
 
@@ -35,19 +50,28 @@ public class User extends DBObject implements Serializable {
         return super.save();
     }
 
-    @Override
-    protected boolean remove() {
+    public boolean remove() {
         return driver.delete( tableName, formatPKWhere( primaryKeys ) ) > 0;
     }
 
-    @Override
     protected boolean insert() {
-        return driver.insert( tableName, getDatabaseFields() ) > 0;
+        int affectedRows;
+
+        if( ( affectedRows = driver.insert( tableName, getDatabaseFields() ) ) > 0 ) {
+            setNewObject( false );
+        }
+
+        return affectedRows > 0;
     }
 
-    @Override
     protected boolean update() {
-        return driver.update( tableName, getDatabaseFields(), formatPKWhere( primaryKeys ) ) > 0;
+        int affectedRows;
+        
+        if( ( affectedRows = driver.update( tableName, getDatabaseFields(), formatPKWhere( primaryKeys ) ) )  > 0 ) {
+            setDirty( false );
+        }
+
+        return affectedRows > 0;
     }
 
     /**
@@ -60,8 +84,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param userId the userId to set
      */
-    public void setUserId(int userId) {
+    public void setUserId( int userId ) {
         this.userId = userId;
+        this.setDirty( true );
     }
 
     /**
@@ -74,8 +99,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param isAdmin the isAdmin to set
      */
-    public void setSuperUser(boolean isSuperUser) {
+    public void setSuperUser( boolean isSuperUser ) {
         this.superUser = isSuperUser;
+        this.setDirty( true );
     }
 
     /**
@@ -88,8 +114,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param email the email to set
      */
-    public void setEmail(String email) {
+    public void setEmail( String email ) {
         this.email = email;
+        this.setDirty( true );
     }
 
     /**
@@ -102,8 +129,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param password the password to set
      */
-    public void setPassword(String password) {
+    public void setPassword( String password ) {
         this.password = password;
+        this.setDirty( true );
     }
 
     /**
@@ -116,8 +144,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param firstName the firstName to set
      */
-    public void setFirstName(String firstName) {
+    public void setFirstName( String firstName ) {
         this.firstName = firstName;
+        this.setDirty( true );
     }
 
     /**
@@ -130,8 +159,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param lastName the lastName to set
      */
-    public void setLastName(String lastName) {
+    public void setLastName( String lastName ) {
         this.lastName = lastName;
+        this.setDirty( true );
     }
 
     /**
@@ -144,8 +174,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param address the address to set
      */
-    public void setAddress(String address) {
+    public void setAddress( String address ) {
         this.address = address;
+        this.setDirty( true );
     }
 
     /**
@@ -158,8 +189,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param state the state to set
      */
-    public void setState(String state) {
+    public void setState( String state ) {
         this.state = state;
+        this.setDirty( true );
     }
 
     /**
@@ -172,8 +204,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param country the country to set
      */
-    public void setCountry(String country) {
+    public void setCountry( String country ) {
         this.country = country;
+        this.setDirty( true );
     }
 
     /**
@@ -186,8 +219,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param postalCode the postalCode to set
      */
-    public void setPostalCode(String postalCode) {
+    public void setPostalCode( String postalCode ) {
         this.postalCode = postalCode;
+        this.setDirty( true );
     }
 
     /**
@@ -200,8 +234,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param joinDate the joinDate to set
      */
-    public void setJoinDate(Date joinDate) {
+    public void setJoinDate( Date joinDate ) {
         this.joinDate = joinDate;
+        this.setDirty( true );
     }
 
     /**
@@ -216,6 +251,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+        this.setDirty( true );
     }
 
     /**
@@ -228,8 +264,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param isValidated the isValidated to set
      */
-    public void setValidated(boolean isValidated) {
+    public void setValidated( boolean isValidated ) {
         this.validated = isValidated;
+        this.setDirty( true );
     }
 
     /**
@@ -242,8 +279,9 @@ public class User extends DBObject implements Serializable {
     /**
      * @param phone the phone to set
      */
-    public void setPhone(String phone) {
+    public void setPhone( String phone ) {
         this.phone = phone;
+        this.setDirty( true );
     }
 
     /**
@@ -256,7 +294,8 @@ public class User extends DBObject implements Serializable {
     /**
      * @param city the city to set
      */
-    public void setCity(String city) {
+    public void setCity( String city ) {
         this.city = city;
+        this.setDirty( true );
     }
 }
