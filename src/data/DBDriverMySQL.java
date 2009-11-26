@@ -16,6 +16,7 @@ public class DBDriverMySQL implements DBDriver {
     }
     
     public ResultSet selectQuery( String sqlStatement ) {
+        System.out.println( sqlStatement );
         try {
             Statement stmt = ( Statement ) connection.getConnection().createStatement();
 
@@ -27,8 +28,6 @@ public class DBDriverMySQL implements DBDriver {
 
     public int updateQuery( String sqlStatement ) {
         int affectedRows = 0;
-
-        System.out.println( ">>>>>QUERY: " + sqlStatement );
 
         try {
             Statement stmt = ( Statement ) connection.getConnection().createStatement();
@@ -42,7 +41,7 @@ public class DBDriverMySQL implements DBDriver {
     }
     
     public ResultSet select( String table, String[] fields, String where ) {
-        return select( table, fields, where, null, null, null, null, 0, 20 ); //@TODO make default LIMIT a system setting
+        return select( table, fields, where, null, null, null, null, 0, 0 );
     }
 
     public ResultSet select( String table, String[] fields, String where, String[] join, String groupBy[], String having, String orderBy[], int start, int limit ) {
@@ -85,15 +84,13 @@ public class DBDriverMySQL implements DBDriver {
             sql.append( Util.joinArray( orderBy, "," ) );
         }
 
-        if( start < 0 ) {
-            start = 0;
-        }
+        if( limit > 0 ) {
+            if( start < 1 ) {
+                start = 0;
+            }
 
-        if( limit < 0 ) {
-            limit = 20; // @TODO make limit value a system setting
+            sql.append( " LIMIT " ).append( start ).append( "," ).append( limit );
         }
-
-        sql.append( " LIMIT " ).append( start ).append( "," ).append( limit );
 
         /* Return the compiled SQL code */
         return selectQuery( sql.toString() );
@@ -137,12 +134,12 @@ public class DBDriverMySQL implements DBDriver {
             sql.append( " ORDER BY " ).append( Util.joinArray( orderBy, "," ) );
         }
 
-        if( start < 1 ) {
-            start = 0;
-        }
-
         if( limit > 0 ) {
-            sql.append( " LIMIT " ).append( start ).append( "," ).append( limit ); // @TODO make limit value a system setting
+            if( start < 1 ) {
+                start = 0;
+            }
+
+            sql.append( " LIMIT " ).append( start ).append( "," ).append( limit );
         }
 
         return updateQuery( sql.toString() );
@@ -167,12 +164,12 @@ public class DBDriverMySQL implements DBDriver {
             sql.append( Util.joinArray( orderBy, "," ) );
         }
 
-        if( start < 1 ) {
-            start = 0;
-        }
-
         if( limit > 0 ) {
-            sql.append( " LIMIT " ).append( start ).append( "," ).append( limit ); // @TODO make limit value a system setting
+            if( start < 1 ) {
+                start = 0;
+            }
+
+            sql.append( " LIMIT " ).append( start ).append( "," ).append( limit );
         }
 
         return updateQuery( sql.toString() );

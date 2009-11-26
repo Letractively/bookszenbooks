@@ -46,9 +46,10 @@ public class SchemaBuilder {
         Iterator<Element> columnIterator;
         
         try {
+            //System.out.println( "FILENAME: " + SCHEMA_PATH + className.toLowerCase() + ".schema.xml" );
             schemaFile = loader.getResourceAsStream( SCHEMA_PATH + className.toLowerCase() + ".schema.xml" );
 
-            //buildSchema( getMetaData( tableName ), schemaFile, className, tableName, fields );
+            buildSchema( getMetaData( tableName ), schemaFile, className, tableName, fields );
 
             if( schemaFile == null ) {
                 throw new FileNotFoundException();
@@ -133,11 +134,11 @@ public class SchemaBuilder {
 
             OutputFormat format = OutputFormat.createPrettyPrint();
             writer = new XMLWriter( System.out, format );
-            writer.write( document );
+            //writer.write( document );
         } catch( SQLException e ) {
 
         } catch( IOException e ) {
-            System.out.println( "IO EXCEPTION! :(");
+
         }
 
             /*writer = new XMLWriter( new FileOutputStream( schemaFile ) );
