@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<table name="systemsetting" className="business.SystemSetting">
+  <field id="0" name="key" dbType="12" javaType="class java.lang.String"/>
+  <field id="1" name="value" dbType="-1" javaType="class java.lang.String"/>
+  <field id="2" name="title" dbType="12" javaType="class java.lang.String"/>
+  <field id="3" name="description" dbType="-1" javaType="class java.lang.String"/>
+  <field id="4" name="fieldType" dbType="12" javaType="class java.lang.String"/>
+</table>

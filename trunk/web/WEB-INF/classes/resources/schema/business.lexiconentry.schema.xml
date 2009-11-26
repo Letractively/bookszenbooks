@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<table name="lexiconentry" className="business.LexiconEntry">
+  <field id="0" name="key" dbType="12" javaType="class java.lang.String"/>
+  <field id="1" name="topic" dbType="12" javaType="class java.lang.String"/>
+  <field id="2" name="language" dbType="12" javaType="class java.lang.String"/>
+  <field id="3" name="value" dbType="-1" javaType="class java.lang.String"/>
+</table>

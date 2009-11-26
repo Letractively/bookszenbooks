@@ -9,4 +9,8 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/accountLogin</url-pattern>
     </servlet-mapping>
+    <context-param>
+        <param-name>dbConfigResource</param-name>
+        <param-value>dbConfig.xml</param-value>
+    </context-param>
 </web-app>

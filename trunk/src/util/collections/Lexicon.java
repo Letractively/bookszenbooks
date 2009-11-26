@@ -1,28 +1,72 @@
 package util.collections;
 
 import business.LexiconEntry;
-import java.util.HashMap;
+import data.DBDriver;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Hashtable;
 
 public class Lexicon {
-	private HashMap<String, String> lexicons;
+    private Hashtable<String, String> lexicons;
+    private String language;
+    private DBDriver driver;
+    
+    public Lexicon( String language, DBDriver driver ) {
+        this.lexicons = new Hashtable<String, String>();
+        this.language = language;
+        this.driver = driver;
+    }
 
-	public LexiconEntry getLexicon(String language, String topic, String key) {
-		throw new UnsupportedOperationException();
-	}
+    public String get( String key ) {
+        return exists( key ) ? lexicons.get( key ) : "";
+    }
 
-	public boolean load(String language, String topic) {
-		throw new UnsupportedOperationException();
-	}
+    public void load( String topic ) {
+        ResultSet result;
+        LexiconEntry entry;
+        String where = "language = '" + language + "'";
 
-	public boolean clearCache() {
-		throw new UnsupportedOperationException();
-	}
+        if( topic != null ) {
+            where += " AND topic = '" + topic + "'";
+        }
 
-	public boolean exists(String key) {
-		throw new UnsupportedOperationException();
-	}
+        result = driver.select( "lexiconentry", null, where );
 
-	private boolean loadCache(String language, String topic) {
-		throw new UnsupportedOperationException();
-	}
+        try {
+            while( result.next() ) {
+                entry = new LexiconEntry();
+                entry.init( driver );
+                entry.populate( result );
+                lexicons.put( entry.getKey(), entry.getValue() );
+            }
+        } catch( SQLException e ) {
+
+        }
+    }
+
+    public boolean clearCache() {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean exists( String key ) {
+        return lexicons.containsKey( key );
+    }
+
+    private boolean loadCache(String language, String topic) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @return the lexicons
+     */
+    public Hashtable<String, String> getLexicons() {
+        return lexicons;
+    }
+
+    /**
+     * @return the language
+     */
+    public String getLanguage() {
+        return language;
+    }
 }

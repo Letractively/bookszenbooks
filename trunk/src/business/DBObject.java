@@ -1,12 +1,9 @@
 package business;
 
 import java.sql.ResultSet;
-import java.util.Hashtable;
 import data.DBDriver;
-import data.SchemaBuilder;
 import data.SchemaColumn;
 import util.Util;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.ResultSetMetaData;
@@ -153,9 +150,6 @@ public abstract class DBObject {
         String returnValue = null;
         SimpleDateFormat simpleDate;
 
-        System.out.println( javaType + ":" + dbType );
-        System.out.println( java.sql.Types.DATE + "," + java.sql.Types.TIME + "," + java.sql.Types.TIMESTAMP );
-
         if( value == null ) {
             return null;
         }
@@ -179,8 +173,6 @@ public abstract class DBObject {
                 returnValue = value == null ? null : value.toString();
                 break;
         }
-
-        //System.out.println( returnValue );
 
         return returnValue;
     }

@@ -3,7 +3,11 @@ package business;
 import data.DBDriver;
 import data.SchemaBuilder;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -28,8 +32,14 @@ public class User extends DBObject implements Serializable {
     protected String tableName = "user";
     protected String[] primaryKeys = { "userId" };
 
-    public User() { }
+    public User() {
+        this.userId = 0;
+    }
 
+    /**
+     * Initialize the object. This must be called prior to any database-related methods.
+     * @param driver The database driver instance.
+     */
     @Override
     public void init( DBDriver driver ) {
         super.init( driver );
@@ -40,20 +50,38 @@ public class User extends DBObject implements Serializable {
         schema = builder.getSchema( className, tableName, fields );
     }
 
+    /**
+     * Populates the object with the ResultSet cursor content.
+     * @param row The ResultSet cursor to populate the object with.
+     * @return True on success, false otherwise.
+     * @throws SQLException
+     */
     @Override
     public boolean populate( ResultSet row ) throws SQLException {
         return super.populate( row );
     }
 
+    /**
+     * Saves the object to the database.
+     * @return True if the object has been saved successfully, false otherwise.
+     */
     @Override
     public boolean save() {
         return super.save();
     }
 
+    /**
+     * Removes the database record matching this object's primary key content fields.
+     * @return True if the record has been removed successfully, false otherwise.
+     */
     public boolean remove() {
         return driver.delete( tableName, formatPKWhere( primaryKeys ) ) > 0;
     }
 
+    /**
+     * Inserts a record into the database containing the content of this object.
+     * @return True if the record has been inserted successfully, false otherwise.
+     */
     protected boolean insert() {
         int affectedRows;
 
@@ -64,6 +92,10 @@ public class User extends DBObject implements Serializable {
         return affectedRows > 0;
     }
 
+    /**
+     * Updates the database record matching this object's primary key content fields.
+     * @return True if the record has been updated successfully, false otherwise.
+     */
     protected boolean update() {
         int affectedRows;
         
@@ -124,6 +156,35 @@ public class User extends DBObject implements Serializable {
      */
     public String getPassword() {
         return password;
+    }
+
+    public String getPasswordAsHash() {
+        BigInteger digestContent;
+        MessageDigest md;
+        byte[] digest;
+        String hashText = null;
+
+        try {
+            md = MessageDigest.getInstance( "MD5" );
+
+            md.update( password.getBytes( "UTF-8" ), 0, password.length() );
+
+            digest = md.digest();
+
+            digestContent = new BigInteger( 1, digest );
+            
+            hashText = digestContent.toString( 16 );
+            
+            while( hashText.length() < 32 ) {
+                hashText = "0" + hashText;
+            }
+        } catch( NoSuchAlgorithmException e ) {
+
+        } catch( UnsupportedEncodingException e ) {
+
+        }
+
+        return hashText;
     }
 
     /**

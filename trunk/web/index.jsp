@@ -1,45 +1,20 @@
-<%@ page import="java.sql.ResultSet, data.*, business.User, util.BooksZenBooks,java.io.InputStream,java.net.URL" %>
-<%@ page contentType="text/html" pageEncoding="UTF-8" %>
-<%@include file="/includes/header.jsp" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="/includes/header.jsp" />
 
+<c:choose>
+    <c:when test="${user != null}">
+        <a href="accountLogin?action=logout">${lexicon.logOut}</a>
+    </c:when>
+    <c:otherwise>
+        <a href="accountLogin">${lexicon.logIn}</a>
+    </c:otherwise>
+</c:choose>
 
-<jsp:useBean id="user" class="business.User" scope="request" />
-<%
+<div>
+    Email: ${user.email}<br />
+    Password (Hashed): ${user.password}<br />
+    First Name: ${user.firstName}<br />
+    Last Name: ${user.lastName}
+</div>
 
-BooksZenBooks bzb = new BooksZenBooks();
-bzb.initDatabase( "dbConfig.xml" );
-
-ResultSet t = bzb.getDBDriver().select( "user", new String[]{ "*" } , "userId = 1" );
-
-/*User u = new User();
-u.init( bzb.getDBDriver() );
-u.setFirstName( "John" );
-u.setLastName( "Johnson" );
-u.setPassword( "MD5(12345)" );
-u.setEmail( "john@host.com" );
-u.setJoinDate( new java.util.Date() );
-u.setBirthDate( new java.util.Date() );
-
-u.save();*/
-
-
-
-if( t.next() ) {
-    user.init( bzb.getDBDriver() );
-    user.populate( t );
-
-    //user.remove();
-    
-
-    /*user.setEmail( "rvarella@google.edu");
-    user.setCity( "Leicestah" );
-    user.save();*/
-
-        %>
-        email: ${user.email} <br />
-        <%
-}
-
-%>
-
-<%@include file="/includes/footer.jsp" %>
+<c:import url="/includes/footer.jsp" />
