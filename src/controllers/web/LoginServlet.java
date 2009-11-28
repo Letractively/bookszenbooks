@@ -2,6 +2,7 @@ package controllers.web;
 
 import javax.servlet.http.HttpServletRequest;
 import business.User;
+import data.DBDriver;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import util.BooksZenBooks;
+import util.DigestHelper;
 import util.RequestHelper;
 
 /**
@@ -54,7 +56,7 @@ public class LoginServlet extends HttpServlet {
 
         /* Handle logout request */
         if( action.equals( "logout" ) ) {
-            forwardUrl = "/index.jsp";
+            forwardUrl = "/home";
 
             endSession( request, response );
         }
@@ -62,29 +64,40 @@ public class LoginServlet extends HttpServlet {
         else if( action.equals( "login" ) ) {
             /* Already logged in? */
             if( bzb.getAuthenticatedUser( request ) != null ) {
-                forwardUrl = "/index.jsp";
+                forwardUrl = "/home";
             }
             else {
                 /* Verify email and password */
-                if ( ( user = checkCredentials( request, bzb ) ) != null ) {
-                    forwardUrl = "/index.jsp";
+                user = checkCredentials( request, bzb.getDBDriver() );
 
-                    startSession( user, request, response, Integer.parseInt( bzb.getConfig().get( "maxCookieLifetime" ) ) );
-                }
-                else {
+                if( user == null ) {
                     forwardUrl = "/login.jsp";
 
+                    request.setAttribute( "pageTitle", bzb.getLexicon().get( "logIn" ) );
                     request.setAttribute( "formError", bzb.getLexicon().get( "invalidLogin" ) );
+                }
+                else if( !user.getValidated() ) {
+                    forwardUrl = "/login.jsp";
+
+                    request.setAttribute( "pageTitle", bzb.getLexicon().get( "logIn" ) );
+                    request.setAttribute( "formError", bzb.getLexicon().get( "notValidated" ) );
+                }
+                else {
+                    forwardUrl = "/home";
+
+                    startSession( user, request, response, Integer.parseInt( bzb.getConfig().get( "maxCookieLifetime" ) ) );
                 }
             }
         }
         /* Requesting the initial login page */
         else {
             if( bzb.getAuthenticatedUser( request ) != null ) {
-                forwardUrl = "/index.jsp";
+                forwardUrl = "/home";
             }
             else {
                 forwardUrl = "/login.jsp";
+
+                request.setAttribute( "pageTitle", bzb.getLexicon().get( "logIn" ) );
             }
         }
 
@@ -115,20 +128,23 @@ public class LoginServlet extends HttpServlet {
      * @param bzb The BooksZenBooks class.
      * @return The matching User if one is found, null otherwise.
      */
-    public User checkCredentials( HttpServletRequest request, BooksZenBooks bzb ) {
+    public User checkCredentials( HttpServletRequest request, DBDriver driver ) {
         ResultSet result;
-        User user = new User();
-        user.init( bzb.getDBDriver() );
-        user.setEmail( RequestHelper.getValue( "email", request ) );
-        user.setPassword( request.getParameter( "password" ) );
-        String where = "email = '" + user.getEmail() + "' AND password = '" + user.getPasswordAsHash() + "'";
+        User user = null;
+        String email = RequestHelper.getValue( "email", request );
+        String password = RequestHelper.getValue( "password", request );
+        
+        String where = "email = '" + email + "' AND password = '" + DigestHelper.md5( password ) + "'";
 
         /* Query for matching user */
-        result = bzb.getDBDriver().select( "user", null, where );
+        result = driver.select( "user", null, where );
 
         try {
             /* Make sure there's a result */
             if( result.next() ) {
+                user = new User();
+
+                user.init( driver );
                 user.populate( result );
 
                 return user;

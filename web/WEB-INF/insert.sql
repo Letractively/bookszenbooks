@@ -18,9 +18,9 @@ INSERT INTO `bzb`.`lexicontopic` (`name`) VALUES ('checkout');
 
 /* Users */
 INSERT INTO `bzb`.`user` (`userId` ,`email` ,`password` ,`firstName` ,`lastName` ,`address` ,`city` ,`state` ,`country` ,
-`postalCode` ,`phone` ,`joinDate` ,`birthDate` ,`validated` ,`superUser`)
+`postalCode` ,`phone` ,`joinDate` ,`birthDate` ,`validated` ,`superUser` ,`validationCode`)
 VALUES (NULL , 'student@worcester.edu', MD5( 'test' ) , 'Rick', 'Varella', '10 Pryor Rd', 'Leicester', 'MA', 'US',
-'01524', '508-892-5304', '2009-11-16 02:43:41', '1987-07-09', '1', '1');
+'01524', '508-892-5304', '2009-11-16 02:43:41', '1987-07-09', '1', '1', NULL);
 
 /* System Settings */
 INSERT INTO `bzb`.`systemsetting` (`key` ,`value` ,`title` ,`description`,`fieldType`)
@@ -33,6 +33,8 @@ INSERT INTO `bzb`.`systemsetting` (`key` ,`value` ,`title` ,`description`,`field
 VALUES ('useHttps', '0', 'Use https', 'Enable this setting to allow connections through SSL.', 'yes_no');
 INSERT INTO `bzb`.`systemsetting` (`key` ,`value` ,`title` ,`description`,`fieldType`)
 VALUES ('maxCookieLifetime', '1800', 'Maximum Cookie Lifetime', 'The maximum amount of time a cookie will be kept on the user\'s system before expiring.', 'text');
+INSERT INTO `bzb`.`systemsetting` (`key` ,`value` ,`title` ,`description`,`fieldType`)
+VALUES ('validEmailDomains', 'worcester.edu', 'Valid Email Domains', 'The email domains that are allowed to register an account.', 'text');
 
 /* Books */
 INSERT INTO `bzb`.`book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `language`)
@@ -78,8 +80,54 @@ VALUES ('country', 'register', 'en', 'Country');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('postalCode', 'register', 'en', 'Postal Code');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('phoneNumber', 'register', 'en', 'Phone Number');
+VALUES ('phone', 'register', 'en', 'Phone Number');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('birthDate', 'register', 'en', 'Birth Date');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('invalidLogin', 'register', 'en', 'The email and password you provided do not match any registered accounts.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('registerAccount', 'register', 'en', 'Register Account');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('register', 'register', 'en', 'Register');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('confirmPassword', 'register', 'en', 'Confirm Password');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('agreeTerms', 'register', 'en', 'I agree with the Terms and Conditions of this website.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('registerDesc', 'register', 'en', 'Use the below form to register for a new account. Registering for an account gives you access to member-only features.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('emailInvalid', 'register', 'en', 'The entered email address is invalid.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('emailRegistered', 'register', 'en', 'The entered email address is already registered.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('passwordInvalid', 'register', 'en', 'The entered password is invalid.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('firstNameInvalid', 'register', 'en', 'You must enter a first name.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('lastNameInvalid', 'register', 'en', 'You must enter a last name.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('passwordNotMatch', 'register', 'en', 'The entered passwords do not match.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('birthDateInvalid', 'register', 'en', 'The entered birthdate is not a valid date.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('agreeTermsEmpty', 'register', 'en', 'You must agree to the Terms and Conditions first.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('home', 'global', 'en', 'Home' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('guest', 'global', 'en', 'guest' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('notValidated', 'register', 'en', 'You must <a href="accountLogin?action=confirm">validate your account</a> first before logging in.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('confirmDesc', 'register', 'en', 'Thanks for registering an account on our website! An email with a Confirmation Code has been sent to the email address your provided during registration. To complete your registration, copy the code in the email message to the below form.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('confirmCode', 'register', 'en', 'Confirmation Code' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('checkCode', 'register', 'en', 'Check Code' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('confirmSuccess', 'register', 'en', 'Thanks, your email address has been confirmed and your account has been activated; you can now log in!' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('codeInvalid', 'register', 'en', 'The entered code is invalid.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('confirmAccount', 'register', 'en', 'Confirm Account' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('registerSuccess', 'register', 'en', 'Registration Success' );

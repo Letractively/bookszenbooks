@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import util.collections.*;
 
 /**
@@ -76,13 +77,19 @@ public class BooksZenBooks {
         ResultSet result;
         User authUser;
         String where;
+        String email = CookieCutter.getCookie( request.getCookies(), "email" );
+        String password = CookieCutter.getCookie( request.getCookies(), "password" );
+        User sessionUser = ( User ) request.getSession().getAttribute( "user" );
 
-        if( user == null ) {
+        if( sessionUser != null ) {
+            user = sessionUser;
+        }
+        else if( user == null && email != null && password != null ) {
             authUser = new User();
             
             authUser.init( getDBDriver() );
-            authUser.setEmail( CookieCutter.getCookie( request.getCookies(), "email" ) );
-            authUser.setPassword( CookieCutter.getCookie( request.getCookies(), "password" ) );
+            authUser.setEmail( email );
+            authUser.setPassword( password );
 
             where = "email = '" + authUser.getEmail() + "' AND password = '" + authUser.getPassword() + "'";
 

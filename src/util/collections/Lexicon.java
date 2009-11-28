@@ -21,6 +21,12 @@ public class Lexicon {
         return exists( key ) ? lexicons.get( key ) : "";
     }
 
+    public void set( String key, String value ) {
+        if( exists( key ) ) {
+            lexicons.put( key, value );
+        }
+    }
+
     public void load( String topic ) {
         ResultSet result;
         LexiconEntry entry;
