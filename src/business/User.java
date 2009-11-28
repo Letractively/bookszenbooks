@@ -3,11 +3,7 @@ package business;
 import data.DBDriver;
 import data.SchemaBuilder;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -159,40 +155,11 @@ public class User extends DBObject implements Serializable {
         return password;
     }
 
-   /* private String getHash( String originalText ) {
-        BigInteger digestContent;
-        MessageDigest md;
-        byte[] digest;
-        String hashText = null;
-
-        try {
-            md = MessageDigest.getInstance( "MD5" );
-
-            md.update( originalText.getBytes( "UTF-8" ), 0, originalText.length() );
-
-            digest = md.digest();
-
-            digestContent = new BigInteger( 1, digest );
-            
-            hashText = digestContent.toString( 16 );
-            
-            while( hashText.length() < 32 ) {
-                hashText = "0" + hashText;
-            }
-        } catch( NoSuchAlgorithmException e ) {
-            System.out.println( "no such alg" );
-        } catch( UnsupportedEncodingException e ) {
-            System.out.println( "encoding error" );
-        }
-
-        return hashText;
-    }*/
-
     /**
      * @param password the password to set
      */
     public void setPassword( String password ) {
-        this.password = password; // getHash( password );
+        this.password = password;
         this.setDirty( true );
     }
 
