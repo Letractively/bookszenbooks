@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <table name="user" className="business.User">
-  <field name="userId" dbType="4" javaType="int"/>
-  <field name="email" dbType="12" javaType="class java.lang.String"/>
-  <field name="password" dbType="12" javaType="class java.lang.String"/>
-  <field name="firstName" dbType="12" javaType="class java.lang.String"/>
-  <field name="lastName" dbType="12" javaType="class java.lang.String"/>
-  <field name="address" dbType="12" javaType="class java.lang.String"/>
-  <field name="city" dbType="12" javaType="class java.lang.String"/>
-  <field name="state" dbType="12" javaType="class java.lang.String"/>
-  <field name="country" dbType="12" javaType="class java.lang.String"/>
-  <field name="postalCode" dbType="12" javaType="class java.lang.String"/>
-  <field name="phone" dbType="12" javaType="class java.lang.String"/>
-  <field name="joinDate" dbType="93" javaType="class java.util.Date"/>
-  <field name="birthDate" dbType="91" javaType="class java.util.Date"/>
-  <field name="validated" dbType="-7" javaType="boolean"/>
-  <field name="superUser" dbType="-7" javaType="boolean"/>
+  <field id="0" name="userId" dbType="4" javaType="int"/>
+  <field id="1" name="email" dbType="12" javaType="class java.lang.String"/>
+  <field id="2" name="password" dbType="12" javaType="class java.lang.String"/>
+  <field id="3" name="firstName" dbType="12" javaType="class java.lang.String"/>
+  <field id="4" name="lastName" dbType="12" javaType="class java.lang.String"/>
+  <field id="5" name="address" dbType="12" javaType="class java.lang.String"/>
+  <field id="6" name="city" dbType="12" javaType="class java.lang.String"/>
+  <field id="7" name="state" dbType="12" javaType="class java.lang.String"/>
+  <field id="8" name="country" dbType="12" javaType="class java.lang.String"/>
+  <field id="9" name="postalCode" dbType="12" javaType="class java.lang.String"/>
+  <field id="10" name="phone" dbType="12" javaType="class java.lang.String"/>
+  <field id="11" name="joinDate" dbType="93" javaType="class java.util.Date"/>
+  <field id="12" name="birthDate" dbType="91" javaType="class java.util.Date"/>
+  <field id="13" name="validated" dbType="-7" javaType="boolean"/>
+  <field id="14" name="superUser" dbType="-7" javaType="boolean"/>
+  <field id="15" name="validationCode" dbType="12" javaType="class java.lang.String"/>
 </table>

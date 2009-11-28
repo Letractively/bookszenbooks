@@ -29,6 +29,7 @@ public class User extends DBObject implements Serializable {
     private boolean superUser;
     private boolean validated;
     private String phone;
+    private String validationCode;
     protected String tableName = "user";
     protected String[] primaryKeys = { "userId" };
 
@@ -158,7 +159,7 @@ public class User extends DBObject implements Serializable {
         return password;
     }
 
-    public String getPasswordAsHash() {
+   /* private String getHash( String originalText ) {
         BigInteger digestContent;
         MessageDigest md;
         byte[] digest;
@@ -167,7 +168,7 @@ public class User extends DBObject implements Serializable {
         try {
             md = MessageDigest.getInstance( "MD5" );
 
-            md.update( password.getBytes( "UTF-8" ), 0, password.length() );
+            md.update( originalText.getBytes( "UTF-8" ), 0, originalText.length() );
 
             digest = md.digest();
 
@@ -179,19 +180,19 @@ public class User extends DBObject implements Serializable {
                 hashText = "0" + hashText;
             }
         } catch( NoSuchAlgorithmException e ) {
-
+            System.out.println( "no such alg" );
         } catch( UnsupportedEncodingException e ) {
-
+            System.out.println( "encoding error" );
         }
 
         return hashText;
-    }
+    }*/
 
     /**
      * @param password the password to set
      */
     public void setPassword( String password ) {
-        this.password = password;
+        this.password = password; // getHash( password );
         this.setDirty( true );
     }
 
@@ -358,5 +359,19 @@ public class User extends DBObject implements Serializable {
     public void setCity( String city ) {
         this.city = city;
         this.setDirty( true );
+    }
+
+    /**
+     * @return the validationCode
+     */
+    public String getValidationCode() {
+        return validationCode;
+    }
+
+    /**
+     * @param validationCode the validationCode to set
+     */
+    public void setValidationCode(String validationCode) {
+        this.validationCode = validationCode;
     }
 }

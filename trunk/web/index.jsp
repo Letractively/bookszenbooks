@@ -6,7 +6,8 @@
         <a href="accountLogin?action=logout">${lexicon.logOut}</a>
     </c:when>
     <c:otherwise>
-        <a href="accountLogin">${lexicon.logIn}</a>
+        [<a href="accountLogin">${lexicon.logIn}</a>] &middot;
+        [<a href="registerAccount">${lexicon.register}</a>]
     </c:otherwise>
 </c:choose>
 
