@@ -5,6 +5,8 @@ import data.DBDriver;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Lexicon {
     private Hashtable<String, String> lexicons;
@@ -19,6 +21,20 @@ public class Lexicon {
 
     public String get( String key ) {
         return exists( key ) ? lexicons.get( key ) : "";
+    }
+
+    public String get( String key, Map<String, String> replace ) {
+        String string = get( key );
+        Iterator<Map.Entry<String, String>> it = replace.entrySet().iterator();
+        Map.Entry<String, String> entry;
+
+        while( it.hasNext() ) {
+            entry = it.next();
+
+            string = string.replace( "${" + entry.getKey() + "}", entry.getValue() );
+        }
+
+        return string;
     }
 
     public void set( String key, String value ) {

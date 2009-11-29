@@ -14,10 +14,15 @@
     <p><label for="firstName">${lexicon.firstName}:</label><input type="text" name="firstName" id="firstName"  value="${param.firstName}" /></p>
     <c:if test="${formErrors.lastName != null}"><p class="error">${formErrors.lastName}</p></c:if>
     <p><label for="lastName">${lexicon.lastName}:</label><input type="text" name="lastName" id="lastName"  value="${param.lastName}" /></p>
+    <c:if test="${formErrors.address != null}"><p class="error">${formErrors.address}</p></c:if>
     <p><label for="address">${lexicon.address}:</label><input type="text" name="address" id="address"  value="${param.address}" /></p>
+    <c:if test="${formErrors.city != null}"><p class="error">${formErrors.city}</p></c:if>
     <p><label for="city">${lexicon.city}:</label><input type="text" name="city" id="city"  value="${param.city}" /></p>
+    <c:if test="${formErrors.state != null}"><p class="error">${formErrors.state}</p></c:if>
     <p><label for="state">${lexicon.state}:</label><input type="text" name="state" id="state"  value="${param.state}" /></p>
+    <c:if test="${formErrors.postalCode != null}"><p class="error">${formErrors.postalCode}</p></c:if>
     <p><label for="postalcode">${lexicon.postalCode}:</label><input type="text" name="postalCode" id="postalCode"  value="${param.postalCode}" /></p>
+    <c:if test="${formErrors.country != null}"><p class="error">${formErrors.country}</p></c:if>
     <p><label for="country">${lexicon.country}:</label>
         <select name="country" id="country">
             <c:forEach var="country" items="${countries}">
@@ -31,6 +36,7 @@
                 </c:choose>
             </c:forEach>
         </select></p>
+    <c:if test="${formErrors.phone != null}"><p class="error">${formErrors.phone}</p></c:if>
     <p><label for="phone">${lexicon.phone}:</label><input type="text" name="phone" id="phone"  value="${param.phone}" /></p>
     <c:if test="${formErrors.birthDate != null}"><p class="error">${formErrors.birthDate}</p></c:if>
     <p><label for="birthDate">${lexicon.birthDate}:</label><input type="text" name="birthDate" id="birthDate" value="${param.birthDate}" /></p>

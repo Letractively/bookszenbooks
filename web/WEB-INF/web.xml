@@ -9,6 +9,11 @@
         <description>Controls registering a new account.</description>
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>controllers.web.RegisterServlet</servlet-class>
+        <init-param>
+            <description>The fields that are required to be filled out during user registration.</description>
+            <param-name>requiredFields</param-name>
+            <param-value>firstName,lastName,address,city,state,postalCode,country,phone,birthDate</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>HomeServlet</servlet-name>
