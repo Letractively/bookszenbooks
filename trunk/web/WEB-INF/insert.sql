@@ -101,19 +101,11 @@ VALUES ('agreeTerms', 'register', 'en', 'I agree with the Terms and Conditions o
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('registerDesc', 'register', 'en', 'Use the below form to register for a new account. Registering for an account gives you access to member-only features.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('emailInvalid', 'register', 'en', 'The entered email address is invalid.');
-INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('emailRegistered', 'register', 'en', 'The entered email address is already registered.');
-INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('passwordInvalid', 'register', 'en', 'The entered password is invalid.');
-INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('firstNameInvalid', 'register', 'en', 'You must enter a first name.');
-INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('lastNameInvalid', 'register', 'en', 'You must enter a last name.');
+VALUES ('emailRegistered', 'register', 'en', 'An account is already registered with the email &quot;${email}&quot;.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('passwordNotMatch', 'register', 'en', 'The entered passwords do not match.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('birthDateInvalid', 'register', 'en', 'The entered birthdate is not a valid date.');
+VALUES ('birthDateInvalid', 'register', 'en', 'The birthdate must be a valid date in MM/DD/YYYY format.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('agreeTermsEmpty', 'register', 'en', 'You must agree to the Terms and Conditions first.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
@@ -136,6 +128,8 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('confirmAccount', 'register', 'en', 'Confirm Account' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('registerSuccess', 'register', 'en', 'Registration Success' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('emptyField', 'register', 'en', 'The ${field} field is required and cannot be left blank.' );
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('author', 'book', 'en', 'Author' );

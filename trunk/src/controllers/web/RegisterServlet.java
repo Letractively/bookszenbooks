@@ -17,6 +17,7 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +27,16 @@ import util.DigestHelper;
 import util.RequestHelper;
 
 public class RegisterServlet extends HttpServlet {
+    private static String[] requiredFields;
+    private static String dbConfigResource;
+    
+    @Override
+    public void init() {
+        ServletContext context = this.getServletContext();
+        ServletConfig config = this.getServletConfig();
+        dbConfigResource = context.getInitParameter( "dbConfigResource" );
+        requiredFields = config.getInitParameter( "requiredFields" ).split( "," );
+    }
     
     /**
      * Handles all incoming POST requests to the servlet.
@@ -37,8 +48,6 @@ public class RegisterServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        ServletContext context = this.getServletContext();
-        String dbConfigResource = context.getInitParameter( "dbConfigResource" );
         BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
         String action = RequestHelper.getValue( "action", request );
         String forwardUrl;
@@ -222,33 +231,69 @@ public class RegisterServlet extends HttpServlet {
         String email = RequestHelper.getValue( "email", request );
         String password = RequestHelper.getValue( "password", request );
         String confirmPassword = RequestHelper.getValue( "confirmPassword", request );
+        HashMap<String, String> replace = new HashMap<String, String>();
 
+        /* Check that required fields are filled in. */
+        for( String fieldName : requiredFields ) {
+            if( RequestHelper.getValue( fieldName, request ).isEmpty() ) {
+                replace = new HashMap();
+                replace.put( "field", bzb.getLexicon().get( fieldName ) );
+                errors.put( fieldName, bzb.getLexicon().get( "emptyField", replace ) );
+            }
+        }
+
+        /* Make sure the email address is valid and unregistered. */
         if( !isValidEmail( email, bzb.getConfig().get( "validEmailDomains" ) ) ) {
-            errors.put( "email", bzb.getLexicon().get( "emailInvalid" ) );
+            replace = new HashMap();
+            replace.put( "field", bzb.getLexicon().get( "email" ) );
+            errors.put( "email", bzb.getLexicon().get( "emptyField", replace ) );
         }
         else if( isEmailRegistered( email, bzb.getDBDriver() ) ) {
-            errors.put( "email", bzb.getLexicon().get( "emailRegistered" ) );
+            replace = new HashMap();
+            replace.put( "email", email );
+            errors.put( "email", bzb.getLexicon().get( "emailRegistered", replace ) );
         }
 
+        /* Make sure the password is valid and matches the confirm field. */
         if( !isValidPassword( password ) ) {
-            errors.put( "password", bzb.getLexicon().get( "passwordInvalid" ) );
+            replace = new HashMap();
+            replace.put( "field", bzb.getLexicon().get( "password" ) );
+            errors.put( "password", bzb.getLexicon().get( "emptyField", replace ) );
         }
         else if( !password.equals( confirmPassword ) ) {
             errors.put( "password", bzb.getLexicon().get( "passwordNotMatch" ) );
         }
-        
-        if( RequestHelper.getValue( "firstName", request ).isEmpty() ) {
-            errors.put( "firstName", bzb.getLexicon().get( "firstNameInvalid" ) );
-        }
-        if( RequestHelper.getValue( "lastName", request ).isEmpty() ) {
-            errors.put( "lastName", bzb.getLexicon().get( "lastNameInvalid" ) );
-        }
-        if( !RequestHelper.getValue( "birthDate", request ).isEmpty() && parseDate( RequestHelper.getValue( "birthDate", request ) ) == null ) {
+
+        /* Check that the birthdate is valid, if entered */
+        if( !errors.containsKey( "birthDate" ) && parseDate( RequestHelper.getValue( "birthDate", request ) ) == null ) {
             errors.put( "birthDate", bzb.getLexicon().get( "birthDateInvalid" ) );
         }
+
+        /* Make sure the user has agreed to the terms */
         if( !RequestHelper.getValue( "agreeTerms", request ).equals( "on" ) ) {
             errors.put( "agreeTerms", bzb.getLexicon().get( "agreeTermsEmpty" ) );
         }
+
+        System.out.println( "XXX:" + errors.get( "city" ) );
+        
+        /*if( RequestHelper.getValue( "firstName", request ).isEmpty() ) {
+            replace = new HashMap();
+            replace.put( "field", bzb.getLexicon().get( "firstName" ) );
+            errors.put( "firstName", bzb.getLexicon().get( "invalidField", replace ) );
+        }
+        if( RequestHelper.getValue( "lastName", request ).isEmpty() ) {
+            replace = new HashMap();
+            replace.put( "field", bzb.getLexicon().get( "lastName" ) );
+            errors.put( "lastName", bzb.getLexicon().get( "invalidField", replace ) );
+        }
+        if( !RequestHelper.getValue( "birthDate", request ).isEmpty() && parseDate( RequestHelper.getValue( "birthDate", request ) ) == null ) {
+            replace = new HashMap();
+            replace.put( "field", bzb.getLexicon().get( "birthDate" ) );
+            errors.put( "birthDate", bzb.getLexicon().get( "invalidField", replace ) );
+        }
+        if( !RequestHelper.getValue( "agreeTerms", request ).equals( "on" ) ) {
+            errors.put( "agreeTerms", bzb.getLexicon().get( "agreeTermsEmpty" ) );
+        }*/
         
         return errors;
     }
