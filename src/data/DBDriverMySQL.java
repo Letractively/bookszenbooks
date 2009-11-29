@@ -61,15 +61,15 @@ public class DBDriverMySQL implements DBDriver {
         /* Add table and fields list to query */
         sql.append( "SELECT " ).append( Util.joinArray( fields, "," ) ).append( " FROM " ).append( getFullTableName( table ) );
 
+        /* Any JOINs?*/
+        if( join != null && join.length > 0 ) {
+            sql.append( " " ).append( Util.joinArray( join, " " ) );
+        }
+
         /* Searching on a WHERE condition? */
         if( where != null && !where.isEmpty() ) {
             sql.append( " WHERE " ).append( where );
-        }
-
-        /* Any JOINs?*/
-        if( join != null && join.length > 0 ) {
-            sql.append( Util.joinArray( join, " " ) );
-        }
+        }        
         
         /* Add GROUP BY clause */
         if( groupBy != null && groupBy.length > 0 ) {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<table name="booklisting" className="business.BookListing">
+  <field id="0" name="listId" dbType="4" javaType="int"/>
+  <field id="1" name="userId" dbType="4" javaType="int"/>
+  <field id="2" name="isbn" dbType="-5" javaType="int"/>
+  <field id="3" name="price" dbType="3" javaType="double"/>
+  <field id="4" name="comment" dbType="-1" javaType="class java.lang.String"/>
+  <field id="5" name="currency" dbType="12" javaType="class java.lang.String"/>
+  <field id="6" name="listDate" dbType="93" javaType="class java.util.Date"/>
+  <field id="7" name="active" dbType="-7" javaType="boolean"/>
+  <field id="8" name="condition" dbType="12" javaType="class java.lang.String"/>
+</table>

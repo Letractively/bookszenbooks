@@ -36,7 +36,7 @@
     <p><label for="birthDate">${lexicon.birthDate}:</label><input type="text" name="birthDate" id="birthDate" value="${param.birthDate}" /></p>
     <c:if test="${formErrors.agreeTerms != null}"><p class="error">${formErrors.agreeTerms}</p></c:if>
     <p><label for="agreeTerms">${lexicon.agreeTerms}</label><input type="checkbox" name="agreeTerms" id="agreeTerms" /></p>
-    <p class="submit"><input type="submit" value="${lexicon.register}" /></p>
+    <p class="submit"><input type="submit" value="${lexicon.registerAccount}" /></p>
 </form>
 
 <c:import url="/includes/footer.jsp" />

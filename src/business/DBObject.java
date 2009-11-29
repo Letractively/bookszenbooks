@@ -54,6 +54,7 @@ public abstract class DBObject {
         Class<?>[] methodTypes = new Class<?>[1];
         Object[] methodArgs = new Object[1];
         SchemaColumn column = schema.get( key );
+        String javaType = column.getJavaType();
 
         try {
             if( column.getJavaType().equals( "class java.lang.String" ) ) {
@@ -64,6 +65,14 @@ public abstract class DBObject {
                 methodTypes[0] = int.class;
                 methodArgs[0] = row.getInt( key );
             }
+            else if( column.getJavaType().equals( "double" ) ) {
+                methodTypes[0] = double.class;
+                methodArgs[0] = row.getDouble( key );
+            }
+            else if( column.getJavaType().equals( "float" ) ) {
+                methodTypes[0] = float.class;
+                methodArgs[0] = row.getFloat( key );
+            }
             else if( column.getJavaType().equals( "boolean" ) ) {
                 methodTypes[0] = boolean.class;
                 methodArgs[0] = row.getBoolean( key );
@@ -72,10 +81,17 @@ public abstract class DBObject {
                 methodTypes[0] = java.lang.Double.class;
                 methodArgs[0] = row.getDouble( key );
             }
+            else if( column.getJavaType().equals( "class java.lang.Float" ) ) {
+                methodTypes[0] = float.class;
+                methodArgs[0] = row.getFloat( key );
+            }
             else if( column.getJavaType().equals( "class java.lang.Long" ) ) {
-                
                 methodTypes[0] = java.lang.Long.class;
                 methodArgs[0] = row.getLong( key );
+            }
+            else if( column.getJavaType().equals( "class java.lang.Boolean" ) ) {
+                methodTypes[0] = java.lang.Boolean.class;
+                methodArgs[0] = row.getBoolean( key );
             }
             else if( column.getJavaType().equals( "class java.util.Date" ) ) {
                 methodTypes[0] = java.util.Date.class;

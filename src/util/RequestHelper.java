@@ -41,6 +41,6 @@ public class RequestHelper {
     }
 
     public static String getValue( String paramName, HttpServletRequest request ) {
-        return request.getParameter( paramName ) != null ? ( String ) request.getParameter( paramName ) : "";
+        return request.getParameter( paramName ) != null ? ( String ) request.getParameter( paramName ).trim() : "";
     }
 }
