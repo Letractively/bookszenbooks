@@ -16,6 +16,7 @@
             <td width="50%">
                 <p><label for="condition">${lexicon.condition}:</label>
                     <select name="condition" id="condition">
+                        <option value="">${lexicon.anyCondition}</option>
                         <c:forEach var="condition" items="${conditions}">
                             <option value="${condition.key}">${condition.value}</option>
                         </c:forEach>
@@ -23,7 +24,14 @@
                 <p><label for="language">${lexicon.language}:</label>
                     <select name="language" id="language">
                         <c:forEach var="language" items="${languages}">
-                            <option value="${language.key}">${language.value}</option>
+                            <c:choose>
+                                <c:when test="${language.key == 'en'}">
+                                    <option value="${language.key}" selected="selected">${language.value}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${language.key}">${language.value}</option>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
                     </select></p>
                 <p><label for="sortBy">${lexicon.sortBy}:</label>

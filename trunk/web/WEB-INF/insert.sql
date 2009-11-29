@@ -170,3 +170,7 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('listedBy', 'search', 'en', 'Listed by' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('on', 'search', 'en', 'on' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('noResults', 'search', 'en', 'No results matching your search criteria were found.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('anyCondition', 'search', 'en', 'Any Condition' );
