@@ -14,6 +14,26 @@
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>controllers.web.HomeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <description>Controls searching for a book.</description>
+        <servlet-name>BookSearchServlet</servlet-name>
+        <servlet-class>controllers.web.BookSearchServlet</servlet-class>
+        <init-param>
+            <description>Allowed sort fields for book searches.</description>
+            <param-name>sortFields</param-name>
+            <param-value>price,publishDate,relevance</param-value>
+        </init-param>
+        <init-param>
+            <description>Values describing the condition of a book.</description>
+            <param-name>bookConditions</param-name>
+            <param-value>new,good,acceptable,poor</param-value>
+        </init-param>
+        <init-param>
+            <description>Book languages.</description>
+            <param-name>bookLanguages</param-name>
+            <param-value>en,es,fr</param-value>
+        </init-param>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/accountLogin</url-pattern>
@@ -27,11 +47,16 @@
         <url-pattern>/home</url-pattern>
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookSearchServlet</servlet-name>
+        <url-pattern>/bookSearch</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
         <welcome-file>index</welcome-file>
     </welcome-file-list>
     <context-param>
+        <description>The database configuration file location.</description>
         <param-name>dbConfigResource</param-name>
         <param-value>dbConfig.xml</param-value>
     </context-param>

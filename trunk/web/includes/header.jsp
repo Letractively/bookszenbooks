@@ -17,7 +17,10 @@
                 </c:when>
                 <c:otherwise>
                     [<a href="accountLogin">${lexicon.logIn}</a>] &middot;
-                    [<a href="registerAccount">${lexicon.register}</a>]
+                    [<a href="registerAccount">${lexicon.registerAccount}</a>]
                 </c:otherwise>
             </c:choose>
+        </div>
+        <div id="simpleSearch">
+            <c:import url="/includes/simpleSearch.jsp" />
         </div>

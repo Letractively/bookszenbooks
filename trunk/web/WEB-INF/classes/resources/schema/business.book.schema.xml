@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<table name="book" className="business.Book">
+  <field id="0" name="isbn" dbType="-5" javaType="long"/>
+  <field id="1" name="categoryId" dbType="4" javaType="int"/>
+  <field id="2" name="title" dbType="12" javaType="class java.lang.String"/>
+  <field id="3" name="author" dbType="12" javaType="class java.lang.String"/>
+  <field id="4" name="pages" dbType="5" javaType="int"/>
+  <field id="5" name="publisher" dbType="12" javaType="class java.lang.String"/>
+  <field id="6" name="publishDate" dbType="91" javaType="class java.util.Date"/>
+  <field id="7" name="edition" dbType="5" javaType="int"/>
+  <field id="8" name="language" dbType="12" javaType="class java.lang.String"/>
+</table>

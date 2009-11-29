@@ -37,19 +37,19 @@ INSERT INTO `bzb`.`systemsetting` (`key` ,`value` ,`title` ,`description`,`field
 VALUES ('validEmailDomains', 'worcester.edu', 'Valid Email Domains', 'The email domains that are allowed to register an account.', 'text');
 
 /* Books */
-INSERT INTO `bzb`.`book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `language`)
-VALUES ('9781890774448', '1', 'Java Servlets and JSP', 'Murach', '730', 'Mike Murach & Associates', '2008-01-23', 'en');
-INSERT INTO `bzb`.`book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `language`)
-VALUES ('7781810775548', '2', 'Math Goodies', 'Some Dude', '1089', 'Ronald McDonald', '1993-11-09', 'en');
+INSERT INTO `bzb`.`book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `language`)
+VALUES ('9781890774448', '1', 'Java Servlets and JSP', 'Murach', '730', 'Mike Murach & Associates', '2008-01-23', '2', 'en');
+INSERT INTO `bzb`.`book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `language`)
+VALUES ('7781810775548', '2', 'Math Goodies', 'Some Dude', '1089', 'Ronald McDonald', '1993-11-09', '1', 'en');
 
 /* Book Listings */
-INSERT INTO `bzb`.`booklisting` (`listId` ,`userId` ,`isbn` ,`price` ,`comment` ,`currency` ,`edition` ,
+INSERT INTO `bzb`.`booklisting` (`listId` ,`userId` ,`isbn` ,`price` ,`comment` ,`currency` ,
 `listDate` ,`active` ,`condition`)
-VALUES ( NULL , '1', '9781890774448', '10.00', 'Awesome book. Jeff''s class rocks!', 'usd', '2',
+VALUES ( NULL , '1', '9781890774448', '10.00', 'Awesome book. Jeff''s class rocks!', 'usd',
 '2009-11-16 09:51:48', '1', 'new');
-INSERT INTO `bzb`.`booklisting` (`listId` ,`userId` ,`isbn` ,`price` ,`comment` ,`currency` ,`edition` ,
+INSERT INTO `bzb`.`booklisting` (`listId` ,`userId` ,`isbn` ,`price` ,`comment` ,`currency` ,
 `listDate` ,`active` ,`condition`)
-VALUES ( NULL , '1', '7781810775548', '50.00', 'Boring book, I can\'t believe Ronald McDonald published this!', 'usd', '2',
+VALUES ( NULL , '9', '7781810775548', '50.00', 'Boring book, I can\'t believe Ronald McDonald published this!', 'usd',
 '2009-11-14 09:51:48', '1', 'poor');
 
 /* Lexicon Entries */
@@ -59,6 +59,15 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('logIn', 'global', 'en', 'Log In');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('logOut', 'global', 'en', 'Log Out');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('search', 'global', 'en', 'Search' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('go', 'global', 'en', 'Go' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('advancedSearch', 'global', 'en', 'Advanced Search' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('registerAccount', 'global', 'en', 'Register Account');
+
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('forgotPassword', 'register', 'en', 'Forgot Password?');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
@@ -85,10 +94,6 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('birthDate', 'register', 'en', 'Birth Date');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('invalidLogin', 'register', 'en', 'The email and password you provided do not match any registered accounts.');
-INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('registerAccount', 'register', 'en', 'Register Account');
-INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('register', 'register', 'en', 'Register');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('confirmPassword', 'register', 'en', 'Confirm Password');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
@@ -131,3 +136,43 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('confirmAccount', 'register', 'en', 'Confirm Account' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('registerSuccess', 'register', 'en', 'Registration Success' );
+
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('author', 'book', 'en', 'Author' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('title', 'book', 'en', 'Title' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('isbn', 'book', 'en', 'ISBN' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('publisher', 'book', 'en', 'Publisher' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('subject', 'book', 'en', 'Subject' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('condition', 'book', 'en', 'Condition' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('language', 'book', 'en', 'Language' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('price', 'book', 'en', 'Price' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('publishDate', 'book', 'en', 'Publish Date' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('new', 'book', 'en', 'New' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('good', 'book', 'en', 'Good' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('acceptable', 'book', 'en', 'Acceptable' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('poor', 'book', 'en', 'Poor' );
+
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('sortBy', 'search', 'en', 'Sort By' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('relevance', 'search', 'en', 'Relevance' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('searchResults', 'search', 'en', 'Search Results' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('by', 'search', 'en', 'by' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('listedBy', 'search', 'en', 'Listed by' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('on', 'search', 'en', 'on' );

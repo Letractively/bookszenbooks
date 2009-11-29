@@ -70,6 +70,7 @@ CREATE TABLE Book (
   pages       smallint(5) NOT NULL,
   publisher   varchar(30) NOT NULL,
   publishDate date NOT NULL,
+  edition     smallint(3) NOT NULL,
   language    varchar(2) NOT NULL,
   PRIMARY KEY (isbn)) CHARACTER SET UTF8;
 
@@ -80,7 +81,6 @@ CREATE TABLE BookListing (
   price       decimal(5, 2) NOT NULL,
   comment     text,
   currency    varchar(10) NOT NULL,
-  edition     smallint(3) NOT NULL,
   listDate    datetime NOT NULL,
   active      tinyint(1) NOT NULL,
   `condition` varchar(10) NOT NULL,

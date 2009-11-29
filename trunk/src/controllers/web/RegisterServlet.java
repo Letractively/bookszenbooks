@@ -62,12 +62,14 @@ public class RegisterServlet extends HttpServlet {
         /* Handle registration request */
         else if( action.equals( "register" ) ) { 
             formErrors = checkRegistration( request, bzb );
-            
+
+            /* No form errors, create the user and display validation page */
             if( formErrors.isEmpty() ) {
                 createUser( request, bzb.getDBDriver() );
                 
                 forwardUrl = "/validationCode.jsp";
             }
+            /* Show form errors */
             else {
                 forwardUrl = "/register.jsp";
 
@@ -75,12 +77,15 @@ public class RegisterServlet extends HttpServlet {
                 request.setAttribute( "countries", getCountries() );
             }
         }
+        /* Confirming an account */
         else if( action.equals( "confirm" ) ) {
+            /* No email entered - display the form */
             if( request.getParameter( "email" ) == null ) {
                 forwardUrl = "/validationCode.jsp";
 
                 request.setAttribute( "pageTitle", bzb.getLexicon().get( "confirmAccount" ) );
             }
+            /* Code and email match - update user and display success */
             else if( ( user = checkValidationCode( request, bzb.getDBDriver() ) ) != null ) {
                 forwardUrl = "/registerSuccess.jsp";
 
@@ -89,6 +94,7 @@ public class RegisterServlet extends HttpServlet {
 
                 request.setAttribute( "pageTitle", bzb.getLexicon().get( "registerSuccess" ) );
             }
+            /* Show validation page with errors */
             else {
                 forwardUrl = "/validationCode.jsp";
 
@@ -123,6 +129,12 @@ public class RegisterServlet extends HttpServlet {
         doPost( request, response );
     }
 
+    /**
+     * Gets a list of ISO country codes country names.
+     *
+     * @return An ArrayList of string arrays. Index 0 contains the ISO country code
+     * and index 1 contains the country name.
+     */
     private ArrayList<String[]> getCountries() {
         ArrayList<String[]> countries = new ArrayList<String[]>();
         String[] countryData;
@@ -139,6 +151,12 @@ public class RegisterServlet extends HttpServlet {
         return countries;
     }
 
+    /**
+     *
+     * @param email
+     * @param allowedDomains
+     * @return
+     */
     public boolean isValidEmail( String email, String allowedDomains ) {
         String domains = allowedDomains.replace( "\n", "|" );
         Pattern pattern = Pattern.compile( "^[A-Z0-9_+-]+(.[A-Z0-9_+-]+)*@" + domains + "$", Pattern.CASE_INSENSITIVE );
@@ -155,6 +173,11 @@ public class RegisterServlet extends HttpServlet {
         return true;
     }
 
+    /**
+     *
+     * @param password
+     * @return
+     */
     public boolean isValidPassword( String password ) {
         if( password.isEmpty() ) {
             return false;
@@ -163,6 +186,11 @@ public class RegisterServlet extends HttpServlet {
         return true;
     }
 
+    /**
+     *
+     * @param birthDate
+     * @return
+     */
     public Date parseDate( String birthDate ) {
         SimpleDateFormat format = new SimpleDateFormat( "dd/MM/yyyy" );
 
@@ -175,10 +203,20 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Hashtable checkRequiredFields() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     *
+     * @param request
+     * @param bzb
+     * @return
+     */
     private HashMap<String, String> checkRegistration( HttpServletRequest request, BooksZenBooks bzb ) {
         HashMap<String, String> errors = new HashMap<String, String>();
         String email = RequestHelper.getValue( "email", request );
@@ -215,6 +253,12 @@ public class RegisterServlet extends HttpServlet {
         return errors;
     }
 
+    /**
+     *
+     * @param request
+     * @param driver
+     * @return
+     */
     private boolean createUser( HttpServletRequest request, DBDriver driver ) {
         User user = new User();
 
@@ -243,6 +287,12 @@ public class RegisterServlet extends HttpServlet {
         return false;
     }
 
+    /**
+     *
+     * @param email
+     * @param driver
+     * @return
+     */
     private boolean isEmailRegistered(String email, DBDriver driver ) {
         String where = "email = '" + email + "'";
         String[] fields = { "COUNT(*) as count" };
@@ -260,6 +310,10 @@ public class RegisterServlet extends HttpServlet {
         return count > 0;
     }
 
+    /**
+     *
+     * @return
+     */
     private String generateCode() {
         StringBuilder builder = new StringBuilder();
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -284,6 +338,12 @@ public class RegisterServlet extends HttpServlet {
         return builder.toString();
     }
 
+    /**
+     *
+     * @param request
+     * @param driver
+     * @return
+     */
     private User checkValidationCode( HttpServletRequest request, DBDriver driver ) {
         String email = RequestHelper.getValue( "email", request );
         String code = RequestHelper.getValue( "confirmCode", request );

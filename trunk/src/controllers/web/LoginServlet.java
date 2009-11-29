@@ -70,18 +70,21 @@ public class LoginServlet extends HttpServlet {
                 /* Verify email and password */
                 user = checkCredentials( request, bzb.getDBDriver() );
 
+                /* No matching user */
                 if( user == null ) {
                     forwardUrl = "/login.jsp";
 
                     request.setAttribute( "pageTitle", bzb.getLexicon().get( "logIn" ) );
                     request.setAttribute( "formError", bzb.getLexicon().get( "invalidLogin" ) );
                 }
+                /* Not validated yet */
                 else if( !user.getValidated() ) {
                     forwardUrl = "/login.jsp";
 
                     request.setAttribute( "pageTitle", bzb.getLexicon().get( "logIn" ) );
                     request.setAttribute( "formError", bzb.getLexicon().get( "notValidated" ) );
                 }
+                /* User matched AND is validated */
                 else {
                     forwardUrl = "/home";
 
