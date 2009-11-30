@@ -23,6 +23,7 @@
         </c:if>
         <div id="priceBox">
             <span class="priceLabel">${lexicon.price}:</span> <span class="buyPrice">${listing.price}</span>
+            <b>[<a href="cart?action=add&amp;listId=${listing.listId}">${lexicon.addToCart}</a>]</b>
         </div>
         <c:if test="${not empty otherFormats}">
             <div id="otherFormatsBox">
