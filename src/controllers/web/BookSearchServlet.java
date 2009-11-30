@@ -1,6 +1,7 @@
 package controllers.web;
 
 import business.BookListing;
+import business.BookSubject;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import data.DBDriver;
@@ -72,6 +73,7 @@ public class BookSearchServlet extends HttpServlet {
 
             request.setAttribute( "conditions", getConditions( bzb.getLexicon() ) );
             request.setAttribute( "languages", getLanguages( bzb.getLexicon() ) );
+            request.setAttribute( "subjects", getSubjects( bzb.getLexicon(), bzb.getDBDriver() ) );
             request.setAttribute( "sortFields", getSortFields( bzb.getLexicon() ) );
             request.setAttribute( "pageTitle", bzb.getLexicon().get( "advancedSearch" ) );
         }
@@ -129,7 +131,7 @@ public class BookSearchServlet extends HttpServlet {
             params.add( "b.publisher LIKE '%" + publisher + "%'" );
         }
         if( !subject.isEmpty() ) {
-            params.add( "b.subject = '" + subject + "'" );
+            params.add( "b.subjectId = '" + subject + "'" );
         }
         if( !condition.isEmpty() ) {
             params.add( "l.condition = '" + condition + "'" );
@@ -218,5 +220,26 @@ public class BookSearchServlet extends HttpServlet {
         }
 
         return fields;
+    }
+
+    private ArrayList<BookSubject> getSubjects( Lexicon lexicon, DBDriver driver ) {
+        BookSubject subject;
+        ArrayList<BookSubject> subjects = new ArrayList<BookSubject>();
+        ResultSet result = driver.select( "booksubject", null, null );
+
+        try {
+            while( result.next() ) {
+                subject = new BookSubject();
+                subject.init( driver );
+                subject.populate( result );
+                subject.setI18nText( lexicon.get( subject.getText() ) );
+
+                subjects.add( subject );
+            }
+        } catch( SQLException e ) {
+
+        }
+
+        return subjects;
     }
 }

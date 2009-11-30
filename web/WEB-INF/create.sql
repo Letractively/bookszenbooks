@@ -30,9 +30,9 @@ CREATE TABLE LexiconEntry (
   topic,
   language)) CHARACTER SET UTF8;
 
-CREATE TABLE BookCategory (
-  categoryId int(10) NOT NULL AUTO_INCREMENT,
-  name  varchar(30) NOT NULL UNIQUE,
+CREATE TABLE BookSubject (
+  subjectId int(10) NOT NULL AUTO_INCREMENT,
+  text      varchar(30) NOT NULL UNIQUE,
   PRIMARY KEY (categoryId)) CHARACTER SET UTF8;
 
 CREATE TABLE BookOrder (
@@ -64,7 +64,7 @@ CREATE TABLE `User` (
 
 CREATE TABLE Book (
   isbn        varchar(13) NOT NULL,
-  categoryId  int(10) NOT NULL,
+  subjectId   int(10) NOT NULL,
   title       varchar(100) NOT NULL,
   author      varchar(100) NOT NULL,
   pages       smallint(5) NOT NULL,
