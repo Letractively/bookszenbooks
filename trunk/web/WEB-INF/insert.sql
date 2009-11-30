@@ -1,10 +1,10 @@
 /* Book Categories */
-INSERT INTO `bzb`.`bookcategory` (`categoryId` , `name` ) VALUES ( NULL , 'Biology' );
-INSERT INTO `bzb`.`bookcategory` (`categoryId` , `name` ) VALUES ( NULL , 'Computer Science' );
-INSERT INTO `bzb`.`bookcategory` (`categoryId` , `name` ) VALUES ( NULL , 'English' );
-INSERT INTO `bzb`.`bookcategory` (`categoryId` , `name` ) VALUES ( NULL , 'Mathematics' );
-INSERT INTO `bzb`.`bookcategory` (`categoryId` , `name` ) VALUES ( NULL , 'Physics' );
-INSERT INTO `bzb`.`bookcategory` (`categoryId` , `name` ) VALUES ( NULL , 'Psychology' );
+INSERT INTO `bzb`.`booksubject` (`subjectId` , `text` ) VALUES ( NULL , 'biology' );
+INSERT INTO `bzb`.`booksubject` (`subjectId` , `text` ) VALUES ( NULL , 'computerScience' );
+INSERT INTO `bzb`.`booksubject` (`subjectId` , `text` ) VALUES ( NULL , 'english' );
+INSERT INTO `bzb`.`booksubject` (`subjectId` , `text` ) VALUES ( NULL , 'mathematics' );
+INSERT INTO `bzb`.`booksubject` (`subjectId` , `text` ) VALUES ( NULL , 'physics' );
+INSERT INTO `bzb`.`booksubject` (`subjectId` , `text` ) VALUES ( NULL , 'psychology' );
 
 /* Lexicon Languages */
 INSERT INTO `bzb`.`lexiconlanguage` (`language`, `name`) VALUES ('en', 'English');
@@ -37,13 +37,13 @@ INSERT INTO `bzb`.`systemsetting` (`key` ,`value` ,`title` ,`description`,`field
 VALUES ('validEmailDomains', 'worcester.edu', 'Valid Email Domains', 'The email domains that are allowed to register an account.', 'text');
 
 /* Books */
-INSERT INTO `book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
+INSERT INTO `book` (`isbn`, `subjectId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
 VALUES ('9781890774448', 2, 'Java Servlets and JSP', 'Joel Murach', 730, 'Mike Murach & Associates', '2008-01-23', 2, 'paperback', 'en');
-INSERT INTO `book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
+INSERT INTO `book` (`isbn`, `subjectId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
 VALUES ('7781810775548', 4, 'Math Goodies', 'Some Dude', 1089, 'Ronald McDonald', '1993-11-09', 1, 'hardcover', 'en');
-INSERT INTO `book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
+INSERT INTO `book` (`isbn`, `subjectId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
 VALUES ('0201700735', 2, 'The C++ Programming Language: Special Edition', 'Bjarne Stroustrup', 1030, 'Addison-Wesley Professional', '2000-02-11', 3, 'hardcover', 'en');
-INSERT INTO `book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
+INSERT INTO `book` (`isbn`, `subjectId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
 VALUES ('1890774464', 2, 'Murach''s C# 2008', 'Joel Murach', 800, 'Mike Murach & Associates', '2008-03-27', 3, 'paperback', 'en');
 
 /* Book Listings */
@@ -106,6 +106,9 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('registerDesc', 'register', 'en', 'Use the below form to register for a new account. Registering for an account gives you access to member-only features.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('emailRegistered', 'register', 'en', 'An account is already registered with the email &quot;${email}&quot;.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('emailInvalid', 'register', 'en', 'The format of the email address you entered is invalid. Email addresses must end in: @${validEmails}.');
+
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('passwordNotMatch', 'register', 'en', 'The entered passwords do not match.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
@@ -171,6 +174,18 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('hardcover', 'book', 'en', 'Hardcover' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('paperback', 'book', 'en', 'Paperback' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('biology', 'book', 'en', 'Biology' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('computerScience', 'book', 'en', 'Computer Science' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('english', 'book', 'en', 'English' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('mathematics', 'book', 'en', 'Mathematics' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('physics', 'book', 'en', 'Physics' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('psychology', 'book', 'en', 'Psychology' );
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('sortBy', 'search', 'en', 'Sort By' );

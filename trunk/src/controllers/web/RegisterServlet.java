@@ -81,7 +81,12 @@ public class RegisterServlet extends HttpServlet {
 
             /* No form errors, create the user and display validation page */
             if( formErrors.isEmpty() ) {
-                createUser( request, bzb.getDBDriver() );
+                user = createUser( request, bzb.getDBDriver() );
+
+                sendValidationEmail( user );
+
+                // @TODO remove below after email is working
+                request.setAttribute( "confirmCode", user.getValidationCode() );
                 
                 forwardUrl = "/validationCode.jsp";
             }
@@ -175,7 +180,7 @@ public class RegisterServlet extends HttpServlet {
      */
     public boolean isValidEmail( String email, String allowedDomains ) {
         String domains = allowedDomains.replace( "\n", "|" );
-        Pattern pattern = Pattern.compile( "^[A-Z0-9_+-]+(.[A-Z0-9_+-]+)*@" + domains + "$", Pattern.CASE_INSENSITIVE );
+        Pattern pattern = Pattern.compile( "^[A-Z0-9_+-]+(.[A-Z0-9_+-]+)*@(" + domains + ")$", Pattern.CASE_INSENSITIVE );
         Matcher matcher = pattern.matcher( email );
 
         if( email.isEmpty() ) {
@@ -252,8 +257,8 @@ public class RegisterServlet extends HttpServlet {
         /* Make sure the email address is valid and unregistered. */
         if( !isValidEmail( email, bzb.getConfig().get( "validEmailDomains" ) ) ) {
             replace = new HashMap();
-            replace.put( "field", bzb.getLexicon().get( "email" ) );
-            errors.put( "email", bzb.getLexicon().get( "emptyField", replace ) );
+            replace.put( "validEmails", bzb.getConfig().get( "validEmailDomains" ).replace( "\n", ", ") );
+            errors.put( "email", bzb.getLexicon().get( "emailInvalid", replace ) );
         }
         else if( isEmailRegistered( email, bzb.getDBDriver() ) ) {
             replace = new HashMap();
@@ -290,7 +295,7 @@ public class RegisterServlet extends HttpServlet {
      * @param driver
      * @return
      */
-    private boolean createUser( HttpServletRequest request, DBDriver driver ) {
+    private User createUser( HttpServletRequest request, DBDriver driver ) {
         User user = new User();
 
         user.init( driver );
@@ -312,10 +317,10 @@ public class RegisterServlet extends HttpServlet {
         user.setSuperUser( false );
 
         if( user.save() ) {
-            return true;
+            return user;
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -393,5 +398,9 @@ public class RegisterServlet extends HttpServlet {
         }
 
         return user;
+    }
+
+    private boolean sendValidationEmail( User user ) {
+        return true;
     }
 }

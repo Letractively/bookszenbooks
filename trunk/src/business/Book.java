@@ -11,7 +11,7 @@ import java.util.Date;
 public class Book extends DBObject implements Serializable {
 
     private String isbn;
-    private int categoryId;
+    private int subjectId;
     private String title;
     private String author;
     private String publisher;
@@ -20,7 +20,7 @@ public class Book extends DBObject implements Serializable {
     private String language;
     private int edition;
     private String format;
-    private BookCategory category;
+    private BookSubject category;
     private String tableName = "book";
     private String[] primaryKeys = { "isbn" };
     
@@ -113,15 +113,15 @@ public class Book extends DBObject implements Serializable {
     /**
      * @return the categoryId
      */
-    public int getCategoryId() {
-        return categoryId;
+    public int getSubjectId() {
+        return subjectId;
     }
 
     /**
      * @param categoryId the categoryId to set
      */
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setSubjectId(int subjectId) {
+        this.subjectId = subjectId;
     }
 
     /**
@@ -225,14 +225,14 @@ public class Book extends DBObject implements Serializable {
     /**
      * @return the category
      */
-    public BookCategory getCategory() {
+    public BookSubject getCategory() {
         return category;
     }
 
     /**
      * @param category the category to set
      */
-    public void setCategory(BookCategory category) {
+    public void setCategory(BookSubject category) {
         this.category = category;
     }
 

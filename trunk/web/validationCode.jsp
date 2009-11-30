@@ -3,6 +3,8 @@
 
 <p>${lexicon.confirmDesc}</p>
 
+<p><b>${lexicon.confirmCode}:</b> ${confirmCode}</p>
+
 <form action="registerAccount" method="post">
     <input type="hidden" name="action" value="confirm" />
     <label for="email">${lexicon.email}:</label><input type="text" name="email" id="email" value="${param.email}" />

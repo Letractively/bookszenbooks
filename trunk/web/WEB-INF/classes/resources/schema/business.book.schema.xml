@@ -2,7 +2,7 @@
 
 <table name="book" className="business.Book">
   <field id="0" name="isbn" dbType="12" javaType="class java.lang.String"/>
-  <field id="1" name="categoryId" dbType="4" javaType="int"/>
+  <field id="1" name="subjectId" dbType="4" javaType="int"/>
   <field id="2" name="title" dbType="12" javaType="class java.lang.String"/>
   <field id="3" name="author" dbType="12" javaType="class java.lang.String"/>
   <field id="4" name="pages" dbType="5" javaType="int"/>
