@@ -217,3 +217,5 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('numberAvailable', 'listing', 'en', 'number Available' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('averagePrice', 'listing', 'en', 'Average Price' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('addToCart', 'listing', 'en', 'Add to Cart' );
