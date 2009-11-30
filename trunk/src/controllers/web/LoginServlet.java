@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +17,7 @@ import util.DigestHelper;
 import util.RequestHelper;
 
 /**
- * This servlet handles all login and logout requests, including setting and
+ * Handles all login and logout requests, including setting and
  * removing cookies and user session data.
  *
  * @author Rick Varella
@@ -26,6 +25,17 @@ import util.RequestHelper;
  */
 
 public class LoginServlet extends HttpServlet {
+    private static String dbConfigResource;
+
+     /**
+     * Initializes the servlet and sets up required instance variables.
+     */
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        
+        dbConfigResource = getServletContext().getInitParameter( "dbConfigResource" );
+    }
 
     /**
      * Handles all incoming POST requests to the servlet.
@@ -37,8 +47,6 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        ServletContext context = this.getServletContext();
-        String dbConfigResource = context.getInitParameter( "dbConfigResource" );
         BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
         String action = RequestHelper.getValue( "action", request );
         String forwardUrl;

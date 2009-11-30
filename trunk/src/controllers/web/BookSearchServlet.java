@@ -1,9 +1,7 @@
 package controllers.web;
 
-import business.Book;
 import business.BookListing;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import javax.servlet.http.HttpServletRequest;
 import data.DBDriver;
 import java.io.IOException;
@@ -15,7 +13,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +20,24 @@ import util.BooksZenBooks;
 import util.RequestHelper;
 import util.collections.Lexicon;
 
+/**
+ * Handles requests related to searching for books.
+ * 
+ * @author Rick Varella
+ * @version 11.29.2009
+ */
 public class BookSearchServlet extends HttpServlet {
+    private static String dbConfigResource;
+
+     /**
+     * Initializes the servlet and sets up required instance variables.
+     */
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        
+        dbConfigResource = getServletContext().getInitParameter( "dbConfigResource" );
+    }
 
     /**
      * Handles all incoming POST requests to the servlet.
@@ -35,8 +49,6 @@ public class BookSearchServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        ServletContext context = this.getServletContext();
-        String dbConfigResource = context.getInitParameter( "dbConfigResource" );
         BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
         String action = RequestHelper.getValue( "action", request );
         String forwardUrl;
@@ -144,14 +156,6 @@ public class BookSearchServlet extends HttpServlet {
         return where.toString();
     }
 
-    public ArrayList getList(Hashtable criteria) {
-        throw new UnsupportedOperationException();
-    }
-
-    public String outputResults( ArrayList list ) {
-        throw new UnsupportedOperationException();
-    }
-
     private ArrayList<BookListing> getSearchResults( ArrayList<String> parameters, DBDriver driver ) {
         ResultSet result;
         BookListing listing;
@@ -168,9 +172,6 @@ public class BookSearchServlet extends HttpServlet {
                 listing = new BookListing();
                 listing.init( driver );
                 listing.populate( result );
-
-                System.out.println( "PRICE:" + listing.getPrice() + "," + result.getDouble( "price" ) );
-
                 listings.add( listing );
             }
         } catch( SQLException e ) {

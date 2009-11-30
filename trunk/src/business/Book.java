@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class Book extends DBObject implements Serializable {
 
-    private long isbn;
+    private String isbn;
     private int categoryId;
     private String title;
     private String author;
@@ -19,6 +19,7 @@ public class Book extends DBObject implements Serializable {
     private int pages;
     private String language;
     private int edition;
+    private String format;
     private BookCategory category;
     private String tableName = "book";
     private String[] primaryKeys = { "isbn" };
@@ -98,14 +99,14 @@ public class Book extends DBObject implements Serializable {
     /**
      * @return the isbn
      */
-    public long getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
     /**
      * @param isbn the isbn to set
      */
-    public void setIsbn(long isbn) {
+    public void setIsbn( String isbn ) {
         this.isbn = isbn;
     }
 
@@ -233,5 +234,19 @@ public class Book extends DBObject implements Serializable {
      */
     public void setCategory(BookCategory category) {
         this.category = category;
+    }
+
+    /**
+     * @return the format
+     */
+    public String getFormat() {
+        return format;
+    }
+
+    /**
+     * @param format the format to set
+     */
+    public void setFormat(String format) {
+        this.format = format;
     }
 }

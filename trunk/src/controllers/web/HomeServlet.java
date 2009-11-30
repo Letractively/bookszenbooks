@@ -1,27 +1,33 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package controllers.web;
 
 import business.User;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import util.BooksZenBooks;
-import util.RequestHelper;
 
 /**
- *
- * @author Rick
+ * Handles requests to the main page of the system.
+ * 
+ * @author Rick Varella
+ * @version 11.29.2009
  */
 public class HomeServlet extends HttpServlet {
-   
+    private static String dbConfigResource;
+
+     /**
+     * Initializes the servlet and sets up required instance variables.
+     */
+    @Override
+    public void init() throws ServletException {
+        super.init();
+
+        dbConfigResource = getServletContext().getInitParameter( "dbConfigResource" );
+    }
+
     /**
      * Handles all incoming POST requests to the servlet.
      *
@@ -32,10 +38,7 @@ public class HomeServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        ServletContext context = this.getServletContext();
-        String dbConfigResource = context.getInitParameter( "dbConfigResource" );
         BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
-        String action = RequestHelper.getValue( "action", request );
         String forwardUrl;
         RequestDispatcher dispatcher;
         User user = bzb.getAuthenticatedUser( request );
@@ -75,5 +78,4 @@ public class HomeServlet extends HttpServlet {
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
         doPost( request, response );
     }
-
 }

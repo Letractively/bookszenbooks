@@ -43,4 +43,17 @@ public class RequestHelper {
     public static String getValue( String paramName, HttpServletRequest request ) {
         return request.getParameter( paramName ) != null ? ( String ) request.getParameter( paramName ).trim() : "";
     }
+
+    public static int getInt( String paramName, HttpServletRequest request ) {
+        String value = getValue( paramName, request );
+        int numericValue;
+
+        try {
+            numericValue = Integer.parseInt( value );
+        } catch( NumberFormatException e ) {
+            numericValue = 0;
+        }
+
+        return numericValue;
+    }
 }

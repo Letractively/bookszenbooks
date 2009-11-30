@@ -37,20 +37,24 @@ INSERT INTO `bzb`.`systemsetting` (`key` ,`value` ,`title` ,`description`,`field
 VALUES ('validEmailDomains', 'worcester.edu', 'Valid Email Domains', 'The email domains that are allowed to register an account.', 'text');
 
 /* Books */
-INSERT INTO `bzb`.`book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `language`)
-VALUES ('9781890774448', '1', 'Java Servlets and JSP', 'Murach', '730', 'Mike Murach & Associates', '2008-01-23', '2', 'en');
-INSERT INTO `bzb`.`book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `language`)
-VALUES ('7781810775548', '2', 'Math Goodies', 'Some Dude', '1089', 'Ronald McDonald', '1993-11-09', '1', 'en');
+INSERT INTO `book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
+VALUES ('9781890774448', 2, 'Java Servlets and JSP', 'Joel Murach', 730, 'Mike Murach & Associates', '2008-01-23', 2, 'paperback', 'en');
+INSERT INTO `book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
+VALUES ('7781810775548', 4, 'Math Goodies', 'Some Dude', 1089, 'Ronald McDonald', '1993-11-09', 1, 'hardcover', 'en');
+INSERT INTO `book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
+VALUES ('0201700735', 2, 'The C++ Programming Language: Special Edition', 'Bjarne Stroustrup', 1030, 'Addison-Wesley Professional', '2000-02-11', 3, 'hardcover', 'en');
+INSERT INTO `book` (`isbn`, `categoryId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
+VALUES ('1890774464', 2, 'Murach''s C# 2008', 'Joel Murach', 800, 'Mike Murach & Associates', '2008-03-27', 3, 'paperback', 'en');
 
 /* Book Listings */
-INSERT INTO `bzb`.`booklisting` (`listId` ,`userId` ,`isbn` ,`price` ,`comment` ,`currency` ,
-`listDate` ,`active` ,`condition`)
-VALUES ( NULL , '1', '9781890774448', '10.00', 'Awesome book. Jeff''s class rocks!', 'usd',
-'2009-11-16 09:51:48', '1', 'new');
-INSERT INTO `bzb`.`booklisting` (`listId` ,`userId` ,`isbn` ,`price` ,`comment` ,`currency` ,
-`listDate` ,`active` ,`condition`)
-VALUES ( NULL , '9', '7781810775548', '50.00', 'Boring book, I can\'t believe Ronald McDonald published this!', 'usd',
-'2009-11-14 09:51:48', '1', 'poor');
+INSERT INTO `bzb`.`booklisting` (`listId` ,`userId` ,`isbn` ,`price` ,`comment` ,`currency` ,`listDate` ,`active` ,`condition`)
+VALUES ( NULL , '1', '9781890774448', '10.00', 'Awesome book. Jeff''s class rocks!', 'usd', '2009-11-16 09:51:48', '1', 'new');
+INSERT INTO `bzb`.`booklisting` (`listId` ,`userId` ,`isbn` ,`price` ,`comment` ,`currency` ,`listDate` ,`active` ,`condition`)
+VALUES ( NULL , '9', '7781810775548', '50.00', 'Boring book, I can\'t believe Ronald McDonald published this! Missing half of the front cover; page 213 is torn out.', 'usd', '2009-11-14 09:51:48', '1', 'poor');
+INSERT INTO `bzb`.`booklisting` (`listId` ,`userId` ,`isbn` ,`price` ,`comment` ,`currency` ,`listDate` ,`active` ,`condition`)
+VALUES (NULL , '1', '1890774464', '12.00', 'Good book!', 'usd', '2009-11-29 00:53:49', '1', 'new');
+INSERT INTO `bzb`.`booklisting` (`listId`, `userId`, `isbn`, `price`, `comment`, `currency`, `listDate`, `active`, `condition`)
+VALUES (NULL, '9', '0201700735', '8.00', 'Good information.', 'usd', '2009-11-23 00:56:20', '1', 'acceptable');
 
 /* Lexicon Entries */
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
@@ -157,6 +161,16 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('acceptable', 'book', 'en', 'Acceptable' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('poor', 'book', 'en', 'Poor' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('edition', 'book', 'en', 'Edition' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('pages', 'book', 'en', 'Pages' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('format', 'book', 'en', 'Format' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('hardcover', 'book', 'en', 'Hardcover' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('paperback', 'book', 'en', 'Paperback' );
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('sortBy', 'search', 'en', 'Sort By' );
@@ -174,3 +188,32 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('noResults', 'search', 'en', 'No results matching your search criteria were found.' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('anyCondition', 'search', 'en', 'Any Condition' );
+
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('listingNotFound', 'listing', 'en', 'Listing Not Found' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('listingIDInvalid', 'listing', 'en', 'The specified listing ID is invalid.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('listingInactive', 'listing', 'en', 'This listing is inactive and is no longer available for purchase.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('showingListing', 'listing', 'en', 'Showing Listing' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('bookDetails', 'listing', 'en', 'Textbook Details' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('by', 'listing', 'en', 'By' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('sellerComments', 'listing', 'en', 'Seller Comments' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('noComment', 'listing', 'en', 'The seller has not included a comment for this listing.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('listingDetails', 'listing', 'en', 'Listing Details' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('listDate', 'listing', 'en', 'List Date' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('sellerProfile', 'listing', 'en', 'View Seller\'s Profile' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('otherFormats', 'listing', 'en', 'Other Formats &amp; Editions' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('numberAvailable', 'listing', 'en', 'number Available' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('averagePrice', 'listing', 'en', 'Average Price' );

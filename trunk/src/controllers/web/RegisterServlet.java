@@ -17,8 +17,6 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
@@ -26,16 +24,25 @@ import util.BooksZenBooks;
 import util.DigestHelper;
 import util.RequestHelper;
 
+/**
+ * Handles requests related to user registration.
+ *
+ * @author Rick Varella
+ * @version 11.29.2009
+ */
 public class RegisterServlet extends HttpServlet {
     private static String[] requiredFields;
     private static String dbConfigResource;
-    
+
+    /**
+     * Initializes the servlet and sets up required instance variables.
+     */
     @Override
-    public void init() {
-        ServletContext context = this.getServletContext();
-        ServletConfig config = this.getServletConfig();
-        dbConfigResource = context.getInitParameter( "dbConfigResource" );
-        requiredFields = config.getInitParameter( "requiredFields" ).split( "," );
+    public void init() throws ServletException {
+        super.init();
+        
+        dbConfigResource = getServletContext().getInitParameter( "dbConfigResource" );
+        requiredFields = getServletConfig().getInitParameter( "requiredFields" ).split( "," );
     }
     
     /**
@@ -274,27 +281,6 @@ public class RegisterServlet extends HttpServlet {
             errors.put( "agreeTerms", bzb.getLexicon().get( "agreeTermsEmpty" ) );
         }
 
-        System.out.println( "XXX:" + errors.get( "city" ) );
-        
-        /*if( RequestHelper.getValue( "firstName", request ).isEmpty() ) {
-            replace = new HashMap();
-            replace.put( "field", bzb.getLexicon().get( "firstName" ) );
-            errors.put( "firstName", bzb.getLexicon().get( "invalidField", replace ) );
-        }
-        if( RequestHelper.getValue( "lastName", request ).isEmpty() ) {
-            replace = new HashMap();
-            replace.put( "field", bzb.getLexicon().get( "lastName" ) );
-            errors.put( "lastName", bzb.getLexicon().get( "invalidField", replace ) );
-        }
-        if( !RequestHelper.getValue( "birthDate", request ).isEmpty() && parseDate( RequestHelper.getValue( "birthDate", request ) ) == null ) {
-            replace = new HashMap();
-            replace.put( "field", bzb.getLexicon().get( "birthDate" ) );
-            errors.put( "birthDate", bzb.getLexicon().get( "invalidField", replace ) );
-        }
-        if( !RequestHelper.getValue( "agreeTerms", request ).equals( "on" ) ) {
-            errors.put( "agreeTerms", bzb.getLexicon().get( "agreeTermsEmpty" ) );
-        }*/
-        
         return errors;
     }
 
