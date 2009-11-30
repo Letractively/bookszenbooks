@@ -12,7 +12,7 @@ public class BookListing extends DBObject implements Serializable {
 
     private int userId;
     private int listId;
-    private int isbn;
+    private String isbn;
     private double price;
     private String comment;
     private String currency;
@@ -26,6 +26,8 @@ public class BookListing extends DBObject implements Serializable {
 
     public BookListing() {
         this.userId = 0;
+        this.book = new Book();
+        this.user = new User();
     }
 
     /**
@@ -40,6 +42,10 @@ public class BookListing extends DBObject implements Serializable {
         Field[] fields = this.getClass().getDeclaredFields();
         SchemaBuilder builder = new SchemaBuilder( driver );
         schema = builder.getSchema( className, tableName, fields );
+
+        /* Initialize related objects */
+        book.init( driver );
+        user.init( driver );
     }
 
     /**
@@ -50,12 +56,7 @@ public class BookListing extends DBObject implements Serializable {
      */
     @Override
     public boolean populate( ResultSet row ) throws SQLException {
-        book = new Book();
-        user = new User();
-
-        book.init( driver );
         book.populate( row );
-        user.init( driver );
         user.populate( row );
 
         return super.populate( row );
@@ -221,14 +222,14 @@ public class BookListing extends DBObject implements Serializable {
     /**
      * @return the isbn
      */
-    public int getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
     /**
      * @param isbn the isbn to set
      */
-    public void setIsbn(int isbn) {
+    public void setIsbn( String isbn ) {
         this.isbn = isbn;
     }
 

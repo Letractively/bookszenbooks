@@ -39,6 +39,11 @@
             <param-value>en,es,fr</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <description>Controls the display of book listings.</description>
+        <servlet-name>BookListingDisplayServlet</servlet-name>
+        <servlet-class>controllers.web.BookListingDisplayServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/accountLogin</url-pattern>
@@ -55,6 +60,10 @@
     <servlet-mapping>
         <servlet-name>BookSearchServlet</servlet-name>
         <url-pattern>/bookSearch</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookListingDisplayServlet</servlet-name>
+        <url-pattern>/displayListing</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

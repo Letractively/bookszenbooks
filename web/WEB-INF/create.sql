@@ -63,7 +63,7 @@ CREATE TABLE `User` (
   PRIMARY KEY (userId)) CHARACTER SET UTF8;
 
 CREATE TABLE Book (
-  isbn        bigint(13) NOT NULL,
+  isbn        varchar(13) NOT NULL,
   categoryId  int(10) NOT NULL,
   title       varchar(100) NOT NULL,
   author      varchar(100) NOT NULL,
@@ -71,13 +71,14 @@ CREATE TABLE Book (
   publisher   varchar(30) NOT NULL,
   publishDate date NOT NULL,
   edition     smallint(3) NOT NULL,
+  format      varchar(20) NOT NULL,
   language    varchar(2) NOT NULL,
   PRIMARY KEY (isbn)) CHARACTER SET UTF8;
 
 CREATE TABLE BookListing (
   listId      int(10) NOT NULL AUTO_INCREMENT,
   userId      int(10) NOT NULL,
-  isbn        bigint(13) NOT NULL,
+  isbn        varchar(13) NOT NULL,
   price       decimal(5, 2) NOT NULL,
   comment     text,
   currency    varchar(10) NOT NULL,
