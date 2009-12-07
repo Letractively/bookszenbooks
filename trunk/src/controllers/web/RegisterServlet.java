@@ -33,6 +33,7 @@ import util.RequestHelper;
 public class RegisterServlet extends HttpServlet {
     private static String[] requiredFields;
     private static String dbConfigResource;
+    private static String jspPath;
 
     /**
      * Initializes the servlet and sets up required instance variables.
@@ -42,6 +43,7 @@ public class RegisterServlet extends HttpServlet {
         super.init();
         
         dbConfigResource = getServletContext().getInitParameter( "dbConfigResource" );
+        jspPath = getServletContext().getInitParameter( "jspPath" );
         requiredFields = getServletConfig().getInitParameter( "requiredFields" ).split( "," );
     }
     
@@ -88,11 +90,11 @@ public class RegisterServlet extends HttpServlet {
                 // @TODO remove below after email is working
                 request.setAttribute( "confirmCode", user.getValidationCode() );
                 
-                forwardUrl = "/validationCode.jsp";
+                forwardUrl = jspPath + "validationCode.jsp";
             }
             /* Show form errors */
             else {
-                forwardUrl = "/register.jsp";
+                forwardUrl = jspPath + "register.jsp";
 
                 request.setAttribute( "formErrors", formErrors );
                 request.setAttribute( "countries", getCountries() );
@@ -102,13 +104,13 @@ public class RegisterServlet extends HttpServlet {
         else if( action.equals( "confirm" ) ) {
             /* No email entered - display the form */
             if( request.getParameter( "email" ) == null ) {
-                forwardUrl = "/validationCode.jsp";
+                forwardUrl = jspPath + "validationCode.jsp";
 
                 request.setAttribute( "pageTitle", bzb.getLexicon().get( "confirmAccount" ) );
             }
             /* Code and email match - update user and display success */
             else if( ( user = checkValidationCode( request, bzb.getDBDriver() ) ) != null ) {
-                forwardUrl = "/registerSuccess.jsp";
+                forwardUrl = jspPath + "registerSuccess.jsp";
 
                 user.setValidated( true );
                 user.save();
@@ -117,7 +119,7 @@ public class RegisterServlet extends HttpServlet {
             }
             /* Show validation page with errors */
             else {
-                forwardUrl = "/validationCode.jsp";
+                forwardUrl = jspPath + "validationCode.jsp";
 
                 request.setAttribute( "pageTitle", bzb.getLexicon().get( "confirmAccount" ) );
                 request.setAttribute( "codeInvalid", true );
@@ -125,7 +127,7 @@ public class RegisterServlet extends HttpServlet {
         }
         /* Display the registration form */
         else {
-            forwardUrl = "/register.jsp";
+            forwardUrl = jspPath + "register.jsp";
 
             request.setAttribute( "pageTitle", bzb.getLexicon().get( "registerAccount" ) );
             request.setAttribute( "countries", getCountries() );
