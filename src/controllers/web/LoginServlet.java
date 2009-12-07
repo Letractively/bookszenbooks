@@ -146,7 +146,6 @@ public class LoginServlet extends HttpServlet {
         User user = null;
         String email = RequestHelper.getValue( "email", request );
         String password = RequestHelper.getValue( "password", request );
-        
         String where = "email = '" + email + "' AND password = '" + DigestHelper.md5( password ) + "'";
 
         /* Query for matching user */
@@ -159,14 +158,12 @@ public class LoginServlet extends HttpServlet {
 
                 user.init( driver );
                 user.populate( result );
-
-                return user;
             }
         } catch( SQLException e ) {
 
         }
 
-        return null;
+        return user;
     }
 
     /**
@@ -197,7 +194,7 @@ public class LoginServlet extends HttpServlet {
         response.addCookie( passwordCookie );
 
         /* Set user session attribute */
-        session.setAttribute( "user", user );
+        session.setAttribute( "authUser", user );
     }
 
     /**

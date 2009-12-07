@@ -1,5 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:import url="/includes/header.jsp" />
+<c:import url="header.jsp" />
 
 <p>${lexicon.confirmDesc}</p>
 
@@ -13,4 +13,4 @@
     <p class="submit"><input type="submit" value="${lexicon.checkCode}" /></p>
 </form>
 
-<c:import url="/includes/footer.jsp" />
+<c:import url="footer.jsp" />

@@ -12,7 +12,7 @@
     <body>
         <div id="loginBar">
             <c:choose>
-                <c:when test="${user != null}">
+                <c:when test="${authUser != null}">
                     <a href="accountLogin?action=logout">${lexicon.logOut}</a>
                 </c:when>
                 <c:otherwise>
@@ -22,5 +22,5 @@
             </c:choose>
         </div>
         <div id="simpleSearch">
-            <c:import url="/includes/simpleSearch.jsp" />
+            <c:import url="simpleSearch.jsp" />
         </div>

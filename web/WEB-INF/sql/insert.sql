@@ -58,6 +58,16 @@ VALUES (NULL, '9', '0201700735', '8.00', 'Good information.', 'usd', '2009-11-23
 
 /* Lexicon Entries */
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('fileNotFound', 'error', 'en', 'Page Not Found' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('fileNotFoundDesc', 'error', 'en', 'The requested page was not found on the server.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('unauthorized', 'error', 'en', 'You Must Log In to Access This Feature' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('unauthorizedDesc', 'error', 'en', 'The feature you are trying to use is only available to registered members. Please log in to have access to it.' );
+
+
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('welcome', 'global', 'en', 'Welcome back, %s.' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('logIn', 'global', 'en', 'Log In');
@@ -198,6 +208,8 @@ VALUES ('by', 'search', 'en', 'by' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('listedBy', 'search', 'en', 'Listed by' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('listedOn', 'search', 'en', 'Listed on' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('on', 'search', 'en', 'on' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('noResults', 'search', 'en', 'No results matching your search criteria were found.' );
@@ -234,3 +246,16 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('averagePrice', 'listing', 'en', 'Average Price' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('addToCart', 'listing', 'en', 'Add to Cart' );
+
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('viewingProfile', 'profile', 'en', 'Viewing ${user}\'s Profile' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('memberSince', 'profile', 'en', 'Member Since' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('totalListings', 'profile', 'en', 'Total Listings' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('recentListings', 'profile', 'en', 'Recent Listings' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('userNotFound', 'profile', 'en', 'User Not Found' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('userNotFoundDesc', 'profile', 'en', 'That user does not exist in the database.' );

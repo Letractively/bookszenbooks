@@ -1,5 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:import url="/includes/header.jsp" />
+<c:import url="header.jsp" />
 
 <h1>${lexicon.advancedSearch}</h1>
 
@@ -57,4 +57,4 @@
 
 </form>
 
-<c:import url="/includes/footer.jsp" />
+<c:import url="footer.jsp" />
