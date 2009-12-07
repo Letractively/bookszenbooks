@@ -1,4 +1,5 @@
-<%@include file="/includes/header.jsp" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="header.jsp" />
 
 <p>${formError}</p>
 
@@ -9,4 +10,4 @@
     <p class="submit"><input type="submit" value="${lexicon.logIn}" /></p>
 </form>
 
-<%@include file="/includes/footer.jsp" %>
+<c:import url="footer.jsp" />

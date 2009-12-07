@@ -81,7 +81,7 @@ public class DBDriverMySQL implements DBDriver {
         }
 
         if( orderBy != null && orderBy.length > 0 ) {
-            sql.append( Util.joinArray( orderBy, "," ) );
+            sql.append( " ORDER BY " ).append( Util.joinArray( orderBy, "," ) );
         }
 
         if( limit > 0 ) {

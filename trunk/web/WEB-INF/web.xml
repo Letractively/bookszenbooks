@@ -5,11 +5,6 @@
         <param-name>jspPath</param-name>
         <param-value>/WEB-INF/views/</param-value>
     </context-param>
-    <context-param>
-        <description>The path of JSP files to be used as an error page.</description>
-        <param-name>errorPath</param-name>
-        <param-value>/WEB-INF/views/errors/</param-value>
-    </context-param>
     <servlet>
         <description>Controls logging in/out of the web context.</description>
         <servlet-name>LoginServlet</servlet-name>
