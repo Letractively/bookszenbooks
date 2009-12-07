@@ -29,6 +29,7 @@ import util.collections.Lexicon;
  */
 public class BookSearchServlet extends HttpServlet {
     private static String dbConfigResource;
+    private static String jspPath;
 
      /**
      * Initializes the servlet and sets up required instance variables.
@@ -38,6 +39,7 @@ public class BookSearchServlet extends HttpServlet {
         super.init();
         
         dbConfigResource = getServletContext().getInitParameter( "dbConfigResource" );
+        jspPath = getServletContext().getInitParameter( "jspPath" );
     }
 
     /**
@@ -69,7 +71,7 @@ public class BookSearchServlet extends HttpServlet {
         searchParams = buildSearchParams( request );
 
         if( action.equals( "advancedSearch" ) ) {
-            forwardUrl = "/advancedSearch.jsp";
+            forwardUrl = jspPath + "advancedSearch.jsp";
 
             request.setAttribute( "conditions", getConditions( bzb.getLexicon() ) );
             request.setAttribute( "languages", getLanguages( bzb.getLexicon() ) );
@@ -78,7 +80,7 @@ public class BookSearchServlet extends HttpServlet {
             request.setAttribute( "pageTitle", bzb.getLexicon().get( "advancedSearch" ) );
         }
         else {
-            forwardUrl = "/searchResults.jsp";
+            forwardUrl = jspPath + "searchResults.jsp";
 
             request.setAttribute( "pageTitle", bzb.getLexicon().get( "searchResults" ) );
             request.setAttribute( "listings", getSearchResults( searchParams, bzb.getDBDriver() ) );

@@ -1,3 +1,7 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controllers.web;
 
 import business.User;
@@ -8,18 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import util.BooksZenBooks;
+import util.RequestHelper;
 
 /**
- * Handles requests to the main page of the system.
- * 
- * @author Rick Varella
- * @version 11.29.2009
+ *
+ * @author Rick
  */
-public class HomeServlet extends HttpServlet {
+public class ProfileDisplayServlet extends HttpServlet {
     private static String dbConfigResource;
     private static String jspPath;
+    private static String errorPath;
 
-     /**
+    /**
      * Initializes the servlet and sets up required instance variables.
      */
     @Override
@@ -28,6 +32,7 @@ public class HomeServlet extends HttpServlet {
 
         dbConfigResource = getServletContext().getInitParameter( "dbConfigResource" );
         jspPath = getServletContext().getInitParameter( "jspPath" );
+        errorPath = getServletContext().getInitParameter( "errorPath" );
     }
 
     /**
@@ -41,26 +46,17 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
         BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
+        String action = RequestHelper.getValue( "action", request );
         String forwardUrl;
         RequestDispatcher dispatcher;
         User user = bzb.getAuthenticatedUser( request );
-        String displayName;
 
-        /* Load necessary lexicons */
-        bzb.getLexicon().load( "global" );
-        bzb.getLexicon().load( "home" );
-
-        displayName = user != null ? user.getFirstName() : bzb.getLexicon().get( "guest" );
-
-        bzb.getLexicon().set( "welcome", String.format( bzb.getLexicon().get( "welcome" ), displayName ) );
-
-        /* Make lexicons and config settings available to JSP */
-        request.setAttribute( "config", bzb.getConfig().getSettings() );
-        request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
-        request.setAttribute( "language", bzb.getLexicon().getLanguage() );
-        request.setAttribute( "pageTitle", bzb.getLexicon().get( "home" ) );
-
-        forwardUrl = jspPath + "home.jsp";
+        if( user == null ) {
+            forwardUrl = errorPath + "401.jsp";
+        }
+        else {
+            forwardUrl = jspPath + "displayUser.jsp";
+        }
 
         /* Set up forward and display JSP */
         dispatcher = getServletContext().getRequestDispatcher( forwardUrl );
@@ -78,6 +74,7 @@ public class HomeServlet extends HttpServlet {
      */
     @Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        doPost( request, response );
+        /* doPost() handles all requests */
+        doPost(request, response);
     }
 }

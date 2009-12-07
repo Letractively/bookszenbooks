@@ -20,6 +20,7 @@ import util.RequestHelper;
  */
 public class BookListingDisplayServlet extends HttpServlet {
     private static String dbConfigResource;
+    private static String jspPath;
 
      /**
      * Initializes the servlet and sets up required instance variables.
@@ -29,6 +30,7 @@ public class BookListingDisplayServlet extends HttpServlet {
         super.init();
 
         dbConfigResource = getServletContext().getInitParameter( "dbConfigResource" );
+        jspPath = getServletContext().getInitParameter( "jspPath" );
     }
 
     /**
@@ -66,7 +68,7 @@ public class BookListingDisplayServlet extends HttpServlet {
             request.setAttribute( "pageTitle", bzb.getLexicon().get( "showingListing" ) + ": " + listing.getBook().getTitle() );
         }
 
-        forwardUrl = "/bookListing.jsp";
+        forwardUrl = jspPath + "bookListing.jsp";
 
         /* Set up forward and display JSP */
         dispatcher = getServletContext().getRequestDispatcher( forwardUrl );

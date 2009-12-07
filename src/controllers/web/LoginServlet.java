@@ -26,6 +26,7 @@ import util.RequestHelper;
 
 public class LoginServlet extends HttpServlet {
     private static String dbConfigResource;
+    private static String jspPath;
 
      /**
      * Initializes the servlet and sets up required instance variables.
@@ -35,6 +36,7 @@ public class LoginServlet extends HttpServlet {
         super.init();
         
         dbConfigResource = getServletContext().getInitParameter( "dbConfigResource" );
+        jspPath = getServletContext().getInitParameter( "jspPath" );
     }
 
     /**
@@ -80,14 +82,14 @@ public class LoginServlet extends HttpServlet {
 
                 /* No matching user */
                 if( user == null ) {
-                    forwardUrl = "/login.jsp";
+                    forwardUrl = jspPath + "login.jsp";
 
                     request.setAttribute( "pageTitle", bzb.getLexicon().get( "logIn" ) );
                     request.setAttribute( "formError", bzb.getLexicon().get( "invalidLogin" ) );
                 }
                 /* Not validated yet */
                 else if( !user.getValidated() ) {
-                    forwardUrl = "/login.jsp";
+                    forwardUrl = jspPath + "login.jsp";
 
                     request.setAttribute( "pageTitle", bzb.getLexicon().get( "logIn" ) );
                     request.setAttribute( "formError", bzb.getLexicon().get( "notValidated" ) );
@@ -106,7 +108,7 @@ public class LoginServlet extends HttpServlet {
                 forwardUrl = "/home";
             }
             else {
-                forwardUrl = "/login.jsp";
+                forwardUrl = jspPath + "login.jsp";
 
                 request.setAttribute( "pageTitle", bzb.getLexicon().get( "logIn" ) );
             }
