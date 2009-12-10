@@ -1,5 +1,5 @@
 <form action="bookSearch" method="get">
-    <p><label for="searchKeywords">${lexicon.search}</label>
-        <input type="text" name="keywords" id="searchKeywords" />
-        <input type="submit" value="${lexicon.go}" /> [<a href="bookSearch?action=advancedSearch">${lexicon.advancedSearch}</a>]</p>
+    <p><input type="text" name="keywords" id="searchKeywords" size="28" />
+        <input type="submit" value="${lexicon.go}" class="button" />
+        <a href="bookSearch?action=advancedSearch" class="advancedSearchLink">${lexicon.advancedSearch}</a></p>
 </form>
