@@ -1,3 +1,134 @@
 body {
-    background:#ccc;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    background: #1e1e1e url(../images/background.gif) repeat-x;
+}
+
+#pageColumns {
+    background: #e3d6b2;
+    position: relative;
+    clear: both;
+    float: left;
+    width: 100%;
+    overflow: hidden;
+}
+
+#columnWrap {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+
+#columnContent,
+#columnSidebar {
+    float: left;
+    position: relative;
+    padding: 0 0 1em 0;
+    overflow: hidden;
+}
+
+div#pageColumns div#columnWrap {
+    right: 75%;
+    border-right: 1px solid #DFC599
+}
+
+div#pageColumns #columnContent {
+    width: 71%;
+    left: 102%;
+}
+
+div#pageColumns #columnSidebar {
+    width: 21%;
+    left: 6%;
+}
+
+#footer {
+    clear: both;
+    float: left;
+    width: 100%;
+    border-top: 1px solid #000;
+}
+
+#footer p {
+    padding:10px;
+    margin:0;
+}
+
+a {
+    color: #039;
+}
+
+input,
+textarea,
+select {
+    border: 1px solid #7F5F27;
+    background: #DFC599;
+}
+
+input.button {
+    cursor: pointer;
+}
+
+a:hover {
+    color: #069;
+    text-decoration: underline;
+}
+
+form label {
+
+}
+
+#pageWrap {
+    min-width: 800px;
+    margin: 0 5%;
+}
+
+#topStrip {
+    background: url(../images/topstrip.png) repeat-x;
+    height: 43px;
+}
+
+#topStrip p {
+    color: #fff;
+    font-weight: bold;
+    font-size: 14pt;
+    margin: 0;
+    padding: 8px 0 0 6px;
+}
+
+#topStrip a {
+    color: #fff;
+}
+
+#topStrip a:hover {
+    color: #efefef;
+}
+
+div.simpleSearch {
+    padding: 0 0 2px 0;
+}
+
+a.advancedSearchLink {
+    font-size: 10pt;
+    float: right;
+    margin: 2px 0;
+}
+
+#header {
+    background: url(../images/paper.png) repeat-x;
+    height: 181px;
+    padding: 0 0 0 10px;
+}
+
+#columnSidebar h3 {
+    background: #9F7E45;
+    color: #DFC599;
+    border: 2px solid #7F5F27;
+    text-align: center;
+}
+
+img {
+    border: 0;
 }

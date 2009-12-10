@@ -13,17 +13,19 @@
         </div>
     </c:when>
     <c:otherwise>
-        <c:forEach var="listing" items="${listings}">
-            <div class="searchResult">
-                <strong><a href="displayListing?listId=${listing.listId}">${listing.book.title}</a></strong>
-                    ${lexicon.by}
-                    <c:forTokens var="author" items="${listing.book.author}" delims="|" varStatus="status">
-                        <a href="bookSearch?author=${author}">${author}</a><c:if test="${status.last != true}">, </c:if>
-                    </c:forTokens><br />
-                    ${lexicon.price}: ${listing.price}<br />
-                    ${lexicon.listedOn}: ${listing.listDate}
-            </div>
-        </c:forEach>
+        <ul class="searchResults">
+            <c:forEach var="listing" items="${listings}">
+                <li>
+                    <strong><a href="displayListing?listId=${listing.listId}">${listing.book.title}</a></strong>
+                        ${lexicon.by}
+                        <c:forTokens var="author" items="${listing.book.author}" delims="|" varStatus="status">
+                            <a href="bookSearch?author=${author}">${author}</a><c:if test="${status.last != true}">, </c:if>
+                        </c:forTokens><br />
+                        ${lexicon.price}: ${listing.price}<br />
+                        ${lexicon.listedOn}: ${listing.listDate}
+                </li>
+            </c:forEach>
+        </ul>
     </c:otherwise>
 </c:choose>
 
