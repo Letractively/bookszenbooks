@@ -10,8 +10,9 @@
         </div>
     </c:when>
     <c:otherwise>
+        <ul class="searchResults">
         <c:forEach var="listing" items="${listings}">
-            <div class="searchResult">
+            <li>
                 <strong><a href="displayListing?listId=${listing.listId}">${listing.book.title}</a></strong>
                     ${lexicon.by}
                     <c:forTokens var="author" items="${listing.book.author}" delims="|" varStatus="status">
@@ -20,8 +21,9 @@
                     ${lexicon.price}: ${listing.price}<br />
                     ${lexicon.publishDate}: ${listing.book.publishDate}<br />
                     ${lexicon.listedBy} <a href="displayUser?userId=${listing.userId}">${listing.user.email}</a> ${lexicon.on} ${listing.listDate}
-            </div>
+            </li>
         </c:forEach>
+        </ul>
     </c:otherwise>
 </c:choose>
 

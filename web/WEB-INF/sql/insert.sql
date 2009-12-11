@@ -147,6 +147,8 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('registerSuccess', 'register', 'en', 'Registration Success' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('emptyField', 'register', 'en', 'The ${field} field is required and cannot be left blank.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('loggedOut', 'register', 'en', 'You are now logged out of the website.' );
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('author', 'book', 'en', 'Author' );

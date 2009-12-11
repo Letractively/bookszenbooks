@@ -3,7 +3,9 @@ body {
     padding: 0;
     border: 0;
     width: 100%;
-    background: #1e1e1e url(../images/background.gif) repeat-x;
+    background: #464646 url(../images/background.gif) repeat-x;
+    font-family: verdana, sans-serif, serif, times;
+    font-size: 11pt;
 }
 
 #pageColumns {
@@ -60,17 +62,6 @@ a {
     color: #039;
 }
 
-input,
-textarea,
-select {
-    border: 1px solid #7F5F27;
-    background: #DFC599;
-}
-
-input.button {
-    cursor: pointer;
-}
-
 a:hover {
     color: #069;
     text-decoration: underline;
@@ -93,7 +84,7 @@ form label {
 #topStrip p {
     color: #fff;
     font-weight: bold;
-    font-size: 14pt;
+    font-size: 12pt;
     margin: 0;
     padding: 8px 0 0 6px;
 }
@@ -131,4 +122,93 @@ a.advancedSearchLink {
 
 img {
     border: 0;
+}
+
+ul.searchResults {
+    padding: 0;
+    list-style-image: none;
+}
+
+ul.searchResults li {
+    display: block;
+    border-bottom: 2px dotted #9F7E45;
+    padding: 7px 0;
+}
+
+form {
+    margin: 0;
+    padding: 0;
+}
+
+form fieldset {
+    min-width: 500px;
+    width: 750px;
+    clear: both;
+    border: 1px solid #7F5F27;
+    padding: 10px;
+    margin: 0;
+}
+
+form fieldset legend {
+    font-size: 1.1em;
+}
+
+form label {
+    display: block;
+    float: left;
+    width: 160px;
+    padding: 0;
+    margin: 5px 0 0 0;
+    text-align: right;
+}
+
+form label.noFloat {
+    display: inline;
+    float: none;
+    width: auto;
+    margin: 0 0 0 5px;
+}
+
+form input,
+form textarea,
+form select {
+    width: auto;
+    margin: 5px 0 0 10px;
+    border: 1px solid #7F5F27;
+    background: #DFC599;
+}
+
+form input.button {
+    cursor: pointer;
+}
+
+form input.submit {
+    margin-left: 170px;
+}
+
+textarea { 
+    overflow: auto;
+}
+
+form small {
+    display: block;
+    margin: 0 0 5px 160px;
+    padding: 1px 3px;
+    font-size: 88%;
+}
+
+form .required{
+    font-weight: bold;
+}
+
+p.error,
+form p.error {
+    background: #FF9F9F;
+    border: 1px solid #BF2F2F;
+    font-size: 10pt;
+    padding: 2px 4px;
+}
+
+form br {
+    clear: left;
 }
