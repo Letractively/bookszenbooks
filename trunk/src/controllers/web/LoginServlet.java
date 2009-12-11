@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 
         /* Handle logout request */
         if( action.equals( "logout" ) ) {
-            forwardUrl = "/home";
+            forwardUrl = jspPath + "/loggedOut.jsp";
 
             endSession( request, response );
         }
