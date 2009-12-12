@@ -35,6 +35,10 @@ INSERT INTO `bzb`.`systemsetting` (`key` ,`value` ,`title` ,`description`,`field
 VALUES ('maxCookieLifetime', '1800', 'Maximum Cookie Lifetime', 'The maximum amount of time a cookie will be kept on the user\'s system before expiring.', 'text');
 INSERT INTO `bzb`.`systemsetting` (`key` ,`value` ,`title` ,`description`,`fieldType`)
 VALUES ('validEmailDomains', 'worcester.edu', 'Valid Email Domains', 'The email domains that are allowed to register an account.', 'text');
+INSERT INTO `bzb`.`systemsetting` (`key` ,`value` ,`title` ,`description`,`fieldType`)
+VALUES ('bookLanguages', 'en,fr,es', 'Book Languages', 'Languages to be shown when selecting a language for a book.', 'text');
+INSERT INTO `bzb`.`systemsetting` (`key` ,`value` ,`title` ,`description`,`fieldType`)
+VALUES ('bookConditions', 'new,good,acceptable,poor', 'Book Conditions', 'Values describing the condition of a book.', 'text');
 
 /* Books */
 INSERT INTO `book` (`isbn`, `subjectId`, `title`, `author`, `pages`, `publisher`, `publishDate`, `edition`, `format`, `language`)
@@ -250,6 +254,18 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('averagePrice', 'listing', 'en', 'Average Price' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('addToCart', 'listing', 'en', 'Add to Cart' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('beginAddListing', 'listing', 'en', 'To begin adding a new listing, enter the ISBN of your book and press &quot;Continue&quot;.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('newListing', 'listing', 'en', 'Add New Listing' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('updateListing', 'listing', 'en', 'Update Listing Details' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('continue', 'listing', 'en', 'Continue' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('invalidField', 'listing', 'en', 'The ${field} field is invalid.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('newListingNoMatch', 'listing', 'en', 'We don\'t have a book matching that ISBN yet. Please fill out the form completely to add the book to our system.' );
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('viewingProfile', 'profile', 'en', 'Viewing ${user}\'s Profile' );

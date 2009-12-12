@@ -13,7 +13,7 @@
                     <label for="isbn">${lexicon.isbn}:</label><input type="text" name="isbn" id="isbn" /><br />
                     <label for="publisher">${lexicon.publisher}:</label><input type="text" name="publisher" id="publisher" /><br />
                     <label for="subject">${lexicon.subject}:</label>
-                        <select name="subject">
+                        <select name="subject" id="subject">
                             <c:forEach var="subject" items="${subjects}">
                                 <option value="${subject.subjectId}">${subject.i18nText}</option>
                             </c:forEach>

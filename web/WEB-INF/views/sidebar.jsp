@@ -14,5 +14,4 @@
     <c:forEach var="subject" items="${subjects}">
         <li><a href="bookSearch?subject=${subject.subjectId}">${subject.i18nText}</a></li>
     </c:forEach>
-    
 </ul>
