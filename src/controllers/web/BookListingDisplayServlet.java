@@ -54,12 +54,7 @@ public class BookListingDisplayServlet extends HttpServlet {
         bzb.getLexicon().load( "global" );
         bzb.getLexicon().load( "book" );
         bzb.getLexicon().load( "listing" );
-
-        /* Make lexicons and config settings available to JSP */
-        request.setAttribute( "config", bzb.getConfig().getSettings() );
-        request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
-        request.setAttribute( "language", bzb.getLexicon().getLanguage() );
-        request.setAttribute( "listing", listing );
+        bzb.getLexicon().load( "subject" );
 
         if( listing == null ) {
             request.setAttribute( "pageTitle", bzb.getLexicon().get( "listingNotFound" ) );
@@ -69,6 +64,13 @@ public class BookListingDisplayServlet extends HttpServlet {
         }
 
         forwardUrl = jspPath + "bookListing.jsp";
+
+        /* Make lexicons and config settings available to JSP */
+        request.setAttribute( "config", bzb.getConfig().getSettings() );
+        request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
+        request.setAttribute( "language", bzb.getLexicon().getLanguage() );
+        request.setAttribute( "subjects", bzb.getSubjects() );
+        request.setAttribute( "listing", listing );
 
         /* Set up forward and display JSP */
         dispatcher = getServletContext().getRequestDispatcher( forwardUrl );

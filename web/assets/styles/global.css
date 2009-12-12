@@ -86,7 +86,7 @@ form label {
     font-weight: bold;
     font-size: 12pt;
     margin: 0;
-    padding: 8px 0 0 6px;
+    padding: 12px 0 0 10px;
 }
 
 #topStrip a {
@@ -101,10 +101,15 @@ div.simpleSearch {
     padding: 0 0 2px 0;
 }
 
-a.advancedSearchLink {
-    font-size: 10pt;
+.advancedSearch {
+    font-size: 8pt;
+    margin: 3px 0 5px 0;
+    clear: both;
+}
+
+.advancedSearch a {
     float: right;
-    margin: 2px 0;
+
 }
 
 #header {
@@ -118,6 +123,36 @@ a.advancedSearchLink {
     color: #DFC599;
     border: 2px solid #7F5F27;
     text-align: center;
+}
+
+#columnSidebar a {
+    color: #7F5F27;
+    text-decoration: none;
+}
+
+#columnSidebar a:hover {
+    color: #5F4312;
+}
+
+#columnSidebar ul {
+    padding: 0;
+    list-style-image: none;
+    border-top: 1px solid #7F5F27;
+}
+
+#columnSidebar ul li {
+    display: block;
+    border-bottom: 1px solid #7F5F27;
+}
+
+#columnSidebar ul li a {
+    display: block;
+    font-weight: bold;
+    padding: 3px 2px;
+}
+
+#columnSidebar ul li a:hover {
+    background: #DFCC99;
 }
 
 img {

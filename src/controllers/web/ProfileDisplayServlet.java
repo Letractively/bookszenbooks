@@ -60,6 +60,7 @@ public class ProfileDisplayServlet extends HttpServlet {
 
         /* Load necessary lexicons */
         bzb.getLexicon().load( "global" );
+        bzb.getLexicon().load( "subject" );
 
         if( bzb.getAuthenticatedUser( request ) == null ) {
             bzb.getLexicon().load( "error" );
@@ -88,6 +89,7 @@ public class ProfileDisplayServlet extends HttpServlet {
         request.setAttribute( "config", bzb.getConfig().getSettings() );
         request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
         request.setAttribute( "language", bzb.getLexicon().getLanguage() );
+        request.setAttribute( "subjects", bzb.getSubjects() );
         request.setAttribute( "pageTitle", pageTitle );
 
         /* Set up forward and display JSP */
