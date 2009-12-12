@@ -49,18 +49,20 @@ public class HomeServlet extends HttpServlet {
         /* Load necessary lexicons */
         bzb.getLexicon().load( "global" );
         bzb.getLexicon().load( "home" );
+        bzb.getLexicon().load( "subject" );
 
         displayName = user != null ? user.getFirstName() : bzb.getLexicon().get( "guest" );
 
         bzb.getLexicon().set( "welcome", String.format( bzb.getLexicon().get( "welcome" ), displayName ) );
+
+        forwardUrl = jspPath + "home.jsp";
 
         /* Make lexicons and config settings available to JSP */
         request.setAttribute( "config", bzb.getConfig().getSettings() );
         request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
         request.setAttribute( "language", bzb.getLexicon().getLanguage() );
         request.setAttribute( "pageTitle", bzb.getLexicon().get( "home" ) );
-
-        forwardUrl = jspPath + "home.jsp";
+        request.setAttribute( "subjects", bzb.getSubjects() );
 
         /* Set up forward and display JSP */
         dispatcher = getServletContext().getRequestDispatcher( forwardUrl );

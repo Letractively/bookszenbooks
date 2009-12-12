@@ -67,11 +67,7 @@ public class RegisterServlet extends HttpServlet {
         /* Load necessary lexicons */
         bzb.getLexicon().load( "global" );
         bzb.getLexicon().load( "register" );
-
-        /* Make lexicons and config settings available to JSP */
-        request.setAttribute( "config", bzb.getConfig().getSettings() );
-        request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
-        request.setAttribute( "language", bzb.getLexicon().getLanguage() );
+        bzb.getLexicon().load( "subject" );
 
         /* Already logged in? */
         if( bzb.getAuthenticatedUser( request ) != null ) {
@@ -132,6 +128,12 @@ public class RegisterServlet extends HttpServlet {
             request.setAttribute( "pageTitle", bzb.getLexicon().get( "registerAccount" ) );
             request.setAttribute( "countries", getCountries() );
         }
+
+        /* Make lexicons and config settings available to JSP */
+        request.setAttribute( "config", bzb.getConfig().getSettings() );
+        request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
+        request.setAttribute( "language", bzb.getLexicon().getLanguage() );
+        request.setAttribute( "subjects", bzb.getSubjects() );
         
         /* Set up forward and display JSP */
         dispatcher = getServletContext().getRequestDispatcher( forwardUrl );

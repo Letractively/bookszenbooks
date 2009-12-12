@@ -1,5 +1,6 @@
 package util;
 
+import business.BookSubject;
 import business.User;
 import data.DBConfig;
 import data.DBDriver;
@@ -9,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import util.collections.*;
 
@@ -105,6 +107,28 @@ public class BooksZenBooks {
         }
 
         return user;
+    }
+
+    public ArrayList<BookSubject> getSubjects() {
+        ArrayList<BookSubject> subjects = new ArrayList<BookSubject>();
+        BookSubject subject;
+        String[] orderBy = { "text ASC" };
+        ResultSet result = dbDriver.select( "booksubject", null, null, null, null, null, orderBy, 0, 0 );
+
+        try {
+            while( result.next() ) {
+                System.out.println( "LOL:" + result.getString( "text" ) );
+                subject = new BookSubject();
+                subject.init( dbDriver );
+                subject.populate( result );
+                subject.setI18nText( lexicon.get( subject.getText() ) );
+                subjects.add( subject );
+            }
+        } catch( SQLException e ) {
+
+        }
+
+        return subjects;
     }
 
     /**

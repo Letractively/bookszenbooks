@@ -81,6 +81,8 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('advancedSearch', 'global', 'en', 'Advanced Search' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('registerAccount', 'global', 'en', 'Register Account');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('subjects', 'global', 'en', 'Subjects');
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('forgotPassword', 'register', 'en', 'Forgot Password?');
@@ -187,17 +189,17 @@ VALUES ('hardcover', 'book', 'en', 'Hardcover' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('paperback', 'book', 'en', 'Paperback' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('biology', 'book', 'en', 'Biology' );
+VALUES ('biology', 'subject', 'en', 'Biology' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('computerScience', 'book', 'en', 'Computer Science' );
+VALUES ('computerScience', 'subject', 'en', 'Computer Science' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('english', 'book', 'en', 'English' );
+VALUES ('english', 'subject', 'en', 'English' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('mathematics', 'book', 'en', 'Mathematics' );
+VALUES ('mathematics', 'subject', 'en', 'Mathematics' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('physics', 'book', 'en', 'Physics' );
+VALUES ('physics', 'subject', 'en', 'Physics' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('psychology', 'book', 'en', 'Psychology' );
+VALUES ('psychology', 'subject', 'en', 'Psychology' );
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('sortBy', 'search', 'en', 'Sort By' );

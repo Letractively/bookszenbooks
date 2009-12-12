@@ -4,7 +4,15 @@
     <form action="bookSearch" method="get">
         <input type="text" name="keywords" id="searchKeywords" />
         <input type="submit" value="${lexicon.go}" class="button" /><br />
-        <a href="bookSearch?action=advancedSearch" class="advancedSearchLink">${lexicon.advancedSearch}</a>
+        <div class="advancedSearch">
+            <a href="bookSearch?action=advancedSearch">${lexicon.advancedSearch}</a>
+        </div>
     </form>
 </div>
-<h3>Categories</h3>
+<h3>${lexicon.subjects}</h3>
+<ul>
+    <c:forEach var="subject" items="${subjects}">
+        <li><a href="bookSearch?subject=${subject.subjectId}">${subject.i18nText}</a></li>
+    </c:forEach>
+    
+</ul>

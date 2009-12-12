@@ -58,11 +58,7 @@ public class LoginServlet extends HttpServlet {
         /* Load necessary lexicons */
         bzb.getLexicon().load( "global" );
         bzb.getLexicon().load( "register" );
-
-        /* Make lexicons and config settings available to JSP */
-        request.setAttribute( "config", bzb.getConfig().getSettings() );
-        request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
-        request.setAttribute( "language", bzb.getLexicon().getLanguage() );
+        bzb.getLexicon().load( "subject" );
 
         /* Handle logout request */
         if( action.equals( "logout" ) ) {
@@ -113,6 +109,12 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute( "pageTitle", bzb.getLexicon().get( "logIn" ) );
             }
         }
+
+        /* Make lexicons and config settings available to JSP */
+        request.setAttribute( "config", bzb.getConfig().getSettings() );
+        request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
+        request.setAttribute( "language", bzb.getLexicon().getLanguage() );
+        request.setAttribute( "subjects", bzb.getSubjects() );
 
         /* Set up forward and display JSP */
         dispatcher = getServletContext().getRequestDispatcher( forwardUrl );

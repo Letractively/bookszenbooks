@@ -62,11 +62,7 @@ public class BookSearchServlet extends HttpServlet {
         bzb.getLexicon().load( "global" );
         bzb.getLexicon().load( "search" );
         bzb.getLexicon().load( "book" );
-
-        /* Make lexicons and config settings available to JSP */
-        request.setAttribute( "config", bzb.getConfig().getSettings() );
-        request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
-        request.setAttribute( "language", bzb.getLexicon().getLanguage() );
+        bzb.getLexicon().load( "subject" );
 
         searchParams = buildSearchParams( request );
 
@@ -75,7 +71,6 @@ public class BookSearchServlet extends HttpServlet {
 
             request.setAttribute( "conditions", getConditions( bzb.getLexicon() ) );
             request.setAttribute( "languages", getLanguages( bzb.getLexicon() ) );
-            request.setAttribute( "subjects", getSubjects( bzb.getLexicon(), bzb.getDBDriver() ) );
             request.setAttribute( "sortFields", getSortFields( bzb.getLexicon() ) );
             request.setAttribute( "pageTitle", bzb.getLexicon().get( "advancedSearch" ) );
         }
@@ -86,6 +81,11 @@ public class BookSearchServlet extends HttpServlet {
             request.setAttribute( "listings", getSearchResults( searchParams, bzb.getDBDriver() ) );
         }
 
+        /* Make lexicons and config settings available to JSP */
+        request.setAttribute( "config", bzb.getConfig().getSettings() );
+        request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
+        request.setAttribute( "language", bzb.getLexicon().getLanguage() );
+        request.setAttribute( "subjects", bzb.getSubjects() );
 
         /* Set up forward and display JSP */
         dispatcher = getServletContext().getRequestDispatcher( forwardUrl );
@@ -222,26 +222,5 @@ public class BookSearchServlet extends HttpServlet {
         }
 
         return fields;
-    }
-
-    private ArrayList<BookSubject> getSubjects( Lexicon lexicon, DBDriver driver ) {
-        BookSubject subject;
-        ArrayList<BookSubject> subjects = new ArrayList<BookSubject>();
-        ResultSet result = driver.select( "booksubject", null, null );
-
-        try {
-            while( result.next() ) {
-                subject = new BookSubject();
-                subject.init( driver );
-                subject.populate( result );
-                subject.setI18nText( lexicon.get( subject.getText() ) );
-
-                subjects.add( subject );
-            }
-        } catch( SQLException e ) {
-
-        }
-
-        return subjects;
     }
 }
