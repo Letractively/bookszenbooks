@@ -27,7 +27,7 @@
     <servlet>
         <description>Controls searching for a book.</description>
         <servlet-name>BookSearchServlet</servlet-name>
-        <servlet-class>controllers.web.BookSearchServlet</servlet-class>
+        <servlet-class>controllers.web.SearchServlet</servlet-class>
         <init-param>
             <description>Allowed sort fields for book searches.</description>
             <param-name>sortFields</param-name>
@@ -47,11 +47,15 @@
     <servlet>
         <description>Controls the display of book listings.</description>
         <servlet-name>BookListingDisplayServlet</servlet-name>
-        <servlet-class>controllers.web.BookListingDisplayServlet</servlet-class>
+        <servlet-class>controllers.web.ListingDisplayServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProfileDisplayServlet</servlet-name>
         <servlet-class>controllers.web.ProfileDisplayServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListingAddServlet</servlet-name>
+        <servlet-class>controllers.web.ListingAddServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -77,6 +81,10 @@
     <servlet-mapping>
         <servlet-name>ProfileDisplayServlet</servlet-name>
         <url-pattern>/displayUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListingAddServlet</servlet-name>
+        <url-pattern>/addListing</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

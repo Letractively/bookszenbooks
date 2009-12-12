@@ -17,8 +17,9 @@ import util.RequestHelper;
 /**
  * Handles requests related to displaying a book listing.
  * @author Rick Varella
+ * @version 12.12.2009
  */
-public class BookListingDisplayServlet extends HttpServlet {
+public class ListingDisplayServlet extends HttpServlet {
     private static String dbConfigResource;
     private static String jspPath;
 

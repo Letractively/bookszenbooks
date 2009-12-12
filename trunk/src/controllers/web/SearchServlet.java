@@ -1,7 +1,6 @@
 package controllers.web;
 
 import business.BookListing;
-import business.BookSubject;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import data.DBDriver;
@@ -27,7 +26,7 @@ import util.collections.Lexicon;
  * @author Rick Varella
  * @version 11.29.2009
  */
-public class BookSearchServlet extends HttpServlet {
+public class SearchServlet extends HttpServlet {
     private static String dbConfigResource;
     private static String jspPath;
 

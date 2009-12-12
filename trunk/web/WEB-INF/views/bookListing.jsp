@@ -75,7 +75,4 @@
     </c:otherwise>
 </c:choose>
 
-
-
-
 <c:import url="footer.jsp" />
