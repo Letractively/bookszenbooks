@@ -145,7 +145,7 @@ public class ListingAddServlet extends HttpServlet {
                     request.setAttribute( "conditions", getConditions( bzb.getLexicon(), bzb.getConfig() ) );
                 }
                 else {
-                    saveListing( listing );
+                    saveListing( listing, request, bzb.getDBDriver() );
 
                     forwardUrl = jspPath + "newListingDone.jsp";
                 }
@@ -304,7 +304,18 @@ public class ListingAddServlet extends HttpServlet {
         return conditions;
     }
 
-    private void saveListing( BookListing listing ) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    private void saveListing( BookListing listing, HttpServletRequest request, DBDriver driver ) {
+        listing.init( driver );
+        listing.setActive( true );
+        listing.setComment( RequestHelper.getString( "comment", request ) );
+        listing.setCondition( RequestHelper.getString( "condition", request ) );
+        listing.setCurrency( "usd" ); //@TODO currency should be a system setting
+        listing.setIsbn( listing.getBook().getIsbn() );
+        listing.setListDate( new java.util.Date() );
+        listing.setPrice( RequestHelper.getDouble( "price", request ) );
+        listing.setUserId( 1 );
+
+        listing.save();
+        listing.getBook().save();
     }
 }

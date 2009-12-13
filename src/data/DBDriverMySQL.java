@@ -29,6 +29,8 @@ public class DBDriverMySQL implements DBDriver {
     public int updateQuery( String sqlStatement ) {
         int affectedRows = 0;
 
+        System.out.println( sqlStatement );
+
         try {
             Statement stmt = ( Statement ) connection.getConnection().createStatement();
             affectedRows = stmt.executeUpdate( sqlStatement );
@@ -54,12 +56,14 @@ public class DBDriverMySQL implements DBDriver {
 
         /* Empty field list means we'll select all fields */
         if( fields == null || fields.length < 1 ) {
-            fields = new String[1];
-            fields[0] = "*";
+            sql.append( "SELECT * " );
+        }
+        else {
+            sql.append( "SELECT " ).append( "`" ).append( Util.joinArray( fields, "`,`" ) ).append( "`" );
         }
 
         /* Add table and fields list to query */
-        sql.append( "SELECT " ).append( Util.joinArray( fields, "," ) ).append( " FROM " ).append( getFullTableName( table ) );
+        sql.append( " FROM " ).append( getFullTableName( table ) );
 
         /* Any JOINs?*/
         if( join != null && join.length > 0 ) {
@@ -100,8 +104,8 @@ public class DBDriverMySQL implements DBDriver {
         StringBuilder sql = new StringBuilder();
 
         sql.append( "INSERT INTO " ).append( getFullTableName( table ) );
-        sql.append( "(" ).append( Util.joinArray( fields.keySet(), "," ) ).append( ") " );
-        sql.append( "VALUES('" ).append( Util.joinArray( fields.values(), "','" ) ).append( "') " );
+        sql.append( " (`" ).append( Util.joinArray( fields.keySet(), "`,`" ) ).append( "`) " );
+        sql.append( "VALUES('" ).append( Util.joinArray( fields.values(), "','" ) ).append( "');" );
 
         return updateQuery( sql.toString() );
     }
@@ -119,7 +123,7 @@ public class DBDriverMySQL implements DBDriver {
 
         while( it.hasNext() ) {
             entry = ( Map.Entry<String, String> ) it.next();
-            sql.append( entry.getKey() ).append( "='" ).append( entry.getValue() ).append( "'" );
+            sql.append( "`" ).append( entry.getKey() ).append( "`='" ).append( entry.getValue() ).append( "'" );
 
             if( it.hasNext() ) {
                 sql.append( ", " );
