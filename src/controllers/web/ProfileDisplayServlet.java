@@ -50,13 +50,11 @@ public class ProfileDisplayServlet extends HttpServlet {
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
         BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
-        String action = RequestHelper.getValue( "action", request );
         String forwardUrl;
         String pageTitle;
         RequestDispatcher dispatcher;
         User user;
         int userId = RequestHelper.getInt( "userId", request );
-        HashMap<String, String> lexiconReplace = new HashMap<String, String>();
 
         /* Load necessary lexicons */
         bzb.getLexicon().load( "global" );
@@ -76,9 +74,7 @@ public class ProfileDisplayServlet extends HttpServlet {
             user = getUser( userId, bzb.getDBDriver() );
             forwardUrl = jspPath + "displayUser.jsp";
 
-            lexiconReplace.put( "user", user.getEmail() );
-
-            pageTitle = bzb.getLexicon().get( "viewingProfile", lexiconReplace );
+            pageTitle = bzb.getLexicon().get( "viewingProfile", new String[][]{ { "user", user.getEmail() } } );
             
             request.setAttribute( "user", user );
             request.setAttribute( "stats", getUserStats( userId, bzb.getDBDriver() ) );
