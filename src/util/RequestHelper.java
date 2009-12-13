@@ -40,16 +40,29 @@ public class RequestHelper {
         return cleanValue;
     }
 
-    public static String getValue( String paramName, HttpServletRequest request ) {
+    public static String getString( String paramName, HttpServletRequest request ) {
         return request.getParameter( paramName ) != null ? ( String ) request.getParameter( paramName ).trim() : "";
     }
 
     public static int getInt( String paramName, HttpServletRequest request ) {
-        String value = getValue( paramName, request );
+        String value = getString( paramName, request );
         int numericValue;
 
         try {
             numericValue = Integer.parseInt( value );
+        } catch( NumberFormatException e ) {
+            numericValue = 0;
+        }
+
+        return numericValue;
+    }
+
+    public static double getDouble( String paramName, HttpServletRequest request ) {
+        String value = getString( paramName, request );
+        double numericValue;
+
+        try {
+            numericValue = Double.parseDouble( value );
         } catch( NumberFormatException e ) {
             numericValue = 0;
         }

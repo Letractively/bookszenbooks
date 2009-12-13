@@ -52,7 +52,7 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
         BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
-        String action = RequestHelper.getValue( "action", request );
+        String action = RequestHelper.getString( "action", request );
         String forwardUrl;
         RequestDispatcher dispatcher;
         ArrayList<String> searchParams;
@@ -107,14 +107,14 @@ public class SearchServlet extends HttpServlet {
 
     public ArrayList<String> buildSearchParams( HttpServletRequest request ) {
         ArrayList<String> params = new ArrayList<String>();
-        String keywords = RequestHelper.getValue( "keywords", request );
-        String author = RequestHelper.getValue( "author", request );
-        String title = RequestHelper.getValue( "title", request );
-        String isbn = RequestHelper.getValue( "isbn", request );
-        String publisher = RequestHelper.getValue( "publisher", request );
-        String subject = RequestHelper.getValue( "subject", request );
-        String condition = RequestHelper.getValue( "condition", request );
-        String language = RequestHelper.getValue( "language", request );
+        String keywords = RequestHelper.getString( "keywords", request );
+        String author = RequestHelper.getString( "author", request );
+        String title = RequestHelper.getString( "title", request );
+        String isbn = RequestHelper.getString( "isbn", request );
+        String publisher = RequestHelper.getString( "publisher", request );
+        String subject = RequestHelper.getString( "subject", request );
+        String condition = RequestHelper.getString( "condition", request );
+        String language = RequestHelper.getString( "language", request );
 
         if( !keywords.isEmpty() ) {
             params.add( "(b.title LIKE '%" + keywords + "%' OR b.isbn = '" + keywords + "' OR b.author LIKE '%" + keywords + "%')" );

@@ -1,6 +1,7 @@
 package controllers.web;
 
 import business.Book;
+import business.BookListing;
 import data.DBDriver;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -58,6 +59,8 @@ public class ListingAddServlet extends HttpServlet {
         int step = RequestHelper.getInt( "step", request );
         RequestDispatcher dispatcher;
         HashMap<String, String> formErrors = new HashMap<String, String>();
+        BookListing listing = ( BookListing ) request.getSession().getAttribute( "userListing" );
+        Book book;
 
         /* Load necessary lexicons */
         bzb.getLexicon().load( "global" );
@@ -68,7 +71,7 @@ public class ListingAddServlet extends HttpServlet {
         pageTitle = bzb.getLexicon().get( "addListing" ) + ":";
 
         if( step == 2 ) {
-            if( !isValidISBN( RequestHelper.getValue( "isbn", request ) ) ) {
+            if( !isValidISBN( RequestHelper.getString( "isbn", request ) ) ) {
                 forwardUrl = jspPath + "newListingStep1.jsp";
 
                 formErrors.put( "isbn", bzb.getLexicon().get( "invalidField", new String[][]{ { "field", bzb.getLexicon().get( "isbn" ) } } ) );
@@ -77,18 +80,33 @@ public class ListingAddServlet extends HttpServlet {
                 forwardUrl = jspPath + "newListingStep2.jsp";
 
                 request.setAttribute( "languages", getLanguages( bzb.getLexicon(), bzb.getConfig() ) );
-                request.setAttribute( "book", getBook( RequestHelper.getValue( "isbn", request ), bzb.getDBDriver() ) );
+                request.setAttribute( "book", getBook( RequestHelper.getString( "isbn", request ), bzb.getDBDriver() ) );
             }
         }
         else if( step == 3 ) {
-            if( RequestHelper.getValue( "newBook", request ).equals( "false" ) ) {
-                if( !isValidISBN( RequestHelper.getValue( "isbn", request ) ) ) {
+            if( RequestHelper.getString( "newBook", request ).equals( "false" ) ) {
+                if( !isValidISBN( RequestHelper.getString( "isbn", request ) ) ) {
                     forwardUrl = jspPath + "newListingStep1.jsp";
 
                     formErrors.put( "isbn", bzb.getLexicon().get( "invalidField", new String[][]{ { "field", bzb.getLexicon().get( "isbn" ) } } ) );
                 }
                 else {
-                    forwardUrl = jspPath + "newListingStep3.jsp";
+                    if( ( book = getBook( RequestHelper.getString( "isbn", request ), bzb.getDBDriver() ) ) != null ) {
+                        forwardUrl = jspPath + "newListingStep3.jsp";
+
+                        if( listing == null ) {
+                            listing = new BookListing();
+                        }
+
+                        listing.setBook( book );
+
+                        request.getSession().setAttribute( "userListing", listing );
+                    }
+                    else {
+                        forwardUrl = jspPath + "newListingStep1.jsp";
+
+                        formErrors.put( "isbn", bzb.getLexicon().get( "invalidField", new String[][]{ { "field", bzb.getLexicon().get( "isbn" ) } } ) );
+                    }
                 }
             }
             else {
@@ -101,11 +119,37 @@ public class ListingAddServlet extends HttpServlet {
                 }
                 else {
                     forwardUrl = jspPath + "newListingStep3.jsp";
+
+                    if( listing == null ) {
+                        listing = new BookListing();
+                    }
+                    
+                    listing.setBook( getBookFromInput( request ) );
+                    request.getSession().setAttribute( "userListing", listing );
+                    request.setAttribute( "conditions", getConditions( bzb.getLexicon(), bzb.getConfig() ) );
                 }
             }
         }
         else if( step == 4 ) {
-            forwardUrl = jspPath + "newListingDone.jsp";
+            if( listing == null ) {
+                forwardUrl = jspPath + "newListingStep1.jsp";
+
+                formErrors.put( "page", bzb.getLexicon().get( "timeOut" ) );
+            }
+            else {
+                formErrors = checkListingForm( request, bzb.getLexicon() );
+
+                if( !formErrors.isEmpty() ) {
+                    forwardUrl = jspPath + "newListingStep3.jsp";
+
+                    request.setAttribute( "conditions", getConditions( bzb.getLexicon(), bzb.getConfig() ) );
+                }
+                else {
+                    saveListing( listing );
+
+                    forwardUrl = jspPath + "newListingDone.jsp";
+                }
+            }
         }
         else {
             forwardUrl = jspPath + "newListingStep1.jsp";
@@ -183,37 +227,84 @@ public class ListingAddServlet extends HttpServlet {
     private HashMap<String, String> checkBookForm( HttpServletRequest request, Lexicon lexicon ) {
         HashMap<String, String> errors = new HashMap<String, String>();
 
-        if( !isValidISBN( RequestHelper.getValue( "isbn", request ) ) ) {
+        if( !isValidISBN( RequestHelper.getString( "isbn", request ) ) ) {
             errors.put( "isbn", lexicon.get( "invalidField", new String[][]{ { "field", lexicon.get( "isbn" ) } } ) );
         }
-        if( RequestHelper.getValue( "title", request ).isEmpty() ) {
+        if( RequestHelper.getString( "title", request ).isEmpty() ) {
             errors.put( "title", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "title" ) } } ) );
         }
-        if( RequestHelper.getValue( "author", request ).isEmpty() ) {
+        if( RequestHelper.getString( "author", request ).isEmpty() ) {
             errors.put( "author", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "author" ) } } ) );
         }
-        if( RequestHelper.getValue( "edition", request ).isEmpty() ) {
+        if( RequestHelper.getString( "edition", request ).isEmpty() ) {
             errors.put( "edition", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "edition" ) } } ) );
         }
-        if( RequestHelper.getValue( "subject", request ).isEmpty() ) {
+        if( RequestHelper.getString( "subject", request ).isEmpty() ) {
             errors.put( "subject", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "subject" ) } } ) );
         }
-        if( RequestHelper.getValue( "format", request ).isEmpty() ) {
+        if( RequestHelper.getString( "format", request ).isEmpty() ) {
             errors.put( "format", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "format" ) } } ) );
         }
-        if( RequestHelper.getValue( "language", request ).isEmpty() ) {
+        if( RequestHelper.getString( "language", request ).isEmpty() ) {
             errors.put( "language", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "language" ) } } ) );
         }
-        if( RequestHelper.getValue( "pages", request ).isEmpty() ) {
+        if( RequestHelper.getString( "pages", request ).isEmpty() ) {
             errors.put( "pages", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "pages" ) } } ) );
         }
-        if( RequestHelper.getValue( "publisher", request ).isEmpty() ) {
+        if( RequestHelper.getString( "publisher", request ).isEmpty() ) {
             errors.put( "publisher", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "publisher" ) } } ) );
         }
-        if( util.Util.parseDate( RequestHelper.getValue( "publishDate", request ) ) == null ) {
+        if( util.Util.parseDate( RequestHelper.getString( "publishDate", request ) ) == null ) {
             errors.put( "publishDate", lexicon.get( "publishDateInvalid" ) );
         }
 
         return errors;
+    }
+
+    private HashMap<String, String> checkListingForm( HttpServletRequest request, Lexicon lexicon ) {
+        HashMap<String, String> errors = new HashMap<String, String>();
+
+        if( RequestHelper.getDouble( "price", request ) < 0.01 ) {
+            errors.put( "price", lexicon.get( "invalidField", new String[][]{ { "field", lexicon.get( "price" ) } } ) );
+        }
+        if( RequestHelper.getString( "condition", request ).isEmpty() ) {
+            errors.put( "condition", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "condition" ) } } ) );
+        }
+
+        return errors;
+    }
+
+    private Book getBookFromInput( HttpServletRequest request ) {
+        Book book = new Book();
+
+        book.setAuthor( RequestHelper.getString( "author", request ) );
+        book.setEdition( RequestHelper.getInt( "edition", request ) );
+        book.setFormat( RequestHelper.getString( "format", request ) );
+        book.setIsbn( RequestHelper.getString( "isbn", request ) );
+        book.setLanguage( RequestHelper.getString( "language", request ) );
+        book.setPages( RequestHelper.getInt( "pages", request ) );
+        book.setPublishDate( util.Util.parseDate( RequestHelper.getString( "publishDate", request ) ) );
+        book.setPublisher( RequestHelper.getString( "publisher", request ) );
+        book.setSubjectId( RequestHelper.getInt( "subject", request ) );
+        book.setTitle( RequestHelper.getString( "title", request ) );
+
+        return book;
+    }
+
+    private HashMap<String, String> getConditions( Lexicon lexicon, SystemConfig config ) {
+        HashMap<String, String> conditions = new HashMap<String, String>();
+        String conditionString = config.get( "bookConditions" );
+        String[] conditionArray = conditionString.split( "," );
+        String key;
+
+        for( int i = 0; i < conditionArray.length; i++ ) {
+            conditions.put( conditionArray[ i ], lexicon.get( conditionArray[ i ] ) );
+        }
+
+        return conditions;
+    }
+
+    private void saveListing( BookListing listing ) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

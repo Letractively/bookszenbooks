@@ -197,6 +197,10 @@ form label {
     width: 160px;
 }
 
+form span.label {
+    margin-left: 10px;
+}
+
 form label.noFloat {
     display: inline;
     float: none;
