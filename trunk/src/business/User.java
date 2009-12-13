@@ -121,7 +121,7 @@ public class User extends DBObject implements Serializable {
     /**
      * @return the isAdmin
      */
-    public boolean getSuperUser() {
+    public boolean isSuperUser() {
         return superUser;
     }
 
@@ -286,7 +286,7 @@ public class User extends DBObject implements Serializable {
     /**
      * @return the isValidated
      */
-    public boolean getValidated() {
+    public boolean isValidated() {
         return validated;
     }
 

@@ -287,6 +287,8 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('publishDateInvalid', 'listing', 'en', 'The Publish Date must be a valid date in MM/DD/YYYY format.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('timeOut', 'listing', 'en', 'Sorry, your request has timed out and you must begin entering your listing data again.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('comments', 'listing', 'en', 'Your Comments');
 
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)

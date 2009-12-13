@@ -84,7 +84,7 @@ public class LoginServlet extends HttpServlet {
                     request.setAttribute( "formError", bzb.getLexicon().get( "invalidLogin" ) );
                 }
                 /* Not validated yet */
-                else if( !user.getValidated() ) {
+                else if( !user.isValidated() ) {
                     forwardUrl = jspPath + "login.jsp";
 
                     request.setAttribute( "pageTitle", bzb.getLexicon().get( "logIn" ) );

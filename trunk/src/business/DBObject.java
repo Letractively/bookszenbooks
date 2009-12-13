@@ -197,9 +197,10 @@ public abstract class DBObject {
         String methodName;
         Method method;
         Object value = null;
+        String prefix = schema.get( field ).getJavaType().equals( "boolean" ) ? "is" : "get";
 
         try {
-            methodName = "get" + Util.toUpperCaseFirst( field );
+            methodName = prefix + Util.toUpperCaseFirst( field );
             method = this.getClass().getMethod( methodName );
             value = method.invoke( this );
         } catch( NoSuchMethodException e ) {
