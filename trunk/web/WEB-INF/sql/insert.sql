@@ -124,7 +124,6 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('emailRegistered', 'register', 'en', 'An account is already registered with the email &quot;${email}&quot;.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('emailInvalid', 'register', 'en', 'The format of the email address you entered is invalid. Email addresses must end in: @${validEmails}.');
-
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('passwordNotMatch', 'register', 'en', 'The entered passwords do not match.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
@@ -282,7 +281,8 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('addSuccess', 'listing', 'en', 'Your new book listing was added successfully!' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('emptyField', 'listing', 'en', 'The ${field} field is required and cannot be left blank.' );
-
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('publishDateInvalid', 'listing', 'en', 'The Publish Date must be a valid date in MM/DD/YYYY format.');
 
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)

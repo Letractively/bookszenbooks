@@ -23,15 +23,15 @@
     </c:forEach>
 </select><br />
 <c:if test="${formErrors.format != null}"><p class="error">${formErrors.format}</p></c:if>
-<label>${lexicon.format}:</label>
-<input type="radio" name="format" id="paperback" /><label for="paperback" class="noFloat">${lexicon.paperback}</label>
-<input type="radio" name="format" id="hardcover" /><label for="hardcover" class="noFloat">${lexicon.hardcover}</label><br />
+<label>${lexicon.format}:${param.format}</label>
+<input type="radio" name="format" id="paperback" value="paperback" <c:if test="${param.format == 'paperback'}">checked="checked"</c:if> /><label for="paperback" class="noFloat">${lexicon.paperback}</label>
+<input type="radio" name="format" id="hardcover" value="hardcover" <c:if test="${param.format == 'hardcover'}">checked="checked"</c:if> /><label for="hardcover" class="noFloat">${lexicon.hardcover}</label><br />
 <c:if test="${formErrors.language != null}"><p class="error">${formErrors.language}</p></c:if>
 <label for="language">${lexicon.language}</label>
 <select name="language" id="language">
     <c:forEach var="language" items="${languages}">
         <c:choose>
-            <c:when test="${language.key == 'en'}">
+            <c:when test="${language.key == 'en' and empty param.language or language.key == param.language}">
                 <option value="${language.key}" selected="selected">${language.value}</option>
             </c:when>
             <c:otherwise>
