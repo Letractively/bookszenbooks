@@ -67,10 +67,6 @@ a:hover {
     text-decoration: underline;
 }
 
-form label {
-
-}
-
 #pageWrap {
     min-width: 800px;
     margin: 0 5%;
@@ -188,13 +184,17 @@ form fieldset legend {
     font-size: 1.1em;
 }
 
-form label {
+form label,
+form span.label {
     display: block;
     float: left;
-    width: 160px;
     padding: 0;
     margin: 5px 0 0 0;
     text-align: right;
+}
+
+form label {
+    width: 160px;
 }
 
 form label.noFloat {

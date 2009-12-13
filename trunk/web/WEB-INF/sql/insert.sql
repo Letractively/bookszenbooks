@@ -266,6 +266,24 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('invalidField', 'listing', 'en', 'The ${field} field is invalid.' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('newListingNoMatch', 'listing', 'en', 'We don\'t have a book matching that ISBN yet. Please fill out the form completely to add the book to our system.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('newListingMatch', 'listing', 'en', 'We found a match for that ISBN! Please review the information below to make sure it matches your book\'s information.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('addListing', 'listing', 'en', 'Add New Listing' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('enterIsbn', 'listing', 'en', 'Enter Your Book\'s ISBN' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('enterBook', 'listing', 'en', 'Enter Your Book\'s Info' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('verifyBook', 'listing', 'en', 'Check Book Details' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('enterListing', 'listing', 'en', 'Enter Your Listing Info' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('addSuccess', 'listing', 'en', 'Your new book listing was added successfully!' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('emptyField', 'listing', 'en', 'The ${field} field is required and cannot be left blank.' );
+
+
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('viewingProfile', 'profile', 'en', 'Viewing ${user}\'s Profile' );
