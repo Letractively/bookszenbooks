@@ -247,34 +247,27 @@ public class RegisterServlet extends HttpServlet {
         String email = RequestHelper.getValue( "email", request );
         String password = RequestHelper.getValue( "password", request );
         String confirmPassword = RequestHelper.getValue( "confirmPassword", request );
-        HashMap<String, String> replace = new HashMap<String, String>();
 
         /* Check that required fields are filled in. */
         for( String fieldName : requiredFields ) {
             if( RequestHelper.getValue( fieldName, request ).isEmpty() ) {
-                replace = new HashMap();
-                replace.put( "field", bzb.getLexicon().get( fieldName ) );
-                errors.put( fieldName, bzb.getLexicon().get( "emptyField", replace ) );
+                errors.put( fieldName, bzb.getLexicon().get( "emptyField", new String[][] { { "field", bzb.getLexicon().get( fieldName ) } } ) );
             }
         }
 
         /* Make sure the email address is valid and unregistered. */
         if( !isValidEmail( email, bzb.getConfig().get( "validEmailDomains" ) ) ) {
-            replace = new HashMap();
-            replace.put( "validEmails", bzb.getConfig().get( "validEmailDomains" ).replace( "\n", ", ") );
-            errors.put( "email", bzb.getLexicon().get( "emailInvalid", replace ) );
+            errors.put( "email", bzb.getLexicon().get( "emailInvalid", new String[][] {
+                { "validEmails", bzb.getConfig().get( "validEmailDomains" ).replace( "\n", ", ") }
+            } ) );
         }
         else if( isEmailRegistered( email, bzb.getDBDriver() ) ) {
-            replace = new HashMap();
-            replace.put( "email", email );
-            errors.put( "email", bzb.getLexicon().get( "emailRegistered", replace ) );
+            errors.put( "email", bzb.getLexicon().get( "emailRegistered", new String[][] { { "email", email } } ) );
         }
 
         /* Make sure the password is valid and matches the confirm field. */
         if( !isValidPassword( password ) ) {
-            replace = new HashMap();
-            replace.put( "field", bzb.getLexicon().get( "password" ) );
-            errors.put( "password", bzb.getLexicon().get( "emptyField", replace ) );
+            errors.put( "password", bzb.getLexicon().get( "emptyField", new String[][] { { "field", bzb.getLexicon().get( "password" ) } } ) );
         }
         else if( !password.equals( confirmPassword ) ) {
             errors.put( "password", bzb.getLexicon().get( "passwordNotMatch" ) );
