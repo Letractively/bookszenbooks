@@ -58,7 +58,6 @@ public class ListingAddServlet extends HttpServlet {
         int step = RequestHelper.getInt( "step", request );
         RequestDispatcher dispatcher;
         HashMap<String, String> formErrors = new HashMap<String, String>();
-        HashMap<String, String> replace = new HashMap<String, String>();
 
         /* Load necessary lexicons */
         bzb.getLexicon().load( "global" );
@@ -72,8 +71,7 @@ public class ListingAddServlet extends HttpServlet {
             if( !isValidISBN( RequestHelper.getValue( "isbn", request ) ) ) {
                 forwardUrl = jspPath + "newListingStep1.jsp";
 
-                replace.put( "field", bzb.getLexicon().get( "isbn" ) );
-                formErrors.put( "isbn", bzb.getLexicon().get( "invalidField", replace ) );
+                formErrors.put( "isbn", bzb.getLexicon().get( "invalidField", new String[][]{ { "field", bzb.getLexicon().get( "isbn" ) } } ) );
             }
             else {
                 forwardUrl = jspPath + "newListingStep2.jsp";
@@ -83,7 +81,28 @@ public class ListingAddServlet extends HttpServlet {
             }
         }
         else if( step == 3 ) {
-            forwardUrl = jspPath + "newListingStep3.jsp";
+            if( RequestHelper.getValue( "newBook", request ).equals( "false" ) ) {
+                if( !isValidISBN( RequestHelper.getValue( "isbn", request ) ) ) {
+                    forwardUrl = jspPath + "newListingStep1.jsp";
+
+                    formErrors.put( "isbn", bzb.getLexicon().get( "invalidField", new String[][]{ { "field", bzb.getLexicon().get( "isbn" ) } } ) );
+                }
+                else {
+                    forwardUrl = jspPath + "newListingStep3.jsp";
+                }
+            }
+            else {
+                formErrors = checkBookForm( request, bzb.getLexicon() );
+
+                if( !formErrors.isEmpty() ) {
+                    forwardUrl = jspPath + "newListingStep2.jsp";
+
+                    request.setAttribute( "languages", getLanguages( bzb.getLexicon(), bzb.getConfig() ) );
+                }
+                else {
+                    forwardUrl = jspPath + "newListingStep3.jsp";
+                }
+            }
         }
         else if( step == 4 ) {
             forwardUrl = jspPath + "newListingDone.jsp";
@@ -159,5 +178,42 @@ public class ListingAddServlet extends HttpServlet {
         }
 
         return languages;
+    }
+
+    private HashMap<String, String> checkBookForm( HttpServletRequest request, Lexicon lexicon ) {
+        HashMap<String, String> errors = new HashMap<String, String>();
+
+        if( !isValidISBN( RequestHelper.getValue( "isbn", request ) ) ) {
+            errors.put( "isbn", lexicon.get( "invalidField", new String[][]{ { "field", lexicon.get( "isbn" ) } } ) );
+        }
+        if( RequestHelper.getValue( "title", request ).isEmpty() ) {
+            errors.put( "title", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "title" ) } } ) );
+        }
+        if( RequestHelper.getValue( "author", request ).isEmpty() ) {
+            errors.put( "author", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "author" ) } } ) );
+        }
+        if( RequestHelper.getValue( "edition", request ).isEmpty() ) {
+            errors.put( "edition", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "edition" ) } } ) );
+        }
+        if( RequestHelper.getValue( "subject", request ).isEmpty() ) {
+            errors.put( "subject", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "subject" ) } } ) );
+        }
+        if( RequestHelper.getValue( "format", request ).isEmpty() ) {
+            errors.put( "format", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "format" ) } } ) );
+        }
+        if( RequestHelper.getValue( "language", request ).isEmpty() ) {
+            errors.put( "language", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "language" ) } } ) );
+        }
+        if( RequestHelper.getValue( "pages", request ).isEmpty() ) {
+            errors.put( "pages", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "pages" ) } } ) );
+        }
+        if( RequestHelper.getValue( "publisher", request ).isEmpty() ) {
+            errors.put( "publisher", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "publisher" ) } } ) );
+        }
+        if( RequestHelper.getValue( "publishDate", request ).isEmpty() ) {
+            errors.put( "publishDate", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "publishDate" ) } } ) );
+        }
+
+        return errors;
     }
 }

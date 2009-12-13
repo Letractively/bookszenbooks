@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="header.jsp" />
 
-${lexicon.registerDesc}</p>
+<p>${lexicon.registerDesc}</p>
 
 <form action="registerAccount" method="post">
     <input type="hidden" name="action" value="register" />
