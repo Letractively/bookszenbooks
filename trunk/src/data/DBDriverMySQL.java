@@ -22,6 +22,7 @@ public class DBDriverMySQL implements DBDriver {
 
             return stmt.executeQuery( sqlStatement );
         } catch( SQLException e ) {
+            System.out.println( e.getMessage() );
             throw new RuntimeException();
         }
     }
@@ -54,12 +55,14 @@ public class DBDriverMySQL implements DBDriver {
             throw new RuntimeException();
         }
 
+        sql.append( "SELECT " );
+
         /* Empty field list means we'll select all fields */
         if( fields == null || fields.length < 1 ) {
-            sql.append( "SELECT * " );
+            sql.append( "*" );
         }
         else {
-            sql.append( "SELECT " ).append( "`" ).append( Util.joinArray( fields, "`,`" ) ).append( "`" );
+            sql.append( Util.joinArray( fields, "," ) );
         }
 
         /* Add table and fields list to query */

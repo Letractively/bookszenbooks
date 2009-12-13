@@ -3,7 +3,6 @@ package controllers.web;
 import business.BookListing;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
-import data.DBDriver;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,8 +26,9 @@ import util.collections.Lexicon;
  * @version 11.29.2009
  */
 public class SearchServlet extends HttpServlet {
-    private static String dbConfigResource;
-    private static String jspPath;
+    private String dbConfigResource;
+    private String jspPath;
+    private BooksZenBooks bzb;
 
      /**
      * Initializes the servlet and sets up required instance variables.
@@ -51,7 +51,7 @@ public class SearchServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
+        bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
         String action = RequestHelper.getString( "action", request );
         String forwardUrl;
         RequestDispatcher dispatcher;
@@ -68,16 +68,16 @@ public class SearchServlet extends HttpServlet {
         if( action.equals( "advancedSearch" ) ) {
             forwardUrl = jspPath + "advancedSearch.jsp";
 
-            request.setAttribute( "conditions", getConditions( bzb.getLexicon() ) );
-            request.setAttribute( "languages", getLanguages( bzb.getLexicon() ) );
-            request.setAttribute( "sortFields", getSortFields( bzb.getLexicon() ) );
+            request.setAttribute( "conditions", getConditions() );
+            request.setAttribute( "languages", getLanguages() );
+            request.setAttribute( "sortFields", getSortFields() );
             request.setAttribute( "pageTitle", bzb.getLexicon().get( "advancedSearch" ) );
         }
         else {
             forwardUrl = jspPath + "searchResults.jsp";
 
             request.setAttribute( "pageTitle", bzb.getLexicon().get( "searchResults" ) );
-            request.setAttribute( "listings", getSearchResults( searchParams, bzb.getDBDriver() ) );
+            request.setAttribute( "listings", getSearchResults( searchParams ) );
         }
 
         /* Make lexicons and config settings available to JSP */
@@ -159,7 +159,7 @@ public class SearchServlet extends HttpServlet {
         return where.toString();
     }
 
-    private ArrayList<BookListing> getSearchResults( ArrayList<String> parameters, DBDriver driver ) {
+    private ArrayList<BookListing> getSearchResults( ArrayList<String> parameters ) {
         ResultSet result;
         BookListing listing;
         ArrayList<BookListing> listings = new ArrayList<BookListing>();
@@ -168,12 +168,12 @@ public class SearchServlet extends HttpServlet {
         String[] join = { "INNER JOIN bzb.book b ON l.isbn=b.isbn", 
                     "INNER JOIN bzb.user u ON l.userId=u.userId" };
 
-        result = driver.select( "booklisting l", fields, where, join, null, null, null, 0, 0 );
+        result = bzb.getDriver().select( "booklisting l", fields, where, join, null, null, null, 0, 0 );
 
         try {
             while( result.next() ) {
                 listing = new BookListing();
-                listing.init( driver );
+                listing.init( bzb.getDriver() );
                 listing.populate( result );
                 listings.add( listing );
             }
@@ -184,20 +184,20 @@ public class SearchServlet extends HttpServlet {
         return listings;
     }
 
-    private HashMap<String, String> getConditions( Lexicon lexicon ) {
+    private HashMap<String, String> getConditions() {
         HashMap<String, String> conditions = new HashMap<String, String>();
         String conditionString = getServletConfig().getInitParameter( "bookConditions" );
         String[] conditionArray = conditionString.split( "," );
         String key;
 
         for( int i = 0; i < conditionArray.length; i++ ) {
-            conditions.put( conditionArray[ i ], lexicon.get( conditionArray[ i ] ) );
+            conditions.put( conditionArray[ i ], bzb.getLexicon().get( conditionArray[ i ] ) );
         }
 
         return conditions;
     }
 
-    private HashMap<String, String> getLanguages( Lexicon lexicon ) {
+    private HashMap<String, String> getLanguages() {
         HashMap<String, String> languages = new HashMap<String, String>();
         String langString = getServletConfig().getInitParameter( "bookLanguages" );
         List<String> langKeys = Arrays.asList( langString.split( "," ) );
@@ -211,13 +211,13 @@ public class SearchServlet extends HttpServlet {
         return languages;
     }
 
-    private HashMap<String, String> getSortFields( Lexicon lexicon ) {
+    private HashMap<String, String> getSortFields() {
         HashMap<String, String> fields = new HashMap<String, String>();
         String fieldString = getServletConfig().getInitParameter( "sortFields" );
         String[] fieldArray = fieldString.split( "," );
 
         for( int i = 0; i < fieldArray.length; i++ ) {
-            fields.put( fieldArray[ i ], lexicon.get( fieldArray[ i ] ) );
+            fields.put( fieldArray[ i ], bzb.getLexicon().get( fieldArray[ i ] ) );
         }
 
         return fields;

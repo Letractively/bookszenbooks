@@ -1,14 +1,10 @@
 package controllers.web;
 
 import business.User;
-import java.util.Hashtable;
 import javax.servlet.http.HttpServletRequest;
-import data.DBDriver;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,12 +24,13 @@ import util.RequestHelper;
  * Handles requests related to user registration.
  *
  * @author Rick Varella
- * @version 11.29.2009
+ * @version 12.13.2009
  */
 public class RegisterServlet extends HttpServlet {
-    private static String[] requiredFields;
-    private static String dbConfigResource;
-    private static String jspPath;
+    private String[] requiredFields;
+    private String dbConfigResource;
+    private String jspPath;
+    private BooksZenBooks bzb;
 
     /**
      * Initializes the servlet and sets up required instance variables.
@@ -57,7 +54,7 @@ public class RegisterServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
+        bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
         String action = RequestHelper.getString( "action", request );
         String forwardUrl;
         RequestDispatcher dispatcher;
@@ -75,11 +72,11 @@ public class RegisterServlet extends HttpServlet {
         }
         /* Handle registration request */
         else if( action.equals( "register" ) ) { 
-            formErrors = checkRegistration( request, bzb );
+            formErrors = checkRegistration( request );
 
             /* No form errors, create the user and display validation page */
             if( formErrors.isEmpty() ) {
-                user = createUser( request, bzb.getDBDriver() );
+                user = createUser( request );
 
                 sendValidationEmail( user );
 
@@ -105,7 +102,7 @@ public class RegisterServlet extends HttpServlet {
                 request.setAttribute( "pageTitle", bzb.getLexicon().get( "confirmAccount" ) );
             }
             /* Code and email match - update user and display success */
-            else if( ( user = checkValidationCode( request, bzb.getDBDriver() ) ) != null ) {
+            else if( ( user = checkValidationCode( request ) ) != null ) {
                 forwardUrl = jspPath + "registerSuccess.jsp";
 
                 user.setValidated( true );
@@ -182,8 +179,8 @@ public class RegisterServlet extends HttpServlet {
      * @param allowedDomains
      * @return
      */
-    public boolean isValidEmail( String email, String allowedDomains ) {
-        String domains = allowedDomains.replace( "\n", "|" );
+    public boolean isValidEmail( String email ) {
+        String domains = bzb.getConfig().get( "validEmailDomains" ).replace( "\n", "|" );
         Pattern pattern = Pattern.compile( "^[A-Z0-9_+-]+(.[A-Z0-9_+-]+)*@(" + domains + ")$", Pattern.CASE_INSENSITIVE );
         Matcher matcher = pattern.matcher( email );
 
@@ -213,19 +210,11 @@ public class RegisterServlet extends HttpServlet {
 
     /**
      *
-     * @return
-     */
-    public Hashtable checkRequiredFields() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     *
      * @param request
      * @param bzb
      * @return
      */
-    private HashMap<String, String> checkRegistration( HttpServletRequest request, BooksZenBooks bzb ) {
+    private HashMap<String, String> checkRegistration( HttpServletRequest request ) {
         HashMap<String, String> errors = new HashMap<String, String>();
         String email = RequestHelper.getString( "email", request );
         String password = RequestHelper.getString( "password", request );
@@ -239,12 +228,12 @@ public class RegisterServlet extends HttpServlet {
         }
 
         /* Make sure the email address is valid and unregistered. */
-        if( !isValidEmail( email, bzb.getConfig().get( "validEmailDomains" ) ) ) {
+        if( !isValidEmail( email ) ) {
             errors.put( "email", bzb.getLexicon().get( "emailInvalid", new String[][] {
                 { "validEmails", bzb.getConfig().get( "validEmailDomains" ).replace( "\n", ", ") }
             } ) );
         }
-        else if( isEmailRegistered( email, bzb.getDBDriver() ) ) {
+        else if( isEmailRegistered( email ) ) {
             errors.put( "email", bzb.getLexicon().get( "emailRegistered", new String[][] { { "email", email } } ) );
         }
 
@@ -275,11 +264,10 @@ public class RegisterServlet extends HttpServlet {
      * @param driver
      * @return
      */
-    private User createUser( HttpServletRequest request, DBDriver driver ) {
+    private User createUser( HttpServletRequest request ) {
         User user = new User();
 
-        user.init( driver );
-
+        user.init( bzb.getDriver() );
         user.setEmail( RequestHelper.getString( "email", request ) );
         user.setPassword( DigestHelper.md5( RequestHelper.getString( "password", request ) ) );
         user.setFirstName( RequestHelper.getString( "firstName", request ) );
@@ -309,10 +297,10 @@ public class RegisterServlet extends HttpServlet {
      * @param driver
      * @return
      */
-    private boolean isEmailRegistered(String email, DBDriver driver ) {
+    private boolean isEmailRegistered( String email ) {
         String where = "email = '" + email + "'";
         String[] fields = { "COUNT(*) as count" };
-        ResultSet result = driver.select( "user", fields, where );
+        ResultSet result = bzb.getDriver().select( "user", fields, where );
         int count = 0;
 
         try {
@@ -360,17 +348,17 @@ public class RegisterServlet extends HttpServlet {
      * @param driver
      * @return
      */
-    private User checkValidationCode( HttpServletRequest request, DBDriver driver ) {
+    private User checkValidationCode( HttpServletRequest request ) {
         String email = RequestHelper.getString( "email", request );
         String code = RequestHelper.getString( "confirmCode", request );
         String where = "email = '" + email + "' AND validationCode = '" + code + "'";
-        ResultSet result = driver.select( "user", null, where );
+        ResultSet result = bzb.getDriver().select( "user", null, where );
         User user = null;
 
         try {
             if( result.next() ) {
                 user = new User();
-                user.init( driver );
+                user.init( bzb.getDriver() );
                 user.populate( result );
             }
         } catch( SQLException e ) {

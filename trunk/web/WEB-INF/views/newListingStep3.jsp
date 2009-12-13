@@ -1,9 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="header.jsp" />
 
-${userListing.book.newObject}<br />
-${userListing.active}
-
 <p>${lexicon.enterListingDesc}</p>
 
 <form action="addListing" method="post">

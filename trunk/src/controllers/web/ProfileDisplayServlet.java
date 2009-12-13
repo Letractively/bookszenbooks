@@ -1,12 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package controllers.web;
 
 import business.BookListing;
 import business.User;
-import data.DBDriver;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,12 +16,15 @@ import util.BooksZenBooks;
 import util.RequestHelper;
 
 /**
- *
- * @author Rick
+ * Handles the display of user profiles.
+ * 
+ * @author Rick Varella
+ * @version 13.13.2009
  */
 public class ProfileDisplayServlet extends HttpServlet {
-    private static String dbConfigResource;
-    private static String jspPath;
+    private String dbConfigResource;
+    private String jspPath;
+    private BooksZenBooks bzb;
 
     /**
      * Initializes the servlet and sets up required instance variables.
@@ -49,7 +47,7 @@ public class ProfileDisplayServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
+        bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
         String forwardUrl;
         String pageTitle;
         RequestDispatcher dispatcher;
@@ -71,14 +69,14 @@ public class ProfileDisplayServlet extends HttpServlet {
             bzb.getLexicon().load( "book" );
             bzb.getLexicon().load( "search" );
 
-            user = getUser( userId, bzb.getDBDriver() );
+            user = getUser( userId );
             forwardUrl = jspPath + "displayUser.jsp";
 
             pageTitle = bzb.getLexicon().get( "viewingProfile", new String[][]{ { "user", user.getEmail() } } );
             
             request.setAttribute( "user", user );
-            request.setAttribute( "stats", getUserStats( userId, bzb.getDBDriver() ) );
-            request.setAttribute( "listings", getUserListings( userId, bzb.getDBDriver() ) );
+            request.setAttribute( "stats", getUserStats( userId ) );
+            request.setAttribute( "listings", getUserListings( userId ) );
         }
 
         /* Make lexicons and config settings available to JSP */
@@ -108,20 +106,20 @@ public class ProfileDisplayServlet extends HttpServlet {
         doPost(request, response);
     }
 
-    private User getUser( int userId, DBDriver driver ) {
+    private User getUser( int userId ) {
         ResultSet result;
         User user = null;
         String where = "userId = " + userId;
 
         /* Query for user data */
-        result = driver.select( "user", null, where );
+        result = bzb.getDriver().select( "user", null, where );
 
         try {
             /* Make sure there's a result */
             if( result.next() ) {
                 user = new User();
 
-                user.init( driver );
+                user.init( bzb.getDriver() );
                 user.populate( result );
             }
         } catch( SQLException e ) {
@@ -131,14 +129,14 @@ public class ProfileDisplayServlet extends HttpServlet {
         return user;
     }
 
-    private HashMap<String, String> getUserStats( int userId, DBDriver driver ) {
+    private HashMap<String, String> getUserStats( int userId ) {
         HashMap<String, String> stats = new HashMap<String, String>();
         ResultSet result;
         String where = "userId = " + userId;
         String[] fields = { "COUNT(*) as totalListings" };
 
         /* Query for stats */
-        result = driver.select( "booklisting", fields, where );
+        result = bzb.getDriver().select( "booklisting", fields, where );
 
         try {
             /* Make sure there's a result */
@@ -152,19 +150,19 @@ public class ProfileDisplayServlet extends HttpServlet {
         return stats;
     }
 
-    private ArrayList<BookListing> getUserListings( int userId, DBDriver driver ) {
+    private ArrayList<BookListing> getUserListings( int userId ) {
         ArrayList<BookListing> listings = new ArrayList<BookListing>();
         BookListing listing;
         String where = "userId = " + userId;
         String[] fields = { "l.*", "b.*" };
         String[] join = { "INNER JOIN bzb.book b ON l.isbn=b.isbn" };
         String[] orderBy = { "l.listDate DESC" };
-        ResultSet result = driver.select( "booklisting l", fields, where, join, null, null, orderBy, 0, 5 );
+        ResultSet result = bzb.getDriver().select( "booklisting l", fields, where, join, null, null, orderBy, 0, 5 );
 
         try {
             while( result.next() ) {
                 listing = new BookListing();
-                listing.init( driver );
+                listing.init( bzb.getDriver() );
                 listing.populate( result );
                 listings.add( listing );
             }

@@ -16,8 +16,9 @@ import util.BooksZenBooks;
  * @version 11.29.2009
  */
 public class HomeServlet extends HttpServlet {
-    private static String dbConfigResource;
-    private static String jspPath;
+    private String dbConfigResource;
+    private String jspPath;
+    private BooksZenBooks bzb;
 
      /**
      * Initializes the servlet and sets up required instance variables.
@@ -40,7 +41,7 @@ public class HomeServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
+        bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
         String forwardUrl;
         RequestDispatcher dispatcher;
         User user = bzb.getAuthenticatedUser( request );
