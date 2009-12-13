@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
         BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
-        String action = RequestHelper.getValue( "action", request );
+        String action = RequestHelper.getString( "action", request );
         String forwardUrl;
         RequestDispatcher dispatcher;
         User user;
@@ -146,8 +146,8 @@ public class LoginServlet extends HttpServlet {
     public User checkCredentials( HttpServletRequest request, DBDriver driver ) {
         ResultSet result;
         User user = null;
-        String email = RequestHelper.getValue( "email", request );
-        String password = RequestHelper.getValue( "password", request );
+        String email = RequestHelper.getString( "email", request );
+        String password = RequestHelper.getString( "password", request );
         String where = "email = '" + email + "' AND password = '" + DigestHelper.md5( password ) + "'";
 
         /* Query for matching user */

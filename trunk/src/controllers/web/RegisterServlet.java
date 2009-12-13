@@ -58,7 +58,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
         BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
-        String action = RequestHelper.getValue( "action", request );
+        String action = RequestHelper.getString( "action", request );
         String forwardUrl;
         RequestDispatcher dispatcher;
         HashMap<String, String> formErrors;
@@ -227,13 +227,13 @@ public class RegisterServlet extends HttpServlet {
      */
     private HashMap<String, String> checkRegistration( HttpServletRequest request, BooksZenBooks bzb ) {
         HashMap<String, String> errors = new HashMap<String, String>();
-        String email = RequestHelper.getValue( "email", request );
-        String password = RequestHelper.getValue( "password", request );
-        String confirmPassword = RequestHelper.getValue( "confirmPassword", request );
+        String email = RequestHelper.getString( "email", request );
+        String password = RequestHelper.getString( "password", request );
+        String confirmPassword = RequestHelper.getString( "confirmPassword", request );
 
         /* Check that required fields are filled in. */
         for( String fieldName : requiredFields ) {
-            if( RequestHelper.getValue( fieldName, request ).isEmpty() ) {
+            if( RequestHelper.getString( fieldName, request ).isEmpty() ) {
                 errors.put( fieldName, bzb.getLexicon().get( "emptyField", new String[][] { { "field", bzb.getLexicon().get( fieldName ) } } ) );
             }
         }
@@ -257,12 +257,12 @@ public class RegisterServlet extends HttpServlet {
         }
 
         /* Check that the birthdate is valid, if entered */
-        if( !errors.containsKey( "birthDate" ) && util.Util.parseDate( RequestHelper.getValue( "birthDate", request ) ) == null ) {
+        if( !errors.containsKey( "birthDate" ) && util.Util.parseDate( RequestHelper.getString( "birthDate", request ) ) == null ) {
             errors.put( "birthDate", bzb.getLexicon().get( "birthDateInvalid" ) );
         }
 
         /* Make sure the user has agreed to the terms */
-        if( !RequestHelper.getValue( "agreeTerms", request ).equals( "on" ) ) {
+        if( !RequestHelper.getString( "agreeTerms", request ).equals( "on" ) ) {
             errors.put( "agreeTerms", bzb.getLexicon().get( "agreeTermsEmpty" ) );
         }
 
@@ -280,17 +280,17 @@ public class RegisterServlet extends HttpServlet {
 
         user.init( driver );
 
-        user.setEmail( RequestHelper.getValue( "email", request ) );
-        user.setPassword( DigestHelper.md5( RequestHelper.getValue( "password", request ) ) );
-        user.setFirstName( RequestHelper.getValue( "firstName", request ) );
-        user.setLastName( RequestHelper.getValue( "lastName", request ) );
-        user.setAddress( RequestHelper.getValue( "address", request ) );
-        user.setCity( RequestHelper.getValue( "city", request ) );
-        user.setState( RequestHelper.getValue( "state", request ) );
-        user.setPostalCode( RequestHelper.getValue( "postalCode", request ) );
-        user.setCountry( RequestHelper.getValue( "country", request ) );
-        user.setPhone( RequestHelper.getValue( "phone", request ) );
-        user.setBirthDate( util.Util.parseDate( RequestHelper.getValue( "birthDate", request ) ) );
+        user.setEmail( RequestHelper.getString( "email", request ) );
+        user.setPassword( DigestHelper.md5( RequestHelper.getString( "password", request ) ) );
+        user.setFirstName( RequestHelper.getString( "firstName", request ) );
+        user.setLastName( RequestHelper.getString( "lastName", request ) );
+        user.setAddress( RequestHelper.getString( "address", request ) );
+        user.setCity( RequestHelper.getString( "city", request ) );
+        user.setState( RequestHelper.getString( "state", request ) );
+        user.setPostalCode( RequestHelper.getString( "postalCode", request ) );
+        user.setCountry( RequestHelper.getString( "country", request ) );
+        user.setPhone( RequestHelper.getString( "phone", request ) );
+        user.setBirthDate( util.Util.parseDate( RequestHelper.getString( "birthDate", request ) ) );
         user.setJoinDate( new Date() );
         user.setValidationCode( generateCode() );
         user.setValidated( false );
@@ -361,8 +361,8 @@ public class RegisterServlet extends HttpServlet {
      * @return
      */
     private User checkValidationCode( HttpServletRequest request, DBDriver driver ) {
-        String email = RequestHelper.getValue( "email", request );
-        String code = RequestHelper.getValue( "confirmCode", request );
+        String email = RequestHelper.getString( "email", request );
+        String code = RequestHelper.getString( "confirmCode", request );
         String where = "email = '" + email + "' AND validationCode = '" + code + "'";
         ResultSet result = driver.select( "user", null, where );
         User user = null;

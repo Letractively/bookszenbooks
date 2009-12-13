@@ -3,6 +3,8 @@
 
 <p>${lexicon.beginAddListing}</p>
 
+<c:if test="${formErrors.page != null}"><p class="error">${formErrors.page}</p></c:if>
+
 <form action="addListing" method="post">
     <fieldset>
         <input type="hidden" name="step" value="2" />

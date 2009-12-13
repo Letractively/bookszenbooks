@@ -20,7 +20,7 @@ public class Book extends DBObject implements Serializable {
     private String language;
     private int edition;
     private String format;
-    private BookSubject category;
+    private BookSubject subject;
     private String tableName = "book";
     private String[] primaryKeys = { "isbn" };
     
@@ -225,15 +225,15 @@ public class Book extends DBObject implements Serializable {
     /**
      * @return the category
      */
-    public BookSubject getCategory() {
-        return category;
+    public BookSubject getSubject() {
+        return subject;
     }
 
     /**
      * @param category the category to set
      */
-    public void setCategory(BookSubject category) {
-        this.category = category;
+    public void setSubject( BookSubject subject ) {
+        this.subject = subject;
     }
 
     /**
