@@ -21,7 +21,7 @@ import util.collections.*;
 public class BooksZenBooks {
 
     private DBConnection dbConnection;
-    private DBDriver dbDriver;
+    private DBDriver driver;
     private SystemConfig config;
     private Lexicon lexicon;
     private User user;
@@ -29,8 +29,8 @@ public class BooksZenBooks {
     public BooksZenBooks( String language, String dbConfigResource ) {
         initDatabase( dbConfigResource );
 
-        this.config = new SystemConfig( dbDriver );
-        this.lexicon = new Lexicon( language, dbDriver );
+        this.config = new SystemConfig( driver );
+        this.lexicon = new Lexicon( language, driver );
 
         this.config.load();
     }
@@ -47,16 +47,16 @@ public class BooksZenBooks {
         this.dbConnection = new DBConnection( dbConfig );
         dbConnection.openConnectionn();
 
-        initDBDriver( dbConfig );
+        initDriver( dbConfig );
     }
 
-    private void initDBDriver( DBConfig dbConfig ) {
+    private void initDriver( DBConfig dbConfig ) {
         String dbPlatform = dbConfig.getPlatform();
 
         try {
-            dbDriver = ( DBDriver ) Class.forName( "data.DBDriver" + dbPlatform ).newInstance();
-            Method init = dbDriver.getClass().getMethod( "init", dbConnection.getClass() );
-            init.invoke( dbDriver, dbConnection );
+            driver = ( DBDriver ) Class.forName( "data.DBDriver" + dbPlatform ).newInstance();
+            Method init = driver.getClass().getMethod( "init", dbConnection.getClass() );
+            init.invoke( driver, dbConnection );
         } catch (IllegalArgumentException ex) {
             throw new RuntimeException();
         } catch (InvocationTargetException ex) {
@@ -74,7 +74,7 @@ public class BooksZenBooks {
         }
     }
 
-    public User getAuthenticatedUser( HttpServletRequest request ) {
+    public synchronized User getAuthenticatedUser( HttpServletRequest request ) {
         ResultSet result;
         User authUser;
         String where;
@@ -88,13 +88,13 @@ public class BooksZenBooks {
         else if( user == null && email != null && password != null ) {
             authUser = new User();
             
-            authUser.init( getDBDriver() );
+            authUser.init( getDriver() );
             authUser.setEmail( email );
             authUser.setPassword( password );
 
             where = "email = '" + authUser.getEmail() + "' AND password = '" + authUser.getPassword() + "'";
 
-            result = getDBDriver().select( "user", null, where );
+            result = getDriver().select( "user", null, where );
 
             try {
                 if( result.next() ) {
@@ -113,13 +113,12 @@ public class BooksZenBooks {
         ArrayList<BookSubject> subjects = new ArrayList<BookSubject>();
         BookSubject subject;
         String[] orderBy = { "text ASC" };
-        ResultSet result = dbDriver.select( "booksubject", null, null, null, null, null, orderBy, 0, 0 );
+        ResultSet result = driver.select( "booksubject", null, null, null, null, null, orderBy, 0, 0 );
 
         try {
             while( result.next() ) {
-                System.out.println( "LOL:" + result.getString( "text" ) );
                 subject = new BookSubject();
-                subject.init( dbDriver );
+                subject.init( driver );
                 subject.populate( result );
                 subject.setI18nText( lexicon.get( subject.getText() ) );
                 subjects.add( subject );
@@ -134,21 +133,21 @@ public class BooksZenBooks {
     /**
      * @return the driver
      */
-    public DBDriver getDBDriver() {
-        return dbDriver;
+    public synchronized DBDriver getDriver() {
+        return driver;
     }
 
     /**
      * @return the config
      */
-    public SystemConfig getConfig() {
+    public synchronized SystemConfig getConfig() {
         return config;
     }
 
     /**
      * @return the lexicon
      */
-    public Lexicon getLexicon() {
+    public synchronized Lexicon getLexicon() {
         return lexicon;
     }
 }

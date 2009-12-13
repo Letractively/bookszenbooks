@@ -289,6 +289,8 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('timeOut', 'listing', 'en', 'Sorry, your request has timed out and you must begin entering your listing data again.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('comments', 'listing', 'en', 'Your Comments');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('myListings', 'global', 'en', 'My Listings');
 
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)

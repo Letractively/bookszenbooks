@@ -19,6 +19,7 @@
             <fieldset>
                 <input type="hidden" name="step" value="3" />
                 <input type="hidden" name="newBook" value="false" />
+                <input type="hidden" name="isbn" value="${book.isbn}" />
                 <label>${lexicon.title}:</label><span class="label">${book.title}</span><br />
                 <label>${lexicon.author}:</label><span class="label">${book.author}</span><br />
                 <label>${lexicon.edition}:</label><span class="label">${book.edition}</span><br />

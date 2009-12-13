@@ -2,7 +2,6 @@ package controllers.web;
 
 import javax.servlet.http.HttpServletRequest;
 import business.User;
-import data.DBDriver;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,12 +20,13 @@ import util.RequestHelper;
  * removing cookies and user session data.
  *
  * @author Rick Varella
- * @version 11.25.2009
+ * @version 12.13.2009
  */
 
 public class LoginServlet extends HttpServlet {
-    private static String dbConfigResource;
-    private static String jspPath;
+    private String dbConfigResource;
+    private String jspPath;
+    private BooksZenBooks bzb;
 
      /**
      * Initializes the servlet and sets up required instance variables.
@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
+        bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
         String action = RequestHelper.getString( "action", request );
         String forwardUrl;
         RequestDispatcher dispatcher;
@@ -74,7 +74,7 @@ public class LoginServlet extends HttpServlet {
             }
             else {
                 /* Verify email and password */
-                user = checkCredentials( request, bzb.getDBDriver() );
+                user = checkCredentials( request );
 
                 /* No matching user */
                 if( user == null ) {
@@ -94,7 +94,7 @@ public class LoginServlet extends HttpServlet {
                 else {
                     forwardUrl = "/home";
 
-                    startSession( user, request, response, Integer.parseInt( bzb.getConfig().get( "maxCookieLifetime" ) ) );
+                    startSession( user, request, response );
                 }
             }
         }
@@ -143,7 +143,7 @@ public class LoginServlet extends HttpServlet {
      * @param bzb The BooksZenBooks class.
      * @return The matching User if one is found, null otherwise.
      */
-    public User checkCredentials( HttpServletRequest request, DBDriver driver ) {
+    public User checkCredentials( HttpServletRequest request ) {
         ResultSet result;
         User user = null;
         String email = RequestHelper.getString( "email", request );
@@ -151,14 +151,14 @@ public class LoginServlet extends HttpServlet {
         String where = "email = '" + email + "' AND password = '" + DigestHelper.md5( password ) + "'";
 
         /* Query for matching user */
-        result = driver.select( "user", null, where );
+        result = bzb.getDriver().select( "user", null, where );
 
         try {
             /* Make sure there's a result */
             if( result.next() ) {
                 user = new User();
 
-                user.init( driver );
+                user.init( bzb.getDriver() );
                 user.populate( result );
             }
         } catch( SQLException e ) {
@@ -176,18 +176,19 @@ public class LoginServlet extends HttpServlet {
      * @param response The response object.
      * @param config The configuration object.
      */
-    public void startSession( User user, HttpServletRequest request, HttpServletResponse response, int cookieLifetime ) {
+    public void startSession( User user, HttpServletRequest request, HttpServletResponse response ) {
         HttpSession session = request.getSession();
         Cookie idCookie = new Cookie( "userId", Integer.toString( user.getUserId() ) );
         Cookie emailCookie = new Cookie( "email", user.getEmail() );
         Cookie passwordCookie = new Cookie( "password", user.getPassword() );
+        int lifetime = Integer.parseInt( bzb.getConfig().get( "maxCookieLifetime" ) );
 
         /* Set up cookies */
-        idCookie.setMaxAge( cookieLifetime );
+        idCookie.setMaxAge( lifetime );
         idCookie.setPath( "/" );
-        emailCookie.setMaxAge( cookieLifetime );
+        emailCookie.setMaxAge( lifetime );
         emailCookie.setPath( "/" );
-        passwordCookie.setMaxAge( cookieLifetime );
+        passwordCookie.setMaxAge( lifetime );
         passwordCookie.setPath( "/" );
 
         /* Add cookies to browser */

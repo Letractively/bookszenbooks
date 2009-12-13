@@ -1,9 +1,7 @@
 package controllers.web;
 
 import business.BookListing;
-import business.User;
 import javax.servlet.http.HttpServletRequest;
-import data.DBDriver;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,12 +14,14 @@ import util.RequestHelper;
 
 /**
  * Handles requests related to displaying a book listing.
+ * 
  * @author Rick Varella
- * @version 12.12.2009
+ * @version 12.13.2009
  */
 public class ListingDisplayServlet extends HttpServlet {
-    private static String dbConfigResource;
-    private static String jspPath;
+    private String dbConfigResource;
+    private String jspPath;
+    private BooksZenBooks bzb;
 
      /**
      * Initializes the servlet and sets up required instance variables.
@@ -44,12 +44,11 @@ public class ListingDisplayServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        BooksZenBooks bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
+        bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
         String forwardUrl;
         RequestDispatcher dispatcher;
-        User user = bzb.getAuthenticatedUser( request );
         int listId = RequestHelper.getInt( "listId", request );
-        BookListing listing = getBookListing( listId, bzb.getDBDriver() );
+        BookListing listing = getBookListing( listId );
 
         /* Load necessary lexicons */
         bzb.getLexicon().load( "global" );
@@ -92,18 +91,18 @@ public class ListingDisplayServlet extends HttpServlet {
         doPost( request, response );
     }
 
-    private BookListing getBookListing( int listId, DBDriver driver ) {
+    private BookListing getBookListing( int listId ) {
         BookListing listing = null;
         String where = "listId = " + listId;
         String[] fields = { "b.*, l.listId, l.price, l.comment, l.listDate, l.active, l.condition, l.currency, u.*" };
         String[] join = { "INNER JOIN bzb.book b ON l.isbn=b.isbn",
                     "INNER JOIN bzb.user u ON l.userId=u.userId" };
-        ResultSet result = driver.select( "booklisting l", fields, where, join, null, null, null, 0, 1 );
+        ResultSet result = bzb.getDriver().select( "booklisting l", fields, where, join, null, null, null, 0, 1 );
 
         try {
             if( result.next() ) {
                 listing = new BookListing();
-                listing.init( driver );
+                listing.init( bzb.getDriver() );
                 listing.populate( result );
             }
         } catch( SQLException e ) {
@@ -111,29 +110,5 @@ public class ListingDisplayServlet extends HttpServlet {
         }
 
         return listing;
-    }
-
-    public String outputIsbnForm() {
-        throw new UnsupportedOperationException();
-    }
-
-    public String outputListingForm() {
-        throw new UnsupportedOperationException();
-    }
-
-    public String outputListing() {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean bookExists(Object int_isbn) {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean createBook() {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean createListing() {
-        throw new UnsupportedOperationException();
     }
 }
