@@ -1,6 +1,9 @@
 package util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  *
@@ -29,5 +32,23 @@ public class Util {
 
     public static String toUpperCaseFirst( String string ) {
         return string.substring( 0, 1 ).toUpperCase() + string.substring( 1 );
+    }
+
+    /**
+     * Attempts to parse a date in standard dd/MM/yyyy format.
+     *
+     * @param date The date string to parse.
+     * @return The parsed Date object on success, null if the date is invalid.
+     */
+    public static Date parseDate( String date ) {
+        SimpleDateFormat format = new SimpleDateFormat( "dd/MM/yyyy" );
+
+        format.setLenient( false );
+
+        try {
+            return format.parse( date );
+        } catch( ParseException e ) {
+            return null;
+        }
     }
 }

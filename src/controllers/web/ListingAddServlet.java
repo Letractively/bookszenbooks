@@ -210,8 +210,8 @@ public class ListingAddServlet extends HttpServlet {
         if( RequestHelper.getValue( "publisher", request ).isEmpty() ) {
             errors.put( "publisher", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "publisher" ) } } ) );
         }
-        if( RequestHelper.getValue( "publishDate", request ).isEmpty() ) {
-            errors.put( "publishDate", lexicon.get( "emptyField", new String[][]{ { "field", lexicon.get( "publishDate" ) } } ) );
+        if( util.Util.parseDate( RequestHelper.getValue( "publishDate", request ) ) == null ) {
+            errors.put( "publishDate", lexicon.get( "publishDateInvalid" ) );
         }
 
         return errors;

@@ -213,23 +213,6 @@ public class RegisterServlet extends HttpServlet {
 
     /**
      *
-     * @param birthDate
-     * @return
-     */
-    public Date parseDate( String birthDate ) {
-        SimpleDateFormat format = new SimpleDateFormat( "dd/MM/yyyy" );
-
-        format.setLenient( false );
-
-        try {
-            return format.parse( birthDate );
-        } catch( ParseException e ) {
-            return null;
-        }
-    }
-
-    /**
-     *
      * @return
      */
     public Hashtable checkRequiredFields() {
@@ -274,7 +257,7 @@ public class RegisterServlet extends HttpServlet {
         }
 
         /* Check that the birthdate is valid, if entered */
-        if( !errors.containsKey( "birthDate" ) && parseDate( RequestHelper.getValue( "birthDate", request ) ) == null ) {
+        if( !errors.containsKey( "birthDate" ) && util.Util.parseDate( RequestHelper.getValue( "birthDate", request ) ) == null ) {
             errors.put( "birthDate", bzb.getLexicon().get( "birthDateInvalid" ) );
         }
 
@@ -307,7 +290,7 @@ public class RegisterServlet extends HttpServlet {
         user.setPostalCode( RequestHelper.getValue( "postalCode", request ) );
         user.setCountry( RequestHelper.getValue( "country", request ) );
         user.setPhone( RequestHelper.getValue( "phone", request ) );
-        user.setBirthDate( parseDate( RequestHelper.getValue( "birthDate", request ) ) );
+        user.setBirthDate( util.Util.parseDate( RequestHelper.getValue( "birthDate", request ) ) );
         user.setJoinDate( new Date() );
         user.setValidationCode( generateCode() );
         user.setValidated( false );
