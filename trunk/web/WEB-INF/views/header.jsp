@@ -16,7 +16,8 @@
                 <c:choose>
                     <c:when test="${authUser != null}">
                         <a href="accountLogin?action=logout">${lexicon.logOut}</a> &middot;
-                        <a href="myListings">${lexicon.myListings}</a>
+                        <a href="myControls">${lexicon.myControls}</a> &middot;
+                        <a href="addListing">${lexicon.sellBook}</a>
                     </c:when>
                     <c:otherwise>
                         <a href="accountLogin">${lexicon.logIn}</a> &middot;

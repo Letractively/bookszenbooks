@@ -57,6 +57,10 @@
         <servlet-name>ListingAddServlet</servlet-name>
         <servlet-class>controllers.web.ListingAddServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserControlsServlet</servlet-name>
+        <servlet-class>controllers.web.UserControlsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/accountLogin</url-pattern>
@@ -85,6 +89,10 @@
     <servlet-mapping>
         <servlet-name>ListingAddServlet</servlet-name>
         <url-pattern>/addListing</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserControlsServlet</servlet-name>
+        <url-pattern>/myControls</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
