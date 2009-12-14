@@ -59,34 +59,33 @@ public class ListingEditServlet extends HttpServlet {
         /* Load necessary lexicons */
         bzb.getLexicon().load( "global" );
         bzb.getLexicon().load( "subject" );
+        bzb.getLexicon().load( "book" );
         bzb.getLexicon().load( "listing" );
 
         if( action.equals( "save" ) ) {
             formErrors = checkListingForm( request );
 
-            if( !formErrors.isEmpty() ) {
-                bzb.getLexicon().load( "book" );
+            listing.setCondition( RequestHelper.getString( "condition", request ) );
+            listing.setPrice( RequestHelper.getDouble( "price", request ) );
+            listing.setComment( RequestHelper.getString( "comment", request ) );
+            listing.setActive( RequestHelper.getBoolean( "active", request ) );
 
+            if( !formErrors.isEmpty() ) {
                 forwardUrl = jspPath + "editListingForm.jsp";
                 pageTitle = bzb.getLexicon().get( "editListing" );
                 
-                listing.setCondition( RequestHelper.getString( "condition", request ) );
-                listing.setPrice( RequestHelper.getDouble( "price", request ) );
-                listing.setComment( RequestHelper.getString( "comments", request ) );
-                listing.setActive( RequestHelper.getBoolean( "active", request ) );
-
                 request.setAttribute( "listing", listing );
                 request.setAttribute( "formErrors", formErrors );
                 request.setAttribute( "conditions", getConditions() );
             }
             else {
+                updateListing( listing, request );
+
                 forwardUrl = jspPath + "editListingSuccess.jsp";
                 pageTitle = bzb.getLexicon().get( "listingUpdated" );
             }
         }
-        else {
-            bzb.getLexicon().load( "book" );
-            
+        else {            
             forwardUrl = jspPath + "editListingForm.jsp";
             pageTitle = bzb.getLexicon().get( "editListing" );
 
@@ -123,7 +122,13 @@ public class ListingEditServlet extends HttpServlet {
     private HashMap<String, String> checkListingForm( HttpServletRequest request ) {
         HashMap<String, String> errors = new HashMap<String, String>();
 
-
+        if( RequestHelper.getDouble( "price", request ) < 0.01 ) {
+            errors.put( "price", bzb.getLexicon().get( "invalidField", new String[][]{ { "field", bzb.getLexicon().get( "price" ) } } ) );
+            System.out.println( "sfsdfdsfsdfsd:" + bzb.getLexicon().get( "price" ));
+        }
+        if( RequestHelper.getString( "condition", request ).isEmpty() ) {
+            errors.put( "condition", bzb.getLexicon().get( "emptyField", new String[][]{ { "field", bzb.getLexicon().get( "condition" ) } } ) );
+        }
 
         return errors;
     }
@@ -146,8 +151,6 @@ public class ListingEditServlet extends HttpServlet {
                 listing = new BookListing();
                 listing.init( bzb.getDriver() );
                 listing.populate( result );
-
-                System.out.println( "author:" + listing.getBook().getAuthor() );
             }
         } catch( SQLException e ) {
             
@@ -166,5 +169,9 @@ public class ListingEditServlet extends HttpServlet {
         }
 
         return conditions;
+    }
+
+    private void updateListing( BookListing listing, HttpServletRequest request ) {
+        listing.save();
     }
 }
