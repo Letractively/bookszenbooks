@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <table name="booksubject" className="business.BookSubject">
-  <field id="0" name="subjectId" dbType="4" javaType="int"/>
+  <field id="0" name="subjectId" dbType="4" javaType="int" index="pk"/>
   <field id="1" name="text" dbType="12" javaType="class java.lang.String"/>
 </table>

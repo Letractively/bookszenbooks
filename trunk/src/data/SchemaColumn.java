@@ -9,12 +9,14 @@ public class SchemaColumn {
     private String name;
     private int dbType;
     private String javaType;
+    private String index;
 
-    public SchemaColumn( int columnId, String columnName, int type, String javaType ) {
+    public SchemaColumn( int columnId, String columnName, int type, String javaType, String index  ) {
         this.id = columnId;
         this.name = columnName;
         this.dbType = type;
         this.javaType = javaType;
+        this.index = index;
     }
 
     /**
@@ -43,5 +45,12 @@ public class SchemaColumn {
      */
     public String getJavaType() {
         return javaType;
+    }
+
+    /**
+     * @return the index
+     */
+    public String getIndex() {
+        return index;
     }
 }
