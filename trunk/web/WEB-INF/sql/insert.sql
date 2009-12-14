@@ -315,14 +315,17 @@ VALUES ('myListings', 'ucp', 'en', 'View My Listings');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('myListingsDesc', 'ucp', 'en', 'The following are the book listings you have posted. You can manage them by selecting an option to the right of the listing.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('editProfile', 'ucp', 'en', 'My Profile');
+VALUES ('editProfile', 'ucp', 'en', 'Edit My Profile');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('editProfileDesc', 'ucp', 'en', 'Use the below form to update your profile information.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('myControls', 'global', 'en', 'My Controls');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('myControlsDesc', 'ucp', 'en', 'Welcome to your Control Panel. Here, you can manage your profile information and your book listings.');
-
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('saveProfile', 'ucp', 'en', 'Save My Profile');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('saveProfileSuccess', 'ucp', 'en', 'Your profile has been updated successfully!');
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('viewingProfile', 'profile', 'en', 'Viewing ${user}\'s Profile' );

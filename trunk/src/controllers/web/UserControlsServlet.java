@@ -4,14 +4,12 @@
  */
 package controllers.web;
 
-import business.Book;
 import business.BookListing;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Locale;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -78,8 +76,8 @@ public class UserControlsServlet extends HttpServlet {
             request.setAttribute( "listings", getUserListings( request ) );
         }
         else if( action.equals( "profile" ) ) {
-            forwardUrl = jspPath + "myProfile.jsp";
-            pageTitle = bzb.getLexicon().get( "myProfile" );
+            forwardUrl = "/editProfile";
+            pageTitle = bzb.getLexicon().get( "editProfile" );
         }
         else {
             forwardUrl = jspPath + "myControls.jsp";

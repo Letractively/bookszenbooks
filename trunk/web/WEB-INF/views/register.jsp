@@ -41,7 +41,7 @@
     <c:if test="${formErrors.birthDate != null}"><p class="error">${formErrors.birthDate}</p></c:if>
     <label for="birthDate">${lexicon.birthDate}:</label><input type="text" name="birthDate" id="birthDate" value="${param.birthDate}" /><br />
     <c:if test="${formErrors.agreeTerms != null}"><p class="error">${formErrors.agreeTerms}</p></c:if>
-    <input type="checkbox" name="agreeTerms" id="agreeTerms" /><label for="agreeTerms" class="noFloat">${lexicon.agreeTerms}</label><br />
+    <label></label><input type="checkbox" name="agreeTerms" id="agreeTerms" /><label for="agreeTerms" class="noFloat">${lexicon.agreeTerms}</label><br />
     <p class="submit"><input type="submit" value="${lexicon.registerAccount}" class="button submit" /><br />
 </form>
 

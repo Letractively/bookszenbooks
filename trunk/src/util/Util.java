@@ -41,7 +41,7 @@ public class Util {
      * @return The parsed Date object on success, null if the date is invalid.
      */
     public static Date parseDate( String date ) {
-        SimpleDateFormat format = new SimpleDateFormat( "dd/MM/yyyy" );
+        SimpleDateFormat format = new SimpleDateFormat( "dd-MM-yyyy" );
 
         format.setLenient( false );
 
