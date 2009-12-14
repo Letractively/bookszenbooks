@@ -17,8 +17,6 @@ public class BookOrder extends DBObject implements Serializable {
     private String paymentMethod;
     private User user;
     private BookListing bookListing;
-    String tableName = "booklisting";
-    String[] primaryKeys = { "orderId" };
 
     public BookOrder() {
         this.user = new User();
