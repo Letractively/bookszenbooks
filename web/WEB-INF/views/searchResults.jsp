@@ -16,7 +16,7 @@
                 <strong><a href="displayListing?listId=${listing.listId}">${listing.book.title}</a></strong>
                     ${lexicon.by}
                     <c:forTokens var="author" items="${listing.book.author}" delims="|" varStatus="status">
-                        <a href="bookSearch?author=${author}">${author}</a><c:if test="${status.last != true}">, </c:if>
+                        <a href="bookSearch?author=${author}">${author}</a><c:if test="${not status.last}">, </c:if>
                     </c:forTokens><br />
                     ${lexicon.price}: ${listing.price}<br />
                     ${lexicon.publishDate}: ${listing.book.publishDate}<br />
