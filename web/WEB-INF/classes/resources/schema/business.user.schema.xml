@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <table name="user" className="business.User">
-  <field id="0" name="userId" dbType="4" javaType="int"/>
+  <field id="0" name="userId" dbType="4" javaType="int" index="pk"/>
   <field id="1" name="email" dbType="12" javaType="class java.lang.String"/>
   <field id="2" name="password" dbType="12" javaType="class java.lang.String"/>
   <field id="3" name="firstName" dbType="12" javaType="class java.lang.String"/>

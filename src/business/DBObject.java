@@ -3,6 +3,7 @@ package business;
 import java.sql.ResultSet;
 import data.DBDriver;
 import data.SchemaColumn;
+import data.SchemaData;
 import util.Util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,9 +16,7 @@ import java.util.Iterator;
 
 public abstract class DBObject {
     protected DBDriver driver;
-    protected HashMap<String, SchemaColumn> schema;
-    private String tableName;
-    private String[] primaryKeys;
+    protected SchemaData schema;
     private boolean dirty;
     private boolean newObject;
 
@@ -40,7 +39,7 @@ public abstract class DBObject {
         for( int i = 1; i <= columnCount; i++ ) {
             columnName = rsMetaData.getColumnName( i );
 
-            if( schema.containsKey( columnName ) ) {
+            if( schema.getColumns().containsKey( columnName ) ) {
                 setField( columnName, row );
             }
         }
@@ -53,7 +52,7 @@ public abstract class DBObject {
         String methodName;
         Class<?>[] methodTypes = new Class<?>[1];
         Object[] methodArgs = new Object[1];
-        SchemaColumn column = schema.get( key );
+        SchemaColumn column = schema.getColumns().get( key );
         String javaType = column.getJavaType();
 
         try {
@@ -147,8 +146,8 @@ public abstract class DBObject {
     }
 
     protected HashMap<String, String> getDatabaseFields() {
-        Iterator<SchemaColumn> it = schema.values().iterator();
-        HashMap<String, String> fields = new HashMap<String, String>( schema.values().size() );
+        Iterator<SchemaColumn> it = schema.getColumns().values().iterator();
+        HashMap<String, String> fields = new HashMap<String, String>( schema.getColumns().values().size() );
         SchemaColumn column;
         Object rawValue;
 
@@ -197,7 +196,7 @@ public abstract class DBObject {
         String methodName;
         Method method;
         Object value = null;
-        String prefix = schema.get( field ).getJavaType().equals( "boolean" ) ? "is" : "get";
+        String prefix = schema.getColumns().get( field ).getJavaType().equals( "boolean" ) ? "is" : "get";
 
         try {
             methodName = prefix + Util.toUpperCaseFirst( field );
@@ -217,15 +216,8 @@ public abstract class DBObject {
     /**
      * @return the columnData
      */
-    public HashMap getSchema() {
+    public SchemaData getSchema() {
         return schema;
-    }
-
-    /**
-     * @return the tableName
-     */
-    public String getTableName() {
-        return tableName;
     }
 
     /**
@@ -240,13 +232,6 @@ public abstract class DBObject {
      */
     public boolean isNewObject() {
         return newObject;
-    }
-
-    /**
-     * @return the primaryKeys
-     */
-    public String[] getPrimaryKeys() {
-        return primaryKeys;
     }
 
     protected void setDirty( boolean isDirty ) {

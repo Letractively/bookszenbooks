@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<table name="BookOrder" className="business.BookOrder">
+  <field id="0" name="orderId" dbType="4" javaType="int" index="pk"/>
+  <field id="1" name="buyerId" dbType="4" javaType="int"/>
+  <field id="2" name="listId" dbType="4" javaType="int"/>
+  <field id="3" name="orderDate" dbType="93" javaType="class java.util.Date"/>
+  <field id="4" name="paymentMethod" dbType="12" javaType="class java.lang.String"/>
+</table>

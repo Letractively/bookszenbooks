@@ -27,7 +27,7 @@ public class LexiconTopic extends DBObject implements Serializable {
         String className = this.getClass().getName();
         Field[] fields = this.getClass().getDeclaredFields();
         SchemaBuilder builder = new SchemaBuilder( driver );
-        schema = builder.getSchema( className, tableName, fields);
+        schema = builder.getSchema( className, fields);
     }
 
     /**
@@ -55,7 +55,7 @@ public class LexiconTopic extends DBObject implements Serializable {
      * @return True if the record has been removed successfully, false otherwise.
      */
     public boolean remove() {
-        return driver.delete( tableName, formatPKWhere( primaryKeys ) ) > 0;
+        return driver.delete( schema.getTableName(), formatPKWhere( schema.getPrimaryKeys() ) ) > 0;
     }
 
     /**
@@ -65,7 +65,7 @@ public class LexiconTopic extends DBObject implements Serializable {
     protected boolean insert() {
         int affectedRows;
 
-        if( ( affectedRows = driver.insert( tableName, getDatabaseFields() ) ) > 0 ) {
+        if( ( affectedRows = driver.insert( schema.getTableName(), getDatabaseFields() ) ) > 0 ) {
             setNewObject( false );
         }
 
@@ -79,7 +79,7 @@ public class LexiconTopic extends DBObject implements Serializable {
     protected boolean update() {
         int affectedRows;
 
-        if( ( affectedRows = driver.update( tableName, getDatabaseFields(), formatPKWhere( primaryKeys ) ) ) > 0 ) {
+        if( ( affectedRows = driver.update( schema.getTableName(), getDatabaseFields(), formatPKWhere( schema.getPrimaryKeys() ) ) )  > 0 ) {
             setDirty( false );
         }
 

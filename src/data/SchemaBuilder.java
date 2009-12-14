@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package data;
 
 import java.io.FileNotFoundException;
@@ -12,6 +7,7 @@ import java.lang.reflect.Field;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import org.dom4j.Attribute;
@@ -24,8 +20,11 @@ import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
 /**
+ * Handles generating and reading XML schemas for the business classes
+ * that interact with the database.
  *
- * @author Rick
+ * @author Rick Varella
+ * @version 12.13.2009
  */
 public class SchemaBuilder {
     private DBDriver driver;
@@ -35,8 +34,9 @@ public class SchemaBuilder {
         this.driver = driver;
     }
 
-    public HashMap<String, SchemaColumn> getSchema( String className, String tableName, Field[] fields ) {
-        HashMap<String, SchemaColumn> schema = new HashMap<String, SchemaColumn>();
+    public SchemaData getSchema( String className, Field[] fields ) {
+        SchemaData schema = null;
+        HashMap<String, SchemaColumn> columns = new HashMap<String, SchemaColumn>();
         ClassLoader loader = this.getClass().getClassLoader();
         SchemaColumn column;
         InputStream schemaFile;
@@ -44,12 +44,12 @@ public class SchemaBuilder {
         Element xmlRoot;
         Element columnRoot;
         Iterator<Element> columnIterator;
+        String tableName = null;
+        ArrayList<String> primaryKeys = new ArrayList<String>();
         
         try {
             //System.out.println( "FILENAME: " + SCHEMA_PATH + className.toLowerCase() + ".schema.xml" );
             schemaFile = loader.getResourceAsStream( SCHEMA_PATH + className.toLowerCase() + ".schema.xml" );
-
-            buildSchema( getMetaData( tableName ), schemaFile, className, tableName, fields );
 
             if( schemaFile == null ) {
                 throw new FileNotFoundException();
@@ -58,17 +58,26 @@ public class SchemaBuilder {
             xmlDocument = parseSchema( schemaFile );
             xmlRoot = xmlDocument.getRootElement();
             columnIterator = xmlRoot.elementIterator();
+            tableName = xmlRoot.attributeValue( "name" ) == null ? classToTableName( className ) : xmlRoot.attributeValue( "name" );
+
+            //buildSchema( getMetaData( tableName ), schemaFile, className, tableName, fields );
 
             while( columnIterator.hasNext() ) {
                 columnRoot = columnIterator.next();
                 column = readSchemaColumn( columnRoot );
-                schema.put( column.getName(), column );
+                columns.put( column.getName(), column );
+
+                if( column.getIndex() != null && column.getIndex().equals( "pk" ) ) {
+                    primaryKeys.add( column.getName() );
+                }
             }
         } catch( FileNotFoundException e ) {
             throw new RuntimeException();
         } catch( DocumentException e ) {
             throw new RuntimeException();
         }
+
+        schema = new SchemaData( columns, tableName, primaryKeys.toArray( new String[ primaryKeys.size() ] ) );
 
         return schema;
     }
@@ -80,11 +89,13 @@ public class SchemaBuilder {
         return document;
     }
 
+
     private SchemaColumn readSchemaColumn( Element container ) {
         int columnId = 0;
         int dbType = 0;
         String javaType = null;
         String columnName = null;
+        String index = null;
         Iterator<Attribute> attrIterator = container.attributeIterator();
         Attribute attribute;
 
@@ -100,11 +111,12 @@ public class SchemaBuilder {
             else if( attribute.getName().equals( "javaType" ) ) {
                 javaType = attribute.getText();
             }
+            else if( attribute.getName().equals( "index" ) ) {
+                index = attribute.getText();
+            }
         }
 
-        // @TODO remove columnId?
-
-        return new SchemaColumn( columnId, columnName, dbType, javaType );
+        return new SchemaColumn( columnId, columnName, dbType, javaType, index );
     }
 
     private void buildSchema( ResultSet columns, InputStream schemaFile, String className, String tableName, Field[] fields ) {
@@ -124,12 +136,13 @@ public class SchemaBuilder {
         try {
             i = 0;
 
-            while( columns.next() ) {
+            while( columns.next() ) {System.out.println( columns.getString( "COLUMN_NAME" ) );
                 field = root.addElement( "field" );
                 field.addAttribute( "id", Integer.toString( i++ ) );
                 field.addAttribute( "name", columns.getString( "COLUMN_NAME" ) );
                 field.addAttribute( "dbType", columns.getString( "DATA_TYPE" ) );
                 field.addAttribute( "javaType", fieldMap.get( columns.getString( "COLUMN_NAME" ) ).getType().toString() );
+                
             }
 
             OutputFormat format = OutputFormat.createPrettyPrint();
@@ -158,5 +171,9 @@ public class SchemaBuilder {
         }
 
         return schemas;
+    }
+
+    private String classToTableName( String className ) {
+        return className.replace( "business.", "" ).replace( ".schema.xml", "" );
     }
 }
