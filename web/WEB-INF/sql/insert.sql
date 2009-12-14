@@ -87,6 +87,8 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('registerAccount', 'global', 'en', 'Register Account');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('subjects', 'global', 'en', 'Subjects');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('sellBook', 'global', 'en', 'Sell a Book');
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('forgotPassword', 'register', 'en', 'Forgot Password?');
@@ -154,6 +156,8 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('emptyField', 'register', 'en', 'The ${field} field is required and cannot be left blank.' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('loggedOut', 'register', 'en', 'You are now logged out of the website.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('logInDesc', 'register', 'en', 'Please log in to the website using the form below.' );
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('author', 'book', 'en', 'Author' );
@@ -289,8 +293,19 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('timeOut', 'listing', 'en', 'Sorry, your request has timed out and you must begin entering your listing data again.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('comments', 'listing', 'en', 'Your Comments');
+
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('myListings', 'global', 'en', 'My Listings');
+VALUES ('myListings', 'ucp', 'en', 'View My Listings');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('myListingsDesc', 'ucp', 'en', 'The following are the book listings you have posted. You can manage them by selecting an option to the right of the listing.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('editProfile', 'ucp', 'en', 'My Profile');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('editProfileDesc', 'ucp', 'en', 'Use the below form to update your profile information.');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('myControls', 'global', 'en', 'My Controls');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('myControlsDesc', 'ucp', 'en', 'Welcome to your Control Panel. Here, you can manage your profile information and your book listings.');
 
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)

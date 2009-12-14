@@ -67,9 +67,15 @@ public class ListingAddServlet extends HttpServlet {
         bzb.getLexicon().load( "book" );
         bzb.getLexicon().load( "listing" );
 
-        pageTitle = bzb.getLexicon().get( "addListing" ) + ":";
+        pageTitle = bzb.getLexicon().get( "addListing" );
 
-        if( step == 2 ) {
+        if( bzb.getAuthenticatedUser( request ) == null ) {
+            bzb.getLexicon().load( "error" );
+
+            forwardUrl = jspPath + "401.jsp";
+            pageTitle = bzb.getLexicon().get( "unauthorized" );
+        }
+        else if( step == 2 ) {
             if( !isValidISBN( RequestHelper.getString( "isbn", request ) ) ) {
                 forwardUrl = jspPath + "newListingStep1.jsp";
 
@@ -155,7 +161,7 @@ public class ListingAddServlet extends HttpServlet {
             forwardUrl = jspPath + "newListingStep1.jsp";
         }
 
-         /* Make lexicons and config settings available to JSP */
+        /* Make lexicons and config settings available to JSP */
         request.setAttribute( "config", bzb.getConfig().getSettings() );
         request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
         request.setAttribute( "language", bzb.getLexicon().getLanguage() );
