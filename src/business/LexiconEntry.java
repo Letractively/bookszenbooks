@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LexiconEntry extends DBObject implements Serializable {
-
     private String key;
     private String topic;
     private String language;

@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 public class LexiconTopic extends DBObject implements Serializable {
     private String name;
-    ArrayList<LexiconEntry> lexiconEntry = new ArrayList<LexiconEntry>();
-    private String tableName = "lexicontopic";
-    private String[] primaryKeys = { "name" };
+    private ArrayList<LexiconEntry> lexiconEntry;
 
-    public LexiconTopic() { }
+    public LexiconTopic() {
+        this.lexiconEntry = new ArrayList<LexiconEntry>();
+    }
 
     /**
      * Initialize the object. This must be called prior to any database-related methods.
@@ -98,5 +98,19 @@ public class LexiconTopic extends DBObject implements Serializable {
      */
     public void setName( String name ) {
         this.name = name;
+    }
+
+    /**
+     * @return the lexiconEntry
+     */
+    public ArrayList<LexiconEntry> getLexiconEntry() {
+        return lexiconEntry;
+    }
+
+    /**
+     * @param lexiconEntry the lexiconEntry to set
+     */
+    public void setLexiconEntry(ArrayList<LexiconEntry> lexiconEntry) {
+        this.lexiconEntry = lexiconEntry;
     }
 }

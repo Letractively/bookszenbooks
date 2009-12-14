@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class User extends DBObject implements Serializable {
-
     private int userId;
     private String email;
     private String password;

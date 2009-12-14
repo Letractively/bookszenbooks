@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BookSubject extends DBObject implements Serializable {
-
     private int subjectId;
     private String text;
     private String i18nText;
