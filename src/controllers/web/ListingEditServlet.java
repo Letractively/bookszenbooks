@@ -5,6 +5,7 @@
 package controllers.web;
 
 import business.BookListing;
+import business.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -55,6 +56,7 @@ public class ListingEditServlet extends HttpServlet {
         RequestDispatcher dispatcher;
         HashMap<String, String> formErrors;
         BookListing listing = getListing( RequestHelper.getInt( "listId", request ) );
+        User authUser = bzb.getAuthenticatedUser( request );
 
         /* Load necessary lexicons */
         bzb.getLexicon().load( "global" );
@@ -62,7 +64,24 @@ public class ListingEditServlet extends HttpServlet {
         bzb.getLexicon().load( "book" );
         bzb.getLexicon().load( "listing" );
 
-        if( action.equals( "save" ) ) {
+        if( listing == null ) {
+            bzb.getLexicon().load( "error" );
+
+            forwardUrl = jspPath + "404.jsp";
+            pageTitle = bzb.getLexicon().get( "listingNotFound" );
+
+            request.setAttribute( "customError", bzb.getLexicon().get( "listingNotFoundDesc" ) );
+        }
+        else if( authUser == null || authUser.getUserId() != listing.getUserId() ) {
+            bzb.getLexicon().load( "error" );
+            bzb.getLexicon().load( "register" );
+
+            forwardUrl = jspPath + "401.jsp";
+            pageTitle = bzb.getLexicon().get( "unauthorized" );
+
+            request.setAttribute( "customError", bzb.getLexicon().get( "notUserListing" ) );
+        }
+        else if( action.equals( "save" ) ) {
             formErrors = checkListingForm( request );
 
             listing.setCondition( RequestHelper.getString( "condition", request ) );

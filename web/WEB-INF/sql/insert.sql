@@ -66,9 +66,15 @@ VALUES ('fileNotFound', 'error', 'en', 'Page Not Found' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('fileNotFoundDesc', 'error', 'en', 'The requested page was not found on the server.' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('unauthorized', 'error', 'en', 'You Must Log In to Access This Feature' );
+VALUES ('unauthorized', 'error', 'en', 'Unauthorized Access' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('unauthorizedDesc', 'error', 'en', 'The feature you are trying to use is only available to registered members. Please log in to have access to it.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('listingNotFound', 'error', 'en', 'Listing Not Found' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('listingNotFoundDesc', 'error', 'en', 'Sorry, the specified listing does not exist in the system.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('notUserListing', 'error', 'en', 'You do not have permission to edit listings which belong to other users.' );
 
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
