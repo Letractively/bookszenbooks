@@ -301,7 +301,6 @@ public class ListingAddServlet extends HttpServlet {
         HashMap<String, String> conditions = new HashMap<String, String>();
         String conditionString = bzb.getConfig().get( "bookConditions" );
         String[] conditionArray = conditionString.split( "," );
-        String key;
 
         for( int i = 0; i < conditionArray.length; i++ ) {
             conditions.put( conditionArray[ i ], bzb.getLexicon().get( conditionArray[ i ] ) );

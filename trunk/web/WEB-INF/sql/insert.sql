@@ -293,6 +293,14 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('timeOut', 'listing', 'en', 'Sorry, your request has timed out and you must begin entering your listing data again.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('comments', 'listing', 'en', 'Your Comments');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('editListingSuccess', 'listing', 'en', 'The listing was updated successfully!');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('listingUpdated', 'listing', 'en', 'Listing Updated Successfully');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('editListing', 'listing', 'en', 'Edit Listing');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('editListingDesc', 'listing', 'en', 'Use the form below to update the information for your book listing.');
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('myListings', 'ucp', 'en', 'View My Listings');
