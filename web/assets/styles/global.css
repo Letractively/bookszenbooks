@@ -158,12 +158,24 @@ img {
 ul.searchResults {
     padding: 0;
     list-style-image: none;
+    border-top: 2px dotted #9F7E45;
 }
 
 ul.searchResults li {
     display: block;
     border-bottom: 2px dotted #9F7E45;
     padding: 7px 0;
+}
+
+ul.searchResults li div.listingOptions {
+    float: right;
+    width: auto;
+    background: #DFC599;
+    border: 1px solid #9F7E45;
+    margin: 2px;
+    padding: 2px;
+    font-size: 11pt;
+    text-align: center;
 }
 
 form {

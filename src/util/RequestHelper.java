@@ -69,4 +69,8 @@ public class RequestHelper {
 
         return numericValue;
     }
+
+    public static boolean getBoolean( String paramName, HttpServletRequest request ) {
+        return Boolean.parseBoolean( getString( paramName, request ) );
+    }
 }

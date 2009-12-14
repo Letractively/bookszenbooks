@@ -4,13 +4,11 @@
  */
 package controllers.web;
 
-import business.Book;
 import business.BookListing;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,7 +22,7 @@ import util.RequestHelper;
  *
  * @author Rick
  */
-public class UserControlsServlet extends HttpServlet {
+public class ListingEditServlet extends HttpServlet {
     private String dbConfigResource;
     private String jspPath;
     private BooksZenBooks bzb;
@@ -55,38 +53,46 @@ public class UserControlsServlet extends HttpServlet {
         String pageTitle;
         String action = RequestHelper.getString( "action", request );
         RequestDispatcher dispatcher;
+        HashMap<String, String> formErrors;
+        BookListing listing = getListing( RequestHelper.getInt( "listId", request ) );
 
         /* Load necessary lexicons */
         bzb.getLexicon().load( "global" );
         bzb.getLexicon().load( "subject" );
-        bzb.getLexicon().load( "ucp" );
+        bzb.getLexicon().load( "listing" );
 
-        if( bzb.getAuthenticatedUser( request ) == null ) {
-            bzb.getLexicon().load( "error" );
-            bzb.getLexicon().load( "register" );
+        if( action.equals( "save" ) ) {
+            formErrors = checkListingForm( request );
 
-            forwardUrl = jspPath + "401.jsp";
-            pageTitle = bzb.getLexicon().get( "unauthorized" );
-        }
-        else if( action.equals( "listings" ) ) {
-            bzb.getLexicon().load( "book" );
-            bzb.getLexicon().load( "listing" );
+            if( !formErrors.isEmpty() ) {
+                bzb.getLexicon().load( "book" );
 
-            forwardUrl = jspPath + "myListings.jsp";
-            pageTitle = bzb.getLexicon().get( "myListings" );
+                forwardUrl = jspPath + "editListingForm.jsp";
+                pageTitle = bzb.getLexicon().get( "editListing" );
+                
+                listing.setCondition( RequestHelper.getString( "condition", request ) );
+                listing.setPrice( RequestHelper.getDouble( "price", request ) );
+                listing.setComment( RequestHelper.getString( "comments", request ) );
+                listing.setActive( RequestHelper.getBoolean( "active", request ) );
 
-            request.setAttribute( "listings", getUserListings( request ) );
-        }
-        else if( action.equals( "profile" ) ) {
-            forwardUrl = jspPath + "myProfile.jsp";
-            pageTitle = bzb.getLexicon().get( "myProfile" );
+                request.setAttribute( "listing", listing );
+                request.setAttribute( "formErrors", formErrors );
+                request.setAttribute( "conditions", getConditions() );
+            }
+            else {
+                forwardUrl = jspPath + "editListingSuccess.jsp";
+                pageTitle = bzb.getLexicon().get( "listingUpdated" );
+            }
         }
         else {
-            forwardUrl = jspPath + "myControls.jsp";
-            pageTitle = bzb.getLexicon().get( "myControls" );
-        }
+            bzb.getLexicon().load( "book" );
+            
+            forwardUrl = jspPath + "editListingForm.jsp";
+            pageTitle = bzb.getLexicon().get( "editListing" );
 
-        
+            request.setAttribute( "listing", listing );
+            request.setAttribute( "conditions", getConditions() );
+        }
 
         /* Make lexicons and config settings available to JSP */
         request.setAttribute( "config", bzb.getConfig().getSettings() );
@@ -114,26 +120,51 @@ public class UserControlsServlet extends HttpServlet {
         doPost( request, response );
     }
 
-    private ArrayList<BookListing> getUserListings( HttpServletRequest request ) {
-        ArrayList<BookListing> listings = new ArrayList<BookListing>();
-        BookListing listing;
-        String[] fields = { "l.*", "b.*, u.*" };
-        String where = "l.userId = " + bzb.getAuthenticatedUser( request ).getUserId();
-        String[] join = { "INNER JOIN bzb.book b ON l.isbn=b.isbn",
-                    "INNER JOIN bzb.user u ON l.userId=u.userId" };
-        ResultSet result = bzb.getDriver().select( "booklisting l", fields, where, join, null, null, null, 0, 0 );
+    private HashMap<String, String> checkListingForm( HttpServletRequest request ) {
+        HashMap<String, String> errors = new HashMap<String, String>();
+
+
+
+        return errors;
+    }
+
+    private BookListing getListing( int listId ) {
+        BookListing listing = null;
+        String[] fields = { "l.*", "b.*" };
+        String where = "l.listId = " + listId;
+        String[] join = { "INNER JOIN bzb.book b ON l.isbn = b.isbn" };
+        ResultSet result;
+
+        if( listId < 1 ) {
+            return listing;
+        }
+
+        result = bzb.getDriver().select( "booklisting l", fields, where, join, null, null, null, 0, 1 );
 
         try {
-            while( result.next() ) {
+            if( result.next() ) {
                 listing = new BookListing();
                 listing.init( bzb.getDriver() );
                 listing.populate( result );
-                listings.add( listing );
+
+                System.out.println( "author:" + listing.getBook().getAuthor() );
             }
         } catch( SQLException e ) {
-
+            
         }
 
-        return listings;
+        return listing;
+    }
+
+    private HashMap<String, String> getConditions() {
+        HashMap<String, String> conditions = new HashMap<String, String>();
+        String conditionString = bzb.getConfig().get( "bookConditions" );
+        String[] conditionArray = conditionString.split( "," );
+
+        for( int i = 0; i < conditionArray.length; i++ ) {
+            conditions.put( conditionArray[ i ], bzb.getLexicon().get( conditionArray[ i ] ) );
+        }
+
+        return conditions;
     }
 }
