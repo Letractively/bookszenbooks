@@ -95,6 +95,8 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('subjects', 'global', 'en', 'Subjects');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('sellBook', 'global', 'en', 'Sell a Book');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('cart', 'global', 'en', 'Shopping Cart' );
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('forgotPassword', 'register', 'en', 'Forgot Password?');
@@ -227,6 +229,8 @@ VALUES ('listedBy', 'search', 'en', 'Listed by' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('listedOn', 'search', 'en', 'Listed on' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('listingInactive', 'search', 'en', 'This listing is no longer active.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('on', 'search', 'en', 'on' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('noResults', 'search', 'en', 'No results matching your search criteria were found.' );
@@ -358,3 +362,17 @@ INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('userNotFound', 'profile', 'en', 'User Not Found' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('userNotFoundDesc', 'profile', 'en', 'That user does not exist in the database.' );
+
+
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('cartDesc', 'cart', 'en', 'Welcome to your shopping cart. Here, you can add book listings of interest to you while you browse for books.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('cartEmpty', 'cart', 'en', 'Your shopping cart is empty.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('cartAddSuccess', 'cart', 'en', 'The listing has been added to your shopping cart.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('cartAddError', 'cart', 'en', 'A problem occurred adding the listing to your shopping cart.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('cartRemoveSuccess', 'cart', 'en', 'The listing has been removed from your cart.' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('cartRemoveError', 'cart', 'en', 'A problem occurred removing the listing from your cart.' );

@@ -76,8 +76,6 @@ public class LoginServlet extends HttpServlet {
                 /* Verify email and password */
                 user = checkCredentials( request );
 
-                System.out.println( "NEWOBJ:" + user.isNewObject() );
-
                 /* No matching user */
                 if( user == null ) {
                     forwardUrl = jspPath + "login.jsp";

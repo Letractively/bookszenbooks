@@ -84,8 +84,7 @@ public class ProfileEditServlet extends HttpServlet {
                 pageTitle = bzb.getLexicon().get( "profileUpdated" );
                 forwardUrl = jspPath + "editProfileSuccess.jsp";
                 
-                saveUser( authUser, request );
-                request.setAttribute( "user", authUser );
+                request.setAttribute( "user", saveUser( request ) );
             }
         }
         else {
@@ -198,8 +197,9 @@ public class ProfileEditServlet extends HttpServlet {
         return errors;
     }
 
-    private void saveUser( User authUser, HttpServletRequest request ) {
-        authUser = bzb.getAuthenticatedUser( request, true );
+    private User saveUser( HttpServletRequest request ) {
+        User authUser = bzb.getAuthenticatedUser( request, true );
+        
         authUser.init( bzb.getDriver() );
         authUser.setAddress( RequestHelper.getString( "address", request ) );
         authUser.setBirthDate( util.Util.parseDate( RequestHelper.getString( "birthDate", request ) ) );
@@ -218,6 +218,8 @@ public class ProfileEditServlet extends HttpServlet {
         }
 
         authUser.save();
+
+        return authUser;
     }
 
     private boolean isEmailRegistered( String email ) {

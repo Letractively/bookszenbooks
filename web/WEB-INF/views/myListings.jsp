@@ -22,8 +22,10 @@
                         <a href="bookSearch?author=${author}">${author}</a><c:if test="${status.last != true}">, </c:if>
                     </c:forTokens><br />
                     ${lexicon.price}: ${listing.price}<br />
-                    ${lexicon.publishDate}: ${listing.book.publishDate}<br />
-                    ${lexicon.listedBy} <a href="displayUser?userId=${listing.userId}">${listing.user.email}</a> ${lexicon.on} ${listing.listDate}
+                    ${lexicon.listedOn}: ${listing.listDate}<br />
+                    <c:if test="${not listing.active}">
+                        <em>${lexicon.listingInactive}</em>
+                    </c:if>
             </li>
         </c:forEach>
         </ul>

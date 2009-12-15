@@ -1,13 +1,15 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="header.jsp" />
 
-<h1>${lexicon.searchResults}</h1>
+<p>${lexicon.cartDesc}</p>
+
+<div class="message">
+    <p>${message}</p>
+</div>
 
 <c:choose>
     <c:when test="${empty listings}">
-        <div class="noSearchResults">
-            <p>${lexicon.noResults}</p>
-        </div>
+        ${lexicon.cartEmpty}
     </c:when>
     <c:otherwise>
         <ul class="searchResults">
@@ -29,6 +31,5 @@
         </ul>
     </c:otherwise>
 </c:choose>
-
 
 <c:import url="footer.jsp" />

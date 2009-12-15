@@ -12,7 +12,7 @@
             <em id="authorBox">${lexicon.by}
                 <c:forTokens var="author" items="${listing.book.author}" delims="|" varStatus="status">
                     <a href="bookSearch?author=${author}">${author}</a>
-                    <c:if test="${status.last != true}">, </c:if>
+                    <c:if test="${not status.last}">, </c:if>
                 </c:forTokens>
             </em>
         </h1>
@@ -23,7 +23,10 @@
         </c:if>
         <div id="priceBox">
             <span class="priceLabel">${lexicon.price}:</span> <span class="buyPrice">${listing.price}</span>
-            <b>[<a href="cart?action=add&amp;listId=${listing.listId}">${lexicon.addToCart}</a>]</b>
+            <br /><br />
+            <c:if test="${listing.active}">
+                <b>[<a href="shoppingCart?action=add&amp;listId=${listing.listId}">${lexicon.addToCart}</a>]</b>
+            </c:if>
         </div>
         <c:if test="${not empty otherFormats}">
             <div id="otherFormatsBox">
