@@ -51,9 +51,9 @@ public class SchemaBuilder {
             //System.out.println( "FILENAME: " + SCHEMA_PATH + className.toLowerCase() + ".schema.xml" );
             schemaFile = loader.getResourceAsStream( SCHEMA_PATH + className.toLowerCase() + ".schema.xml" );
 
-            if( schemaFile == null ) {
+            /*if( schemaFile == null ) {
                 throw new FileNotFoundException();
-            }
+            }*/
 
             xmlDocument = parseSchema( schemaFile );
             xmlRoot = xmlDocument.getRootElement();
@@ -71,9 +71,9 @@ public class SchemaBuilder {
                     primaryKeys.add( column.getName() );
                 }
             }
-        } catch( FileNotFoundException e ) {
+        } /*catch( FileNotFoundException e ) {
             throw new RuntimeException();
-        } catch( DocumentException e ) {
+        }*/ catch( DocumentException e ) {
             throw new RuntimeException();
         }
 
