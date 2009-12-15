@@ -63,7 +63,7 @@ public class LexiconLanguage extends DBObject implements Serializable {
         int affectedRows;
 
         if( ( affectedRows = driver.insert( schema.getTableName(), getDatabaseFields() ) ) > 0 ) {
-            setNewObject( false );
+            newObject = false;
         }
 
         return affectedRows > 0;
@@ -77,7 +77,7 @@ public class LexiconLanguage extends DBObject implements Serializable {
         int affectedRows;
 
         if( ( affectedRows = driver.update( schema.getTableName(), getDatabaseFields(), formatPKWhere( schema.getPrimaryKeys() ) ) )  > 0 ) {
-            setDirty( false );
+            dirty = false;
         }
 
         return affectedRows > 0;

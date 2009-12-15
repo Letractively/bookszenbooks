@@ -80,7 +80,7 @@ public class User extends DBObject implements Serializable {
         int affectedRows;
 
         if( ( affectedRows = driver.insert( schema.getTableName(), getDatabaseFields() ) ) > 0 ) {
-            setNewObject( false );
+            newObject = false;
         }
 
         return affectedRows > 0;
@@ -94,7 +94,7 @@ public class User extends DBObject implements Serializable {
         int affectedRows;
 
         if( ( affectedRows = driver.update( schema.getTableName(), getDatabaseFields(), formatPKWhere( schema.getPrimaryKeys() ) ) )  > 0 ) {
-            setDirty( false );
+            dirty = false;
         }
 
         return affectedRows > 0;
@@ -112,7 +112,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setUserId( int userId ) {
         this.userId = userId;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -127,7 +127,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setSuperUser( boolean isSuperUser ) {
         this.superUser = isSuperUser;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -142,7 +142,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setEmail( String email ) {
         this.email = email;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -157,7 +157,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setPassword( String password ) {
         this.password = password;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -172,7 +172,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setFirstName( String firstName ) {
         this.firstName = firstName;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -187,7 +187,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setLastName( String lastName ) {
         this.lastName = lastName;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -202,7 +202,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setAddress( String address ) {
         this.address = address;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -217,7 +217,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setState( String state ) {
         this.state = state;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -232,7 +232,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setCountry( String country ) {
         this.country = country;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -247,7 +247,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setPostalCode( String postalCode ) {
         this.postalCode = postalCode;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -262,7 +262,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setJoinDate( Date joinDate ) {
         this.joinDate = joinDate;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -277,7 +277,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -292,7 +292,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setValidated( boolean isValidated ) {
         this.validated = isValidated;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -307,7 +307,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setPhone( String phone ) {
         this.phone = phone;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**
@@ -322,7 +322,7 @@ public class User extends DBObject implements Serializable {
      */
     public void setCity( String city ) {
         this.city = city;
-        this.setDirty( true );
+        this.dirty = true;
     }
 
     /**

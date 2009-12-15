@@ -8,17 +8,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import util.BooksZenBooks;
+import util.DigestHelper;
 import util.RequestHelper;
 
 public class ProfileEditServlet extends HttpServlet {
     private String dbConfigResource;
     private String jspPath;
+    private String[] requiredFields;
     private BooksZenBooks bzb;
 
     /**
@@ -30,6 +34,7 @@ public class ProfileEditServlet extends HttpServlet {
 
         dbConfigResource = getServletContext().getInitParameter("dbConfigResource");
         jspPath = getServletContext().getInitParameter("jspPath");
+        requiredFields = getServletConfig().getInitParameter( "requiredFields" ).split( "," );
     }
 
     /**
@@ -73,14 +78,14 @@ public class ProfileEditServlet extends HttpServlet {
                 pageTitle = bzb.getLexicon().get( "editProfile" );
 
                 request.setAttribute( "countries", getCountries() );
-
+                request.setAttribute( "formErrors", formErrors );
             }
             else {
-                pageTitle = bzb.getLexicon().get( "editProfileSuccess" );
-                
-                saveUser();
-
+                pageTitle = bzb.getLexicon().get( "profileUpdated" );
                 forwardUrl = jspPath + "editProfileSuccess.jsp";
+                
+                saveUser( authUser, request );
+                request.setAttribute( "user", authUser );
             }
         }
         else {
@@ -92,7 +97,6 @@ public class ProfileEditServlet extends HttpServlet {
             request.setAttribute( "countries", getCountries() );
             request.setAttribute( "user", authUser );
         }
-
 
         /* Make lexicons and config settings available to JSP */
         request.setAttribute( "config", bzb.getConfig().getSettings() );
@@ -142,11 +146,118 @@ public class ProfileEditServlet extends HttpServlet {
         return countries;
     }
 
-    private HashMap<String, String> checkForm(HttpServletRequest request) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    private HashMap<String, String> checkForm( HttpServletRequest request ) {
+        HashMap<String, String> errors = new HashMap<String, String>();
+        String newEmail = RequestHelper.getString( "newEmail", request );
+        String currentPassword = RequestHelper.getString( "currentPassword", request );
+        String newPassword = RequestHelper.getString( "newPassword", request );
+        String newPasswordConfirm = RequestHelper.getString( "newPasswordConfirm", request );
+
+        /* Check that required fields are filled in. */
+        for( String fieldName : requiredFields ) {
+            if( RequestHelper.getString( fieldName, request ).isEmpty() ) {
+                errors.put( fieldName, bzb.getLexicon().get( "emptyField", new String[][] { { "field", bzb.getLexicon().get( fieldName ) } } ) );
+            }
+        }
+
+        /* Make sure the email address is valid and unregistered. */
+        if( !newEmail.isEmpty() ) {
+            if( !isValidEmail( newEmail ) ) {
+                errors.put( "newEmail", bzb.getLexicon().get( "emailInvalid", new String[][] {
+                    { "validEmails", bzb.getConfig().get( "validEmailDomains" ).replace( "\n", ", ") }
+                } ) );
+            }
+            else if( isEmailRegistered( newEmail ) ) {
+                errors.put( "newEmail", bzb.getLexicon().get( "emailRegistered", new String[][] { { "email", newEmail } } ) );
+            }
+        }
+        
+
+        /* Make sure the password is valid and matches the confirm field. */
+        if( !newPassword.isEmpty() ) {
+            if( !isValidPassword( newPassword ) ) {
+                errors.put( "newPassword", bzb.getLexicon().get( "emptyField", new String[][] { { "field", bzb.getLexicon().get( "password" ) } } ) );
+            }
+            else if( !newPassword.equals( newPasswordConfirm ) ) {
+                errors.put( "newPassword", bzb.getLexicon().get( "passwordNotMatch" ) );
+            }
+
+            if( !DigestHelper.md5( currentPassword ).equals( bzb.getAuthenticatedUser( request ).getPassword() ) ) {
+                errors.put( "currentPassword", bzb.getLexicon().get( "passwordIncorrect" ) );
+            }
+        }
+
+
+        /* Check that the birthdate is valid, if entered */
+        if( !errors.containsKey( "birthDate" ) && util.Util.parseDate( RequestHelper.getString( "birthDate", request ) ) == null ) {
+            errors.put( "birthDate", bzb.getLexicon().get( "birthDateInvalid" ) );
+        }
+
+        System.out.println( util.Util.parseDate( RequestHelper.getString( "birthDate", request ) ) );
+
+        return errors;
     }
 
-    private void saveUser() {
-        throw new UnsupportedOperationException("Not yet implemented");
+    private void saveUser( User authUser, HttpServletRequest request ) {
+        authUser = bzb.getAuthenticatedUser( request, true );
+        authUser.init( bzb.getDriver() );
+        authUser.setAddress( RequestHelper.getString( "address", request ) );
+        authUser.setBirthDate( util.Util.parseDate( RequestHelper.getString( "birthDate", request ) ) );
+        authUser.setCity( RequestHelper.getString( "city", request ) );
+        authUser.setFirstName( RequestHelper.getString( "firstName", request ) );
+        authUser.setLastName( RequestHelper.getString( "lastName", request ) );
+        authUser.setPhone( RequestHelper.getString( "phone", request ) );
+        authUser.setPostalCode( RequestHelper.getString( "postalCode", request ) );
+        authUser.setState( RequestHelper.getString( "state", request ) );
+
+        if( !RequestHelper.getString( "newEmail", request ).isEmpty() ) {
+            authUser.setEmail( RequestHelper.getString( "newEmail", request ) );
+        }
+        if( !RequestHelper.getString( "newPassword", request ).isEmpty() ) {
+            authUser.setPassword( DigestHelper.md5( RequestHelper.getString( "newPassword", request ) ) );
+        }
+
+        authUser.save();
+    }
+
+    private boolean isEmailRegistered( String email ) {
+        String where = "email = '" + email + "'";
+        String[] fields = { "COUNT(*) as count" };
+        ResultSet result = bzb.getDriver().select( "user", fields, where );
+        int count = 0;
+
+        try {
+            if( result.next() ) {
+                count = result.getInt( "count" );
+            }
+        } catch( SQLException e ) {
+
+        }
+
+        return count > 0;
+    }
+
+    public boolean isValidPassword( String password ) {
+        if( password.isEmpty() ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean isValidEmail( String email ) {
+        String domains = bzb.getConfig().get( "validEmailDomains" ).replace( "\n", "|" );
+        Pattern pattern = Pattern.compile( "^[A-Z0-9_+-]+(.[A-Z0-9_+-]+)*@(" + domains + ")$", Pattern.CASE_INSENSITIVE );
+        Matcher matcher = pattern.matcher( email );
+
+        if( email.isEmpty() ) {
+            return false;
+        }
+
+        if( !matcher.find() ) {
+            return false;
+        }
+
+        return true;
     }
 }

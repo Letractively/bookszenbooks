@@ -75,6 +75,10 @@ public class BooksZenBooks {
     }
 
     public synchronized User getAuthenticatedUser( HttpServletRequest request ) {
+        return getAuthenticatedUser( request, false );
+    }
+
+    public synchronized User getAuthenticatedUser( HttpServletRequest request, boolean forceReload ) {
         ResultSet result;
         User authUser;
         String where;
@@ -82,10 +86,7 @@ public class BooksZenBooks {
         String password = CookieCutter.getCookie( request.getCookies(), "password" );
         User sessionUser = ( User ) request.getSession().getAttribute( "authUser" );
 
-        if( sessionUser != null ) {
-            user = sessionUser;
-        }
-        else if( user == null && email != null && password != null ) {
+        if( forceReload || ( user == null && email != null && password != null ) ) {
             authUser = new User();
             
             authUser.init( getDriver() );
@@ -104,6 +105,9 @@ public class BooksZenBooks {
             } catch( SQLException e ) {
 
             }
+        }
+        else {
+            user = sessionUser;
         }
 
         return user;
