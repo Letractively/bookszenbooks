@@ -17,8 +17,8 @@ import java.util.Iterator;
 public abstract class DBObject {
     protected DBDriver driver;
     protected SchemaData schema;
-    private boolean dirty;
-    private boolean newObject;
+    protected boolean dirty;
+    protected boolean newObject;
 
     public DBObject() {
         this.dirty = false;
@@ -56,43 +56,43 @@ public abstract class DBObject {
         String javaType = column.getJavaType();
 
         try {
-            if( column.getJavaType().equals( "class java.lang.String" ) ) {
+            if( javaType.equals( "class java.lang.String" ) ) {
                 methodTypes[0] = java.lang.String.class;
                 methodArgs[0] = row.getString( key );
             }
-            else if( column.getJavaType().equals( "int" ) ) {
+            else if( javaType.equals( "int" ) ) {
                 methodTypes[0] = int.class;
                 methodArgs[0] = row.getInt( key );
             }
-            else if( column.getJavaType().equals( "double" ) ) {
+            else if( javaType.equals( "double" ) ) {
                 methodTypes[0] = double.class;
                 methodArgs[0] = row.getDouble( key );
             }
-            else if( column.getJavaType().equals( "float" ) ) {
+            else if( javaType.equals( "float" ) ) {
                 methodTypes[0] = float.class;
                 methodArgs[0] = row.getFloat( key );
             }
-            else if( column.getJavaType().equals( "boolean" ) ) {
+            else if( javaType.equals( "boolean" ) ) {
                 methodTypes[0] = boolean.class;
                 methodArgs[0] = row.getBoolean( key );
             }
-            else if( column.getJavaType().equals( "class java.lang.Double" ) ) {
+            else if( javaType.equals( "class java.lang.Double" ) ) {
                 methodTypes[0] = java.lang.Double.class;
                 methodArgs[0] = row.getDouble( key );
             }
-            else if( column.getJavaType().equals( "class java.lang.Float" ) ) {
+            else if( javaType.equals( "class java.lang.Float" ) ) {
                 methodTypes[0] = float.class;
                 methodArgs[0] = row.getFloat( key );
             }
-            else if( column.getJavaType().equals( "class java.lang.Long" ) ) {
+            else if( javaType.equals( "class java.lang.Long" ) ) {
                 methodTypes[0] = java.lang.Long.class;
                 methodArgs[0] = row.getLong( key );
             }
-            else if( column.getJavaType().equals( "class java.lang.Boolean" ) ) {
+            else if( javaType.equals( "class java.lang.Boolean" ) ) {
                 methodTypes[0] = java.lang.Boolean.class;
                 methodArgs[0] = row.getBoolean( key );
             }
-            else if( column.getJavaType().equals( "class java.util.Date" ) ) {
+            else if( javaType.equals( "class java.util.Date" ) ) {
                 methodTypes[0] = java.util.Date.class;
                 methodArgs[0] = row.getDate( key );
             }
@@ -232,13 +232,5 @@ public abstract class DBObject {
      */
     public boolean isNewObject() {
         return newObject;
-    }
-
-    protected void setDirty( boolean isDirty ) {
-        this.dirty = isDirty;
-    }
-
-    protected void setNewObject( boolean isNewObject ) {
-        this.newObject = isNewObject;
     }
 }

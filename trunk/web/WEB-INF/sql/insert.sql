@@ -135,7 +135,7 @@ VALUES ('emailInvalid', 'register', 'en', 'The format of the email address you e
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('passwordNotMatch', 'register', 'en', 'The entered passwords do not match.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
-VALUES ('birthDateInvalid', 'register', 'en', 'The birthdate must be a valid date in MM/DD/YYYY format.');
+VALUES ('birthDateInvalid', 'register', 'en', 'The birthdate must be a valid date in mm-dd-yyyy format.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('agreeTermsEmpty', 'register', 'en', 'You must agree to the Terms and Conditions first.');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
@@ -325,7 +325,26 @@ VALUES ('myControlsDesc', 'ucp', 'en', 'Welcome to your Control Panel. Here, you
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('saveProfile', 'ucp', 'en', 'Save My Profile');
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('profileUpdated', 'ucp', 'en', 'Profile Updated');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('saveProfileSuccess', 'ucp', 'en', 'Your profile has been updated successfully!');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('profileGeneral', 'ucp', 'en', 'General Profile Settings');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('changeEmail', 'ucp', 'en', 'Update Email Address');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('changePassword', 'ucp', 'en', 'Change Your Password');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('currentEmail', 'ucp', 'en', 'Current Email');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('newEmail', 'ucp', 'en', 'New Email');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('currentPassword', 'ucp', 'en', 'Current Password');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('newPassword', 'ucp', 'en', 'New Password');
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('passwordIncorrect', 'ucp', 'en', 'The entered password is incorrect.');
+
 
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('viewingProfile', 'profile', 'en', 'Viewing ${user}\'s Profile' );
