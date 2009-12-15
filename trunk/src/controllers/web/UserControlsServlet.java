@@ -69,6 +69,7 @@ public class UserControlsServlet extends HttpServlet {
         else if( action.equals( "listings" ) ) {
             bzb.getLexicon().load( "book" );
             bzb.getLexicon().load( "listing" );
+            bzb.getLexicon().load( "search" );
 
             forwardUrl = jspPath + "myListings.jsp";
             pageTitle = bzb.getLexicon().get( "myListings" );

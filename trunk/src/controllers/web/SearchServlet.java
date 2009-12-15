@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 import util.BooksZenBooks;
 import util.RequestHelper;
-import util.collections.Lexicon;
 
 /**
  * Handles requests related to searching for books.
@@ -115,6 +114,8 @@ public class SearchServlet extends HttpServlet {
         String subject = RequestHelper.getString( "subject", request );
         String condition = RequestHelper.getString( "condition", request );
         String language = RequestHelper.getString( "language", request );
+
+        params.add( "l.active = 1" );
 
         if( !keywords.isEmpty() ) {
             params.add( "(b.title LIKE '%" + keywords + "%' OR b.isbn = '" + keywords + "' OR b.author LIKE '%" + keywords + "%')" );
