@@ -3,9 +3,14 @@
 
 <p>${lexicon.cartDesc}</p>
 
-<div class="message">
-    <p>${message}</p>
-</div>
+<c:if test="${not empty message}">
+    <c:if test="${isError}">
+        <p class="error">${message}</p>
+    </c:if>
+    <c:if test="${not isError}">
+        <p class="success">${message}</p>
+    </c:if>
+</c:if>
 
 <c:choose>
     <c:when test="${empty listings}">
@@ -15,6 +20,9 @@
         <ul class="searchResults">
         <c:forEach var="listing" items="${listings}">
             <li>
+                <div class="listingOptions">
+                    <a href="shoppingCart?action=remove&amp;listId=${listing.listId}">${lexicon.removeFromCart}</a>
+                </div>
                 <strong><a href="displayListing?listId=${listing.listId}">${listing.book.title}</a></strong>
                     ${lexicon.by}
                     <c:forTokens var="author" items="${listing.book.author}" delims="|" varStatus="status">

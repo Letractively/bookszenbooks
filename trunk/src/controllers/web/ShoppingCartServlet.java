@@ -49,6 +49,7 @@ public class ShoppingCartServlet extends HttpServlet {
         String forwardUrl;
         String pageTitle;
         String message = null;
+        boolean isError = false;
         String action = RequestHelper.getString( "action", request );
         RequestDispatcher dispatcher;
 
@@ -74,6 +75,7 @@ public class ShoppingCartServlet extends HttpServlet {
             }
             else {
                 message = bzb.getLexicon().get( "cartAddError" );
+                isError = true;
             }
         }
         else if( action.equals( "remove" ) ) {
@@ -82,6 +84,7 @@ public class ShoppingCartServlet extends HttpServlet {
             }
             else {
                 message = bzb.getLexicon().get( "cartRemoveError" );
+                isError = true;
             }
         }
 
@@ -92,6 +95,7 @@ public class ShoppingCartServlet extends HttpServlet {
         request.setAttribute( "subjects", bzb.getSubjects() );
         request.setAttribute( "pageTitle", pageTitle );
         request.setAttribute( "message", message );
+        request.setAttribute( "isError", isError );
         request.setAttribute( "listings", getListings( request ) );
 
         /* Set up forward and display JSP */

@@ -24,7 +24,7 @@
         <div id="priceBox">
             <span class="priceLabel">${lexicon.price}:</span> <span class="buyPrice">${listing.price}</span>
             <br /><br />
-            <c:if test="${listing.active}">
+            <c:if test="${listing.active and listing.userId ne authUser.userId}">
                 <b>[<a href="shoppingCart?action=add&amp;listId=${listing.listId}">${lexicon.addToCart}</a>]</b>
             </c:if>
         </div>
