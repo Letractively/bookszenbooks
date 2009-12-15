@@ -373,6 +373,8 @@ VALUES ('cartAddSuccess', 'cart', 'en', 'The listing has been added to your shop
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('cartAddError', 'cart', 'en', 'A problem occurred adding the listing to your shopping cart.' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
+VALUES ('removeFromCart', 'cart', 'en', 'Remove From Cart' );
+INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('cartRemoveSuccess', 'cart', 'en', 'The listing has been removed from your cart.' );
 INSERT INTO `bzb`.`lexiconentry` (`key` ,`topic` ,`language` ,`value`)
 VALUES ('cartRemoveError', 'cart', 'en', 'A problem occurred removing the listing from your cart.' );

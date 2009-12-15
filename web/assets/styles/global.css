@@ -253,11 +253,17 @@ form .required{
 }
 
 p.error,
+p.success,
 form p.error {
     background: #FF9F9F;
     border: 1px solid #BF2F2F;
     font-size: 10pt;
     padding: 2px 4px;
+}
+
+p.success {
+    background: #A4FF9F;
+    border: 1px solid #347F27;
 }
 
 form br {
