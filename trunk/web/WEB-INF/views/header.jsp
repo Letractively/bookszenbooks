@@ -14,7 +14,7 @@
             <div id="topStrip">
                 <p>
                 <c:choose>
-                    <c:when test="${authUser != null}">
+                    <c:when test="${authUser ne null}">
                         <a href="accountLogin?action=logout">${lexicon.logOut}</a> &middot;
                         <a href="myControls">${lexicon.myControls}</a> &middot;
                         <a href="addListing">${lexicon.sellBook}</a> &middot;

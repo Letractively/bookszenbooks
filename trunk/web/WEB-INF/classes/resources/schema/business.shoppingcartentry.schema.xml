@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<table name="ShoppingCartEntry" className="business.ShoppingCartEntry">
+  <field id="0" name="userId" dbType="4" javaType="int" index="pk"/>
+  <field id="1" name="listId" dbType="4" javaType="int" index="pk"/>
+</table>

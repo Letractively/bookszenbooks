@@ -64,6 +64,7 @@ public class HomeServlet extends HttpServlet {
         request.setAttribute( "language", bzb.getLexicon().getLanguage() );
         request.setAttribute( "pageTitle", bzb.getLexicon().get( "home" ) );
         request.setAttribute( "subjects", bzb.getSubjects() );
+        request.getSession().setAttribute( "authUser", user );
 
         /* Set up forward and display JSP */
         dispatcher = getServletContext().getRequestDispatcher( forwardUrl );
