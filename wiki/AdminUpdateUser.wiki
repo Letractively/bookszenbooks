@@ -6,7 +6,9 @@ Introduction
 
 Pre conditions 
 
-1. User does not have an active account 
+1. User has role of administrator
+
+2. User is logged into administrators interface 
 
 Post condition 
 
@@ -14,11 +16,11 @@ Post condition
 
 Basic Course of Action 
 
-1. Administrator visits profile page. 
+1. User visits profile page. 
 
-2. Administrator add user's name 
+2. User adds  name 
 
-3. Administrator adds user's address 
+3. User adds the  address 
 
 4. System verifies required fields. 
 
