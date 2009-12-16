@@ -6,7 +6,13 @@ Updates book into the system.
 
 Pre condition 
 
-1.Administer wants to update book information. 
+
+1. The user has the role of Administrator.
+ 
+2. The user is logged into the administration interface. 
+
+3. The user is viewing the Update Bookn page. 
+ 
 
 Post condition 
 
@@ -14,15 +20,15 @@ Post condition
 
 Basic Course of Action 
 
-1.Administer visits the update book's page. 
+1. User visits the update book's page. 
 
-2. Administer enters title. 
+2. User enters title. 
 
-3.administer enters ISBN 
+3. User enters enters ISBN 
 
-4. Administer enters author of the book. 
+4. User enters author of the book. 
 
-5.Administer enters year of the book. 
+5. User enters year of the book. 
 
 6.System verifies the required fields 
 
