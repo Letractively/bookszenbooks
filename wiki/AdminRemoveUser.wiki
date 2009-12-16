@@ -4,6 +4,12 @@ Description Removes user from the system.
 
 Pre conditions 
 
+1.The user has the role of Administrator. 
+
+2.The user is logged into the administration interface.
+ 
+3.The user is viewing the remove user  page. 
+
 1.User has an active account. 
 
 Post condition 
@@ -12,17 +18,17 @@ Post condition
 
 Basic Course of Action 
 
-1.Administrator wants to remove user from system. 
+1. User wants to remove user from system. 
 
-2. Administrator locates user wants to remove from a user's list. 
+2. User locates user wants to remove from a user's list. 
 
-3. Administrator selects the user he/she wants to remove. 
+3. User selects the user he/she wants to remove. 
 
-4.Administrator selects remove from listing. 
+4. User selects remove from listing. 
 
 5.System confirms that he/she wants to remove user. 
 
-6.Administrator agrees. 
+6. User agrees. 
 
 7. System checks that it is safe to remove. 
 
@@ -31,4 +37,3 @@ Basic Course of Action
 9.System displays message confirming user has been removed 
 
 10. Use case ends 
-
