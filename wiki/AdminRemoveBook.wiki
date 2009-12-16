@@ -6,9 +6,12 @@ Removes book from active book account
 
 Pre condition 
 
-1.Book is on current book listing 
+The user has the role of Administrator.
+ 
+The user is logged into the administration interface. 
 
-2. Book is not yet purchased. 
+The user is viewing the Remove Book Lexicon page. 
+ 
 
 Post condition 
 
@@ -18,15 +21,15 @@ Post condition
 
 Basic Course of Action 
 
-1.Administrator visits current book listings page. 
+1. User visits current book listings page. 
 
-2.Administrator selects book he/she wants to remove. 
+2. User selects book he/she wants to remove. 
 
 3.Click remove from the listing page. 
 
 4.System displays message confirming administer wants to remove book. 
 
-5. Administrator agrees. 
+5. User agrees. 
 
 6. System confirms that book is safe to be removed. 
 
