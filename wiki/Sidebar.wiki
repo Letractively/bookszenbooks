@@ -9,6 +9,7 @@
    * [SoftwareFeatures Software Features]
  * Documentation
    * [UseCases Use Cases]
+   * [UseCase Diagram]
    * [ClassDiagram Class Diagram]
    * [ERModel Entity Relational Model]
    * [SequenceDiagrams Sequence Diagrams]
