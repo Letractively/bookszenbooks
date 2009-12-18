@@ -1,4 +1,4 @@
 #summary Sequence Diagram for registering a new user account.
 #labels Diagram,Phase-Design
 
-http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Register_Account_11122009.png
+http://bookszenbooks.googlecode.com/files/Register_Account_12-16-2009.png
