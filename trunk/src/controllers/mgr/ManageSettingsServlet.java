@@ -89,8 +89,4 @@ public class ManageSettingsServlet extends HttpServlet {
     private boolean updateSystemSetting( SystemSetting setting, HttpServletRequest request ) {
         throw new UnsupportedOperationException();
     }
-
-    private boolean removeSystemSetting( SystemSetting setting ) {
-        throw new UnsupportedOperationException();
-    }
 }
