@@ -1,4 +1,4 @@
 #summary Sequence Diagram for logging into an existing user account.
 #labels Phase-Design,Diagram
 
-http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Log_In_To_Account_11122009.png
+http://bookszenbooks.googlecode.com/files/Log_In_To_Account_12-16-2009.png
