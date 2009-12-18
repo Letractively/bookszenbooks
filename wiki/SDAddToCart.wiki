@@ -1,0 +1,4 @@
+#summary Sequence Diagram for adding a listing to the user's shopping cart.
+#labels Diagram,Phase-Design
+
+http://bookszenbooks.googlecode.com/files/Add_To_Cart_12-17-2009.png
