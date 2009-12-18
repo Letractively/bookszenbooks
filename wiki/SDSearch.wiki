@@ -1,0 +1,4 @@
+#summary Sequence Diagram for searching book listings using a variety of criteria.
+#labels Diagram,Phase-Design
+
+http://bookszenbooks.googlecode.com/files/Search_12-16-2009.png
