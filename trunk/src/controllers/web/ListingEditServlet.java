@@ -15,8 +15,10 @@ import util.BooksZenBooks;
 import util.RequestHelper;
 
 /**
- *
- * @author Rick
+ * Controls requests for editting a book listing.
+ * 
+ * @author Rick Varella
+ * @version 12.17.2009
  */
 public class ListingEditServlet extends HttpServlet {
     private String dbConfigResource;

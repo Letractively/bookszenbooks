@@ -79,6 +79,25 @@
         <servlet-name>ShoppingCartServlet</servlet-name>
         <servlet-class>controllers.web.ShoppingCartServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageSettingsServlet</servlet-name>
+        <servlet-class>controllers.mgr.ManageSettingsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <description>Controls managing book entries through the manager.</description>
+        <servlet-name>ManageBookServlet</servlet-name>
+        <servlet-class>controllers.mgr.ManageBookServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <description>Controls managing lexicons through the manager.</description>
+        <servlet-name>ManageLexiconServlet</servlet-name>
+        <servlet-class>controllers.mgr.ManageLexiconServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <description>Controls managing users through the manager.</description>
+        <servlet-name>ManageUserServlet</servlet-name>
+        <servlet-class>controllers.mgr.ManageUserServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/accountLogin</url-pattern>
@@ -123,6 +142,22 @@
     <servlet-mapping>
         <servlet-name>ShoppingCartServlet</servlet-name>
         <url-pattern>/shoppingCart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageSettingsServlet</servlet-name>
+        <url-pattern>/manager/settings</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageBookServlet</servlet-name>
+        <url-pattern>/manager/book</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageLexiconServlet</servlet-name>
+        <url-pattern>/manager/lexicon</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageUserServlet</servlet-name>
+        <url-pattern>/manager/user</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

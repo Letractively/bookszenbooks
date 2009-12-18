@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package controllers.web;
 
 import business.BookListing;
@@ -9,7 +5,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Locale;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +14,10 @@ import util.BooksZenBooks;
 import util.RequestHelper;
 
 /**
+ * Handles the display of the user's control panel (UCP).
  *
- * @author Rick
+ * @author Rick Varella
+ * @version 12.17.2009
  */
 public class UserControlsServlet extends HttpServlet {
     private String dbConfigResource;

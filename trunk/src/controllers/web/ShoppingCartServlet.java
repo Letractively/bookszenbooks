@@ -15,7 +15,9 @@ import util.BooksZenBooks;
 import util.RequestHelper;
 
 /**
- *
+ * Handles requests for displaying the user's shopping cart, and adding/removing
+ * items from the user's cart.
+ * 
  * @author Rick Varella
  * @version 12.16.2009
  */

@@ -1,6 +1,5 @@
 package controllers.web;
 
-import business.BookListing;
 import business.User;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -19,6 +18,12 @@ import util.BooksZenBooks;
 import util.DigestHelper;
 import util.RequestHelper;
 
+/**
+ * Handles updating a user's personal profile information.
+ *
+ * @author Rick Varella
+ * @version 12.17.2009
+ */
 public class ProfileEditServlet extends HttpServlet {
     private String dbConfigResource;
     private String jspPath;

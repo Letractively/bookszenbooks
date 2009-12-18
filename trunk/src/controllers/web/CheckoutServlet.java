@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import util.BooksZenBooks;
 
 /**
- * Handles requests to the main page of the system.
+ * Handles requests for checking out book listings currently in the user's cart.
  *
  * @author Rick Varella
  * @version 11.29.2009
