@@ -3,7 +3,7 @@
 
 = The Diagram =
 
-http://bookszenbooks.googlecode.com/files/ER_Model_11122009.png
+http://bookszenbooks.googlecode.com/files/Entity_Relational_Diagram_12162009.png
 
 = The Details =
 
