@@ -1,7 +1,9 @@
 package controllers.mgr;
 
+import business.SystemSetting;
 import business.User;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,12 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import util.BooksZenBooks;
 
 /**
- * Handles managing users through the Manager interface.
+ * Handles managing system settings through the Manager interface.
  *
  * @author Rick Varella
  * @version 12.17.2009
  */
-public class ManageUserServlet extends HttpServlet {
+public class ManageSettingsServlet extends HttpServlet {
     private String dbConfigResource;
     private String jspPath;
     private BooksZenBooks bzb;
@@ -48,7 +50,7 @@ public class ManageUserServlet extends HttpServlet {
 
         /* Load necessary lexicons */
         bzb.getLexicon().load( "manager" );
-        bzb.getLexicon().load( "user" );
+        bzb.getLexicon().load( "settings" );
 
         /* Make lexicons and config settings available to JSP */
         request.setAttribute( "config", bzb.getConfig().getSettings() );
@@ -76,19 +78,19 @@ public class ManageUserServlet extends HttpServlet {
         doPost( request, response );
     }
 
-    private User getUser( HttpServletRequest request ) {
+    private ArrayList<SystemSetting> getSettings( HttpServletRequest request ) {
         throw new UnsupportedOperationException();
     }
 
-    private boolean checkUserForm( HttpServletRequest request ) {
+    private SystemSetting getSystemSetting( String key ) {
         throw new UnsupportedOperationException();
     }
 
-    private boolean updateUser( User user, HttpServletRequest request ) {
+    private boolean updateSystemSetting( SystemSetting setting, HttpServletRequest request ) {
         throw new UnsupportedOperationException();
     }
 
-    private boolean removeUser( User user ) {
+    private boolean removeSystemSetting( SystemSetting setting ) {
         throw new UnsupportedOperationException();
     }
 }

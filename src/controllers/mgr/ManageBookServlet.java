@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import util.BooksZenBooks;
 
 /**
- * Handles requests to the main page of the system.
+ * Handles managing books through the Manager interface.
  *
  * @author Rick Varella
- * @version 11.29.2009
+ * @version 12.17.2009
  */
 public class ManageBookServlet extends HttpServlet {
     private String dbConfigResource;

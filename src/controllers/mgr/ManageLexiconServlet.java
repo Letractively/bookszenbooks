@@ -1,6 +1,5 @@
 package controllers.mgr;
 
-import business.Book;
 import business.LexiconEntry;
 import business.User;
 import java.io.IOException;
@@ -13,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import util.BooksZenBooks;
 
 /**
- * Handles requests to the main page of the system.
+ * Handles managing lexicons through the Manager interface.
  *
  * @author Rick Varella
- * @version 11.29.2009
+ * @version 12.17.2009
  */
 public class ManageLexiconServlet extends HttpServlet {
     private String dbConfigResource;
@@ -51,7 +50,7 @@ public class ManageLexiconServlet extends HttpServlet {
 
         /* Load necessary lexicons */
         bzb.getLexicon().load( "manager" );
-        bzb.getLexicon().load( "book" );
+        bzb.getLexicon().load( "lexicon" );
 
         /* Make lexicons and config settings available to JSP */
         request.setAttribute( "config", bzb.getConfig().getSettings() );

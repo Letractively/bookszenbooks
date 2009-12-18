@@ -24,7 +24,7 @@ import util.RequestHelper;
  * Handles adding a new book listing to the system.
  *
  * @author Rick Varella
- * @version 12.13.2009
+ * @version 12.17.2009
  */
 public class ListingAddServlet extends HttpServlet {
     private String dbConfigResource;
