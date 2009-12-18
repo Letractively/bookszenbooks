@@ -1,35 +1,95 @@
 package controllers.mgr;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
+import business.Book;
+import business.User;
+import java.io.IOException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import data.DBDriver;
+import javax.servlet.http.HttpServletResponse;
+import util.BooksZenBooks;
 
-public class ManageBookServlet {
-	private HttpServletRequest request;
-	private DBDriver db;
+/**
+ * Handles requests to the main page of the system.
+ *
+ * @author Rick Varella
+ * @version 11.29.2009
+ */
+public class ManageBookServlet extends HttpServlet {
+    private String dbConfigResource;
+    private String jspPath;
+    private BooksZenBooks bzb;
 
-	public String outputSearchForm() {
-		throw new UnsupportedOperationException();
-	}
+     /**
+     * Initializes the servlet and sets up required instance variables.
+     */
+    @Override
+    public void init() throws ServletException {
+        super.init();
 
-	public String outputBookForm() {
-		throw new UnsupportedOperationException();
-	}
+        dbConfigResource = getServletContext().getInitParameter( "dbConfigResource" );
+        jspPath = getServletContext().getInitParameter( "jspPath" );
+    }
 
-	public ArrayList getList(Hashtable criteria) {
-		throw new UnsupportedOperationException();
-	}
+    /**
+     * Handles all incoming POST requests to the servlet.
+     *
+     * @param request The contents of the HTTP request.
+     * @param response The contents of the HTTP response.
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+        bzb = new BooksZenBooks( "en", dbConfigResource ); // @TODO language should be a request param
+        String forwardUrl = jspPath + "home";
+        RequestDispatcher dispatcher;
+        User user = bzb.getAuthenticatedUser( request );
 
-	public String getBook() {
-		throw new UnsupportedOperationException();
-	}
+        /* Load necessary lexicons */
+        bzb.getLexicon().load( "manager" );
+        bzb.getLexicon().load( "book" );
 
-	public boolean removeBook() {
-		throw new UnsupportedOperationException();
-	}
+        /* Make lexicons and config settings available to JSP */
+        request.setAttribute( "config", bzb.getConfig().getSettings() );
+        request.setAttribute( "lexicon", bzb.getLexicon().getLexicons() );
+        request.setAttribute( "language", bzb.getLexicon().getLanguage() );
+        request.setAttribute( "subjects", bzb.getSubjects() );
+        request.getSession().setAttribute( "authUser", user );
 
-	public boolean updateBook() {
-		throw new UnsupportedOperationException();
-	}
+        /* Set up forward and display JSP */
+        dispatcher = getServletContext().getRequestDispatcher( forwardUrl );
+
+        dispatcher.forward( request, response );
+    }
+
+    /**
+     * Handles all incoming GET requests to the servlet.
+     *
+     * @param request The contents of the HTTP request.
+     * @param response The contents of the HTTP response.
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+        doPost( request, response );
+    }
+
+    private Book getBook( HttpServletRequest request ) {
+        throw new UnsupportedOperationException();
+    }
+
+    private boolean checkBookForm( HttpServletRequest request ) {
+        throw new UnsupportedOperationException();
+    }
+
+    private boolean updateBook( Book book, HttpServletRequest request ) {
+        throw new UnsupportedOperationException();
+    }
+
+    private boolean removeBook( Book book ) {
+        throw new UnsupportedOperationException();
+    }
 }
