@@ -1,0 +1,4 @@
+#summary Use case for removing a user's book from available listings.
+#labels Diagram,Phase-Design
+
+http://bookszenbooks.googlecode.com/files/RemoveBook11_30.png
