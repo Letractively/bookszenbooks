@@ -1,0 +1,11 @@
+#summary UseCases Diagrams for the Books Zen Books project.
+
+ * [SDRegisterAccount Register Account]
+ * [SDActivateAccount Activate Account]
+ * [SDLogInToAcount Log Into Account]
+ * [SDListBook List Book]
+ * [SDRemoveBook Remove Book]
+ * [SDSearch Search]
+ * [SDAddToCart Add to Cart]
+ * [SDRemoveFromCart Remove From Cart]
+ * [SDCheckout Checkout]
