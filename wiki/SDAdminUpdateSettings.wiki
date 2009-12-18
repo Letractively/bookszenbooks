@@ -1,4 +1,4 @@
-#summary Use case for checking out the book listings in the user's shopping cart.
+#summary Use case for updating system settings.
 #labels Diagram,Phase-Design
 
 http://bookszenbooks.googlecode.com/files/AdminUpdateSettings.jpg
