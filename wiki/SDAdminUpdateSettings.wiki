@@ -1,0 +1,4 @@
+#summary Use case for checking out the book listings in the user's shopping cart.
+#labels Diagram,Phase-Design
+
+http://bookszenbooks.googlecode.com/files/Checkout.jpg
