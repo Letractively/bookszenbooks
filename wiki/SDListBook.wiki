@@ -1,0 +1,4 @@
+#summary Sequence Diagram for listing a book for sale.
+#labels Diagram,Phase-Design
+
+http://bookszenbooks.googlecode.com/files/Add%20Book%20Listing_12-16-2009.png
