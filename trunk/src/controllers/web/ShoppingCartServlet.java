@@ -3,7 +3,6 @@ package controllers.web;
 import business.BookListing;
 import business.ShoppingCartEntry;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,7 +16,8 @@ import util.RequestHelper;
 
 /**
  *
- * @author Rick
+ * @author Rick Varella
+ * @version 12.16.2009
  */
 public class ShoppingCartServlet extends HttpServlet {
     private String dbConfigResource;

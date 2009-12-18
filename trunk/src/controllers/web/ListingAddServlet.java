@@ -69,13 +69,16 @@ public class ListingAddServlet extends HttpServlet {
 
         pageTitle = bzb.getLexicon().get( "addListing" );
 
+        /* Make sure user is logged in */
         if( bzb.getAuthenticatedUser( request ) == null ) {
             bzb.getLexicon().load( "error" );
 
             forwardUrl = jspPath + "401.jsp";
             pageTitle = bzb.getLexicon().get( "unauthorized" );
         }
+        /* User has submitted the initial ISBN form */
         else if( step == 2 ) {
+            /* Invalid ISBN */
             if( !isValidISBN( RequestHelper.getString( "isbn", request ) ) ) {
                 forwardUrl = jspPath + "newListingStep1.jsp";
 
@@ -85,26 +88,33 @@ public class ListingAddServlet extends HttpServlet {
                 forwardUrl = jspPath + "newListingStep2.jsp";
 
                 request.setAttribute( "languages", getLanguages() );
+                /* Add book data to request, if it exists in the DB */
                 request.setAttribute( "book", getBook( RequestHelper.getString( "isbn", request ) ) );
             }
         }
+        /* User has submitted the book form */
         else if( step == 3 ) {
+            /* Existing book? */
             if( RequestHelper.getString( "newBook", request ).equals( "false" ) ) {
+                /* Invalid ISBN */
                 if( !isValidISBN( RequestHelper.getString( "isbn", request ) ) ) {
                     forwardUrl = jspPath + "newListingStep1.jsp";
 
                     formErrors.put( "isbn", bzb.getLexicon().get( "invalidField", new String[][]{ { "field", bzb.getLexicon().get( "isbn" ) } } ) );
                 }
                 else {
+                    /* Check to see if book exists in the DB */
                     if( ( book = getBook( RequestHelper.getString( "isbn", request ) ) ) != null ) {
                         forwardUrl = jspPath + "newListingStep3.jsp";
 
+                        /* Create empty listing object for later */
                         if( listing == null ) {
                             listing = new BookListing();
                         }
 
                         listing.setBook( book );
 
+                        /* Put listing object in SESSION object */
                         request.getSession().setAttribute( "userListing", listing );
                         request.setAttribute( "conditions", getConditions() );
                     }
@@ -115,41 +125,50 @@ public class ListingAddServlet extends HttpServlet {
                     }
                 }
             }
+            /* New book being submitted */
             else {
                 formErrors = checkBookForm( request);
 
+                /* Has errors - display book form again */
                 if( !formErrors.isEmpty() ) {
                     forwardUrl = jspPath + "newListingStep2.jsp";
 
                     request.setAttribute( "languages", getLanguages() );
                 }
+                /* No errors - display listing form */
                 else {
                     forwardUrl = jspPath + "newListingStep3.jsp";
 
                     if( listing == null ) {
                         listing = new BookListing();
                     }
-                    
+
+                    /* Add listing to SESSION */
                     listing.setBook( getBookFromInput( request ) );
                     request.getSession().setAttribute( "userListing", listing );
                     request.setAttribute( "conditions", getConditions() );
                 }
             }
         }
+        /* Submitted the final listing form */
         else if( step == 4 ) {
+            /* Hey, you can't skip to the end just yet! */
             if( listing == null ) {
                 forwardUrl = jspPath + "newListingStep1.jsp";
 
                 formErrors.put( "page", bzb.getLexicon().get( "timeOut" ) );
             }
+            /* Make sure form is valid */
             else {
                 formErrors = checkListingForm( request );
 
+                /* Invalid - display listing form again */
                 if( !formErrors.isEmpty() ) {
                     forwardUrl = jspPath + "newListingStep3.jsp";
 
                     request.setAttribute( "conditions", getConditions() );
                 }
+                /* Create listing and display success page */
                 else {
                     saveListing( listing, request );
 
@@ -157,6 +176,7 @@ public class ListingAddServlet extends HttpServlet {
                 }
             }
         }
+        /* Display initial ISBN form */
         else {
             forwardUrl = jspPath + "newListingStep1.jsp";
         }
@@ -309,22 +329,22 @@ public class ListingAddServlet extends HttpServlet {
         return conditions;
     }
 
-    private void saveListing( BookListing listing, HttpServletRequest request ) {
-        listing.init( bzb.getDriver() );
-        listing.setActive( true );
-        listing.setComment( RequestHelper.getString( "comment", request ) );
-        listing.setCondition( RequestHelper.getString( "condition", request ) );
-        listing.setCurrency( "usd" ); //@TODO currency should be a system setting
-        listing.setIsbn( listing.getBook().getIsbn() );
-        listing.setListDate( new java.util.Date() );
-        listing.setPrice( RequestHelper.getDouble( "price", request ) );
-        listing.setUserId( ( ( User ) request.getSession().getAttribute( "authUser" ) ).getUserId() );
-        listing.getBook().setAuthor( listing.getBook().getAuthor().replaceAll( "\n", "|" ).trim() );
+private void saveListing( BookListing listing, HttpServletRequest request ) {
+    listing.init( bzb.getDriver() );
+    listing.setActive( true );
+    listing.setComment( RequestHelper.getString( "comment", request ) );
+    listing.setCondition( RequestHelper.getString( "condition", request ) );
+    listing.setCurrency( "usd" ); //@TODO currency should be a system setting
+    listing.setIsbn( listing.getBook().getIsbn() );
+    listing.setListDate( new java.util.Date() );
+    listing.setPrice( RequestHelper.getDouble( "price", request ) );
+    listing.setUserId( ( ( User ) request.getSession().getAttribute( "authUser" ) ).getUserId() );
+    listing.getBook().setAuthor( listing.getBook().getAuthor().replaceAll( "\n", "|" ).trim() );
 
-        listing.save();
+    listing.save();
 
-        if( listing.getBook().isNewObject() ) {
-            listing.getBook().save();
-        }
+    if( listing.getBook().isNewObject() ) {
+        listing.getBook().save();
     }
+}
 }
