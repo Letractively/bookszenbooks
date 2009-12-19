@@ -1,0 +1,4 @@
+#summary Use case diagram for listing a book for sale.
+#labels Diagram,Phase-Design
+
+http://bookszenbooks.googlecode.com/files/ListBook_11_7.png
