@@ -3,4 +3,4 @@
  * [ Register Account]
  * [ Log Into Account]
  * [ List Book]
- * [ Remove Book]
+ * [ UseCaseDiagram Remove Book]
