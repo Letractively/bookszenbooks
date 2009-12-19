@@ -1,0 +1,4 @@
+#summary Use Case diagram for removing a user's book listing.
+#labels Diagram,Phase-Design
+
+http://bookszenbooks.googlecode.com/files/RemoveBook_11_7.png
