@@ -1,0 +1,4 @@
+#summary Use Case Diagram for logging into a registered user account.
+#labels Diagram
+
+http://bookszenbooks.googlecode.com/files/Login_11_7.png
