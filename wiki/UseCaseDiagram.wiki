@@ -1,6 +1,6 @@
-#summary UseCases Diagrams for the Books Zen Books project.
+#summary Use Case Diagrams for the Books Zen Books project.
 
- * [ Register Account]
- * [ Log Into Account]
- * [ List Book]
- * [ UseCaseDiagram Remove Book]
+ * [UCDRemoveBook Remove Book]
+ * [UCDLogin Log Into Account]
+ * [UCDListBook List Book]
+ * [UCDRegister Register]
