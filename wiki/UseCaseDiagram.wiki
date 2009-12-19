@@ -3,4 +3,4 @@
  * [SDRegisterAccount Register Account]
  * [SDLogInToAcount Log Into Account]
  * [SDListBook List Book]
- * [SDRemoveBook Remove Book]
+ * [RemoveBook_11_7 Remove Book]
