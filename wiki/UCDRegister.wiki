@@ -1,0 +1,4 @@
+#summary Use Case Diagram for registering a new account.
+#labels Phase-Design,Diagram
+
+http://bookszenbooks.googlecode.com/files/Registration_11_7.png
