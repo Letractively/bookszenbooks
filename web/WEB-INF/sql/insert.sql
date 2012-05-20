@@ -19,8 +19,8 @@ INSERT INTO `bzb`.`lexicontopic` (`name`) VALUES ('checkout');
 /* Users */
 INSERT INTO `bzb`.`user` (`userId` ,`email` ,`password` ,`firstName` ,`lastName` ,`address` ,`city` ,`state` ,`country` ,
 `postalCode` ,`phone` ,`joinDate` ,`birthDate` ,`validated` ,`superUser` ,`validationCode`)
-VALUES (NULL , 'student@worcester.edu', MD5( 'test' ) , 'Rick', 'Varella', '10 Pryor Rd', 'Leicester', 'MA', 'US',
-'01524', '508-892-5304', '2009-11-16 02:43:41', '1987-07-09', '1', '1', NULL);
+VALUES (NULL , 'student@worcester.edu', MD5( 'test' ) , 'Rick', 'V', '100 Main Street', 'Hicksville', 'AK', 'US',
+'00000', '555-555-555', '2009-11-16 02:43:41', '1986-01-01', '1', '1', NULL);
 
 /* System Settings */
 INSERT INTO `bzb`.`systemsetting` (`key` ,`value` ,`title` ,`description`,`fieldType`)
