@@ -1,0 +1,1 @@
+![http://bookszenbooks.googlecode.com/files/RemoveBook_11_7.png](http://bookszenbooks.googlecode.com/files/RemoveBook_11_7.png)

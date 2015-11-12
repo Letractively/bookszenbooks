@@ -1,0 +1,1 @@
+![http://bookszenbooks.googlecode.com/files/Checkout.jpg](http://bookszenbooks.googlecode.com/files/Checkout.jpg)

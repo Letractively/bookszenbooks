@@ -1,0 +1,1 @@
+![http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Remove_From_Cart_11122009.png](http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Remove_From_Cart_11122009.png)

@@ -1,0 +1,1 @@
+![http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Admin_Create_Lexicon_11122009_2.png](http://bookszenbooks.googlecode.com/files/Sequence_Diagram_Admin_Create_Lexicon_11122009_2.png)
